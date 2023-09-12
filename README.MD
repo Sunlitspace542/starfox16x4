@@ -1,0 +1,16 @@
+## Star Fox 16 x 4
+(todo: cool logo thing)  
+By Sunlit & Monika and whoever else  
+Based on [HackerSM64](https://github.com/HackerN64/HackerSM64)
+
+# What the hey is this?
+I've started reading through and documenting the source code of the original Star Fox as part of my [UltraStarFox](https://github.com/Sunlitspace542/ultrastarfox) fork of the source code.  
+I noticed that for SM64, Nintendo decided to reuse the Strategy and PATH macros/scripting languages Star Fox uses.  
+Seeing that similarity i lost my mind for probably the 12th time and thought "Hey, I should try porting Star Fox to the N64! That'll be fun, right?" and now I'm here. ~ Sunlit  
+
+
+# Things that will need to be done
+- Turn Mario into an arwing  
+- Strip game down to just the engine (remove all unnecessary objs, behaviors, etc.)  
+- Figure out how i'm going to handle music/sounds  
+- Start porting strats/paths/models  
