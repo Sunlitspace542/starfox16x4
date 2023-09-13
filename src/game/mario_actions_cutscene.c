@@ -530,36 +530,9 @@ s32 act_debug_free_move(struct MarioState *m) { // ARWING ENTRYPOINT
         pos[2] += medPspeed;
     }
 
-    // Calculate the target pitch (vertical angle) based on the vertical input from the controller.
-    s16 targetPitch = -(s16)(252.0f * m->controller->stickY);
-
-    // Initialize the pitch velocity.
-    s16 pitchVel;
-    
-    // Determine the pitch velocity based on Mario's current pitch angle.
-    if (m->faceAngle[0] < 0) {
-        // If Mario is looking upwards (negative pitch), set a slower pitch velocity.
-        pitchVel = 0x100;
-    } else {
-        // If Mario is looking downwards (positive pitch), set a faster pitch velocity.
-        pitchVel = 0x200;
+    if (m->controller->stickY ) {
+        // do something ()
     }
-
-    // If Mario's current pitch angle is less than the target pitch angle (looking upwards):
-    if (m->faceAngle[0] < targetPitch) {
-        // Increase Mario's pitch angle to look upwards.
-        if ((m->faceAngle[0] += pitchVel) > targetPitch) {
-            // Ensure that Mario's pitch angle doesn't exceed the target pitch.
-            m->faceAngle[0] = targetPitch;
-        }
-    }
-    // If Mario's current pitch angle is greater than the target pitch angle (looking downwards):
-    else if (m->faceAngle[0] > targetPitch) {
-        // Decrease Mario's pitch angle to look downwards.
-        if ((m->faceAngle[0] -= pitchVel) < targetPitch) {
-            // Ensure that Mario's pitch angle doesn't go below the target pitch.
-            m->faceAngle[0] = targetPitch;
-        }
 
     // TODO: Add ability to ignore collision
     //      - spawn pseudo floor object to prevent OOB death
