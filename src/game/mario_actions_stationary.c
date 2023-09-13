@@ -324,7 +324,7 @@ s32 act_waking_up(struct MarioState *m) {
     m->actionTimer++;
 
     if (m->actionTimer > 20) {
-        return set_mario_action(m, ACT_IDLE, 0);
+        return set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
     stationary_ground_step(m);
@@ -381,7 +381,7 @@ s32 act_shivering(struct MarioState *m) {
         case ACT_STATE_SHIVERING_RETURN_TO_IDLE:
             set_mario_animation(m, MARIO_ANIM_SHIVERING_RETURN_TO_IDLE);
             if (is_anim_past_end(m)) {
-                set_mario_action(m, ACT_IDLE, 0);
+                set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
             }
             break;
     }
@@ -418,7 +418,7 @@ s32 act_hold_idle(struct MarioState *m) {
     }
 
     if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_DROP_OBJECT) {
-        return drop_and_set_mario_action(m, ACT_IDLE, 0);
+        return drop_and_set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
     if (m->quicksandDepth > 30.0f) {
@@ -484,7 +484,7 @@ s32 act_standing_against_wall(struct MarioState *m) {
 
 s32 act_in_quicksand(struct MarioState *m) {
     if (m->quicksandDepth < 30.0f) {
-        return set_mario_action(m, ACT_IDLE, 0);
+        return set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
     if (check_common_idle_cancels(m)) {
@@ -545,7 +545,7 @@ s32 act_panting(struct MarioState *m) {
     }
 
     if (m->health >= 0x500) {
-        return set_mario_action(m, ACT_IDLE, 0);
+        return set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
     if (check_common_idle_cancels(m)) {
@@ -634,7 +634,7 @@ s32 act_butt_slide_stop(struct MarioState *m) {
 
 s32 act_hold_butt_slide_stop(struct MarioState *m) {
     if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_DROP_OBJECT) {
-        return drop_and_set_mario_action(m, ACT_IDLE, 0);
+        return drop_and_set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
     if (m->input & INPUT_STOMPED) {
@@ -711,7 +711,7 @@ s32 act_stop_crouching(struct MarioState *m) {
     stationary_ground_step(m);
     set_mario_animation(m, MARIO_ANIM_STOP_CROUCHING);
     if (is_anim_past_end(m)) {
-        set_mario_action(m, ACT_IDLE, 0);
+        set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
     return FALSE;
 }
@@ -781,7 +781,7 @@ s32 act_shockwave_bounce(struct MarioState *m) {
     }
 
     if (++m->actionTimer == 48) {
-        return set_mario_action(m, ACT_IDLE, 0);
+        return set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
     s16 bounceTimer = (m->actionTimer % 16) << 12;
@@ -815,7 +815,7 @@ s32 check_common_landing_cancels(struct MarioState *m, u32 action) {
     }
 
     if (m->input & INPUT_FIRST_PERSON) {
-        return set_mario_action(m, ACT_IDLE, 0);
+        return set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
     if (m->input & INPUT_A_PRESSED) {
@@ -921,7 +921,7 @@ s32 act_long_jump_land_stop(struct MarioState *m) {
 
 s32 act_hold_jump_land_stop(struct MarioState *m) {
     if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_DROP_OBJECT) {
-        return drop_and_set_mario_action(m, ACT_IDLE, 0);
+        return drop_and_set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
     if (m->input & INPUT_STOMPED) {
@@ -942,7 +942,7 @@ s32 act_hold_jump_land_stop(struct MarioState *m) {
 
 s32 act_hold_freefall_land_stop(struct MarioState *m) {
     if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_DROP_OBJECT) {
-        return drop_and_set_mario_action(m, ACT_IDLE, 0);
+        return drop_and_set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
     if (m->input & INPUT_STOMPED) {
@@ -1001,7 +1001,7 @@ s32 act_twirl_land(struct MarioState *m) {
     m->marioObj->header.gfx.angle[1] += m->twirlYaw;
     if (is_anim_at_end(m) && m->angleVel[1] == 0) {
         m->faceAngle[1] += m->twirlYaw;
-        set_mario_action(m, ACT_IDLE, 0);
+        set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
     return FALSE;
@@ -1036,7 +1036,7 @@ s32 act_first_person(struct MarioState *m) {
         raise_background_noise(2);
         // Go back to the last camera mode
         set_camera_mode(m->area->camera, -1, 1);
-        return set_mario_action(m, ACT_IDLE, 0);
+        return set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
     }
 
 #ifdef UNLOCK_ALL

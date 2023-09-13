@@ -1711,7 +1711,7 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
 #ifdef ENABLE_CREDITS_BENCHMARK
         static s32 startedBenchmark = FALSE;
         if (!startedBenchmark) {
-            set_mario_action(gMarioState, ACT_IDLE, 0);
+            set_mario_action(gMarioState, ACT_DEBUG_FREE_MOVE, 0);
             level_trigger_warp(gMarioState, WARP_OP_CREDITS_START);
             startedBenchmark = TRUE;
         }

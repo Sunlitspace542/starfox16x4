@@ -46,7 +46,7 @@ DEFINE_LEVEL("SC2 WMOTR",      LEVEL_WMOTR,            COURSE_WMOTR,    wmotr,  
 STUB_LEVEL(  "",               LEVEL_UNKNOWN_32,       COURSE_NONE,                                 20000, 0x70, 0x00, 0x00, _,         _)
 DEFINE_LEVEL("B BATTLE2",      LEVEL_BOWSER_2,         COURSE_BITFS,    bowser_2,         fire,     60000, 0x40, 0x40, 0x40, _,         _)
 DEFINE_LEVEL("B BATTLE3",      LEVEL_BOWSER_3,         COURSE_BITS,     bowser_3,         generic,  60000, 0x40, 0x40, 0x40, _,         _)
-STUB_LEVEL(  "",               LEVEL_UNKNOWN_35,       COURSE_NONE,                                 20000, 0x00, 0x00, 0x00, _,         _)
+DEFINE_LEVEL("DUMMY",          LEVEL_DUMMY,           COURSE_NONE,      dummy,            generic,  15000,    0x08, 0x08, 0x08, _,         _)
 DEFINE_LEVEL("COURSE 12 TTM",  LEVEL_TTM,              COURSE_TTM,      ttm,              mountain, 15000, 0x08, 0x08, 0x08, _,         _)
 STUB_LEVEL(  "",               LEVEL_UNKNOWN_37,       COURSE_NONE,                                 20000, 0x00, 0x00, 0x00, _,         _)
 STUB_LEVEL(  "",               LEVEL_UNKNOWN_38,       COURSE_NONE,                                 20000, 0x00, 0x00, 0x00, sDynUnk38, _)
