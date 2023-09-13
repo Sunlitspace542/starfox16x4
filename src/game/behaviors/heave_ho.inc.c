@@ -98,7 +98,7 @@ void heave_ho_act_0(void) {
     cur_obj_set_pos_to_home();
 
     if (find_water_level(o->oPosX, o->oPosZ) < o->oPosY && o->oDistanceToMario < 4000.0f) {
-        cur_obj_become_tangible();
+        s_hitON();
         cur_obj_unhide();
         o->oAction = 1;
     } else {

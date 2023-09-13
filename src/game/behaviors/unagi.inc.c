@@ -180,7 +180,7 @@ void bhv_unagi_loop(void) {
 
 void bhv_unagi_subobject_loop(void) {
     if (!o->parentObj->oUnagiHasStar) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         f32 offset = 300.0f * o->oBehParams2ndByte;
 

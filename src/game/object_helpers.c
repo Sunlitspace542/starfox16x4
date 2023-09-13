@@ -829,7 +829,7 @@ void cur_obj_get_thrown_or_placed(f32 forwardVel, f32 velY, s32 thrownAction) {
         cur_obj_set_pos_relative(o->parentObj, -41.684f, 85.859f, 321.577f);
     }
 
-    cur_obj_become_tangible();
+    s_hitON();
     cur_obj_enable_rendering();
 
     o->oHeldState = HELD_FREE;
@@ -843,7 +843,7 @@ void cur_obj_get_thrown_or_placed(f32 forwardVel, f32 velY, s32 thrownAction) {
 }
 
 void cur_obj_get_dropped(void) {
-    cur_obj_become_tangible();
+    s_hitON();
     cur_obj_enable_rendering();
 
     o->oHeldState = HELD_FREE;
@@ -893,7 +893,7 @@ s32 cur_obj_clear_interact_status_flag(s32 flag) {
 /**
  * Mark an object to be unloaded at the end of the frame.
  */
-void obj_mark_for_deletion(struct Object *obj) {
+void s_remove_obj(struct Object *obj) {
 #ifdef PUPPYLIGHTS
     obj_disable_light(obj);
 #endif
@@ -917,7 +917,7 @@ void cur_obj_become_intangible(void) {
     o->oIntangibleTimer = -1;
 }
 
-void cur_obj_become_tangible(void) {
+void s_hitON(void) {
     o->oIntangibleTimer = 0;
 }
 
@@ -1713,7 +1713,7 @@ void obj_set_hitbox(struct Object *obj, struct ObjectHitbox *hitbox) {
         obj->oHealth = hitbox->health;
         obj->oNumLootCoins = hitbox->numLootCoins;
 
-        cur_obj_become_tangible();
+        s_hitON();
     }
 
     obj->hitboxRadius = obj->header.gfx.scale[0] * hitbox->radius;
@@ -1782,7 +1782,7 @@ void bhv_dust_smoke_loop(void) {
     vec3f_add(&o->oPosVec, &o->oVelVec);
 
     if (o->oSmokeTimer == 10) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     o->oSmokeTimer++;
@@ -1926,7 +1926,7 @@ s32 cur_obj_set_hitbox_and_die_if_attacked(struct ObjectHitbox *hitbox, s32 deat
         if (o->oInteractStatus & INT_STATUS_WAS_ATTACKED) {
             spawn_mist_particles();
             obj_spawn_loot_yellow_coins(o, o->oNumLootCoins, 20.0f);
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
             create_sound_spawner(deathSound);
         } else {
             interacted = TRUE;
@@ -1941,7 +1941,7 @@ s32 cur_obj_set_hitbox_and_die_if_attacked(struct ObjectHitbox *hitbox, s32 deat
 void obj_explode_and_spawn_coins(f32 mistSize, s32 coinType) {
     spawn_mist_particles_variable(0, 0, mistSize);
     spawn_triangle_break_particles(30, MODEL_DIRT_ANIMATION, 3.0f, TINY_DIRT_PARTICLE_ANIM_STATE_YELLOW);
-    obj_mark_for_deletion(o);
+    s_remove_obj(o);
 
     if (coinType == COIN_TYPE_YELLOW) {
         obj_spawn_loot_yellow_coins(o, o->oNumLootCoins, 20.0f);

@@ -17,7 +17,7 @@ void bhv_water_air_bubble_loop(void) {
         cur_obj_become_intangible();
         o->oPosY += 3.0f;
     } else {
-        cur_obj_become_tangible();
+        s_hitON();
         cur_obj_forward_vel_approach_upward(2.0f, 10.0f);
         o->oMoveAngleYaw = obj_angle_to_object(o, gMarioObject);
         cur_obj_move_using_fvel_and_gravity();
@@ -28,14 +28,14 @@ void bhv_water_air_bubble_loop(void) {
 
     if (o->oInteractStatus & INT_STATUS_INTERACTED || o->oTimer > 200) {
         cur_obj_play_sound_2(SOUND_GENERAL_QUIET_BUBBLE);
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         for (i = 0; i < 30; i++) {
             spawn_object(o, MODEL_BUBBLE, bhvBubbleMaybe);
         }
     }
 
     if (find_water_level(o->oPosX, o->oPosZ) < o->oPosY) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     o->oInteractStatus = INT_STATUS_NONE;
@@ -77,7 +77,7 @@ void bhv_small_water_wave_loop(void) {
     }
 
     if (o->oInteractStatus & INT_STATUS_INTERACTED) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
@@ -100,7 +100,7 @@ void bhv_particle_loop() {
     obj_translate_xz_random(o, 4.0f);
     scale_bubble_sin();
     if (o->oTimer != 0 && o->oPosY > find_water_level(o->oPosX, o->oPosZ)) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         try_to_spawn_object(5, 0, o, MODEL_SMALL_WATER_SPLASH, bhvObjectWaterSplash);
     }
 }

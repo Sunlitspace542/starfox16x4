@@ -292,7 +292,7 @@ static void klepto_act_retreat(void) {
         o->oHomeY = 1500.0f;
         o->oKleptoDiveTimer = -100;
         o->oFlags |= OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW;
-        cur_obj_become_tangible();
+        s_hitON();
     }
 }
 
@@ -305,7 +305,7 @@ static void klepto_act_reset_position(void) {
         o->oHomeY = o->oKleptoDistanceToTarget = 9999.0f;
 
         if (o->oPosY > 5000.0f) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         } else {
             klepto_approach_target(20.0f);
         }
@@ -378,7 +378,7 @@ void bhv_klepto_update(void) {
                        & (ACT_FLAG_SHORT_HITBOX | ACT_FLAG_BUTT_OR_STOMACH_SLIDE))) {
             cur_obj_become_intangible();
         } else {
-            cur_obj_become_tangible();
+            s_hitON();
         }
     }
 

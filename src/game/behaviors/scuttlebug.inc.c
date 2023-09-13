@@ -79,7 +79,7 @@ void bhv_scuttlebug_loop(void) {
                 o->oSubAction = 1;
             }
             if (o->oPosY - o->oHomeY < -200.0f) {
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             }
             cur_obj_rotate_yaw_toward(o->oAngleToMario, 0x400);
             break;
@@ -122,7 +122,7 @@ void bhv_scuttlebug_loop(void) {
 
     if (o->parentObj != o) {
         if (obj_is_hidden(o)) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         }
         if (o->activeFlags == ACTIVE_FLAG_DEACTIVATED) {
             o->parentObj->oScuttlebugSpawnerIsDeactivated = 1;

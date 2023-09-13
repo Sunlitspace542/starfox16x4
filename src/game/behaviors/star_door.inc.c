@@ -12,7 +12,7 @@ void bhv_star_door_loop(void) {
 
     switch (o->oAction) {
         case STAR_DOOR_ACT_CLOSED:
-            cur_obj_become_tangible();
+            s_hitON();
             if (o->oInteractStatus & (INT_STATUS_DOOR_PULLED | INT_STATUS_DOOR_PUSHED)) {
                 o->oAction = STAR_DOOR_ACT_OPENING;
             }

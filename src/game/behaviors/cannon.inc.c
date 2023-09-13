@@ -13,11 +13,11 @@ void opened_cannon_act_idle(void) { // act 0
         o->oCannonAngle    = 0;
         o->oCannonIsActive = FALSE;
         cur_obj_enable_rendering();
-        cur_obj_become_tangible();
+        s_hitON();
     }
 
     if (o->oDistanceToMario < 500.0f) {
-        cur_obj_become_tangible();
+        s_hitON();
         cur_obj_enable_rendering();
         if (o->oInteractStatus & INT_STATUS_INTERACTED
          && (!(o->oInteractStatus & INT_STATUS_TOUCHED_BOB_OMB))) { // bob-omb explodes when it gets into a cannon

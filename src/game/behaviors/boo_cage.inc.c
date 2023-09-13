@@ -80,7 +80,7 @@ void bhv_boo_cage_loop(void) {
 
         case BOO_CAGE_ACT_ON_GROUND:
             // Allow Mario to enter the cage once it's still on the ground.
-            cur_obj_become_tangible();
+            s_hitON();
 
             // The other useless scale
             cur_obj_scale(1.0f);

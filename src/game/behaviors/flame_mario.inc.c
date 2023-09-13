@@ -31,7 +31,7 @@ void bhv_black_smoke_mario_loop(void) {
     cur_obj_scale(1.0f + (o->oTimer / 16.0f));
     o->oOpacity -= 4;
     if (o->oOpacity < 10) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 #endif
 }
@@ -48,7 +48,7 @@ void bhv_flame_mario_loop(void) {
 
     if (!(gMarioObject->oMarioParticleFlags & ACTIVE_PARTICLE_FIRE)) {
         o->parentObj->oActiveParticleFlags &= ~ACTIVE_PARTICLE_FIRE;
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         gMarioObject->prevObj = NULL;
     }
 }

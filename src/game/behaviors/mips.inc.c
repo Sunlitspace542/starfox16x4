@@ -238,7 +238,7 @@ void bhv_mips_dropped(void) {
     o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
     cur_obj_init_animation(0);
     o->oHeldState = HELD_FREE;
-    cur_obj_become_tangible();
+    s_hitON();
     o->oForwardVel = 3.0f;
     o->oAction = MIPS_ACT_IDLE;
 }
@@ -252,7 +252,7 @@ void bhv_mips_thrown(void) {
     o->oHeldState = HELD_FREE;
     o->oFlags &= ~OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW;
     cur_obj_init_animation(2);
-    cur_obj_become_tangible();
+    s_hitON();
     o->oForwardVel = 25.0f;
     o->oVelY = 20.0f;
     o->oAction = MIPS_ACT_FALL_DOWN;

@@ -176,7 +176,7 @@ static void monty_mole_act_select_hole(void) {
         }
 
         cur_obj_unhide();
-        cur_obj_become_tangible();
+        s_hitON();
     }
 }
 
@@ -460,7 +460,7 @@ static void monty_mole_rock_act_move(void) {
 
     if (o->oMoveFlags & (OBJ_MOVE_MASK_ON_GROUND | OBJ_MOVE_ENTERED_WATER)) {
         cur_obj_spawn_particles(&sMontyMoleRockBreakParticles);
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     cur_obj_move_standard(78);

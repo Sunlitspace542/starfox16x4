@@ -142,12 +142,12 @@ s32 cur_obj_has_model(ModelID16 modelID);
 ModelID32 obj_get_model_id(struct Object *obj);
 void mario_set_flag(s32 flag);
 s32 cur_obj_clear_interact_status_flag(s32 flag);
-void obj_mark_for_deletion(struct Object *obj);
+void s_remove_obj(struct Object *obj);
 // Hackersm64 backwards compatibility
-#define mark_obj_for_deletion obj_mark_for_deletion
+#define s_obj_remove s_remove_obj
 void cur_obj_disable(void);
 void cur_obj_become_intangible(void);
-void cur_obj_become_tangible(void);
+void s_hitON(void);
 void obj_become_tangible(struct Object *obj);
 void cur_obj_update_floor_height(void);
 struct Surface *cur_obj_update_floor_height_and_get_floor(void);

@@ -148,7 +148,7 @@ void bhv_wing_vanish_cap_loop(void) {
     }
 
     if (o->oTimer > 20) {
-        cur_obj_become_tangible();
+        s_hitON();
     }
 
     cap_despawn();
@@ -185,7 +185,7 @@ void bhv_metal_cap_loop(void) {
     }
 
     if (o->oTimer > 20) {
-        cur_obj_become_tangible();
+        s_hitON();
     }
 
     cap_set_hitbox();

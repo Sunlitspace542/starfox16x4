@@ -9,7 +9,7 @@ void bhv_lll_wood_piece_loop(void) {
     o->oLllWoodPieceOscillationTimer += 0x400;
 
     if (o->parentObj->oAction == 2) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 

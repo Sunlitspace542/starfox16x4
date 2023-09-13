@@ -33,7 +33,7 @@ void bhv_collect_star_loop(void) {
     o->oFaceAngleYaw += 0x800;
 
     if (o->oInteractStatus & INT_STATUS_INTERACTED) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         o->oInteractStatus = INT_STATUS_NONE;
     }
 }
@@ -100,7 +100,7 @@ void bhv_star_spawn_loop(void) {
 
             if (o->oPosY < o->oHomeY) {
                 cur_obj_play_sound_2(SOUND_GENERAL_STAR_APPEARS);
-                cur_obj_become_tangible();
+                s_hitON();
                 o->oPosY = o->oHomeY;
                 o->oAction = SPAWN_STAR_ARC_CUTSCENE_ACT_END;
             }
@@ -115,7 +115,7 @@ void bhv_star_spawn_loop(void) {
             }
 
             if (o->oInteractStatus & INT_STATUS_INTERACTED) {
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
                 o->oInteractStatus = INT_STATUS_NONE;
             }
             break;

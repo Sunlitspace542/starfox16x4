@@ -18,7 +18,7 @@ void bhv_end_birds_1_loop(void) {
                 cur_obj_play_sound_2(SOUND_GENERAL_BIRDS_FLY_AWAY);
             }
             if (gCutsceneTimer == 0) {
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             }
             break;
     }

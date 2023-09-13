@@ -1759,7 +1759,7 @@ static void intro_cutscene_lower_pipe(struct MarioState *m) {
 
     sIntroWarpPipeObj->oPosY -= 5.0f;
     if (sIntroWarpPipeObj->oPosY <= 50.0f) {
-        obj_mark_for_deletion(sIntroWarpPipeObj);
+        s_remove_obj(sIntroWarpPipeObj);
         advance_cutscene_step(m);
     }
 
@@ -2067,7 +2067,7 @@ static void end_peach_cutscene_spawn_peach(struct MarioState *m) {
         play_transition(WARP_TRANSITION_FADE_FROM_COLOR, 192, 255, 255, 255);
     }
     if (m->actionTimer == 40) {
-        obj_mark_for_deletion(sEndJumboStarObj);
+        s_remove_obj(sEndJumboStarObj);
 
         sEndPeachObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_PEACH, bhvEndPeach, 0, 2428,
                                                  -1300, 0, 0, 0);

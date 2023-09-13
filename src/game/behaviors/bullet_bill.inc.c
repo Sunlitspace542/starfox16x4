@@ -9,7 +9,7 @@ void bhv_bullet_bill_init(void) {
 }
 
 void bullet_bill_act_0(void) {
-    cur_obj_become_tangible();
+    s_hitON();
     o->oForwardVel = 0.0f;
     o->oMoveAngleYaw = o->oBulletBillInitialMoveYaw;
     o->oFaceAnglePitch = 0;

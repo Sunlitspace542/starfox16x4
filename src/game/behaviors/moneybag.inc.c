@@ -191,7 +191,7 @@ void bhv_moneybag_loop(void) {
         case MONEYBAG_ACT_MOVE_AROUND:
             moneybag_act_move_around();
             if (o->oTimer > 30) {
-                cur_obj_become_tangible();
+                s_hitON();
             }
             break;
 

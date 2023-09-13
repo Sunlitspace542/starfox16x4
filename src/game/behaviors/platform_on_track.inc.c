@@ -416,6 +416,6 @@ void bhv_track_ball_update(void) {
     s16 relativeIndex =
         (s16) o->oBehParams2ndByte - (s16) o->parentObj->oPlatformOnTrackBaseBallIndex - 1;
     if (relativeIndex < 1 || relativeIndex > 5) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }

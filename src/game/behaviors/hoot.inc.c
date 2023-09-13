@@ -247,7 +247,7 @@ void bhv_hoot_loop(void) {
                 && cutscene_object_with_dialog(CUTSCENE_DIALOG, o, DIALOG_044)) {
                 set_mario_npc_dialog(MARIO_DIALOG_STOP);
 
-                cur_obj_become_tangible();
+                s_hitON();
 
                 o->oHootAvailability = HOOT_AVAIL_READY_TO_FLY;
             }

@@ -67,7 +67,7 @@ s32 piranha_plant_check_interactions(void) {
  * to piranha_plant_check_interactions().
  */
 void piranha_plant_act_sleeping(void) {
-    cur_obj_become_tangible();
+    s_hitON();
     o->oInteractType = INTERACT_BOUNCE_TOP;
 
     cur_obj_init_animation_with_sound(PIRANHA_PLANT_ANIM_SLEEPING);
@@ -227,7 +227,7 @@ static s8 sPiranhaPlantBiteSoundFrames[] = { 12, 28, 50, 64, -1 };
 void piranha_plant_act_biting(void) {
     s32 animFrame = o->header.gfx.animInfo.animFrame;
 
-    cur_obj_become_tangible();
+    s_hitON();
 
     o->oInteractType = INTERACT_DAMAGE;
 

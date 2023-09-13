@@ -39,7 +39,7 @@ void bhv_alpha_boo_key_loop(void) {
         o->parentObj->oBooDeathStatus = BOO_DEATH_STATUS_DYING;
 
         // Delete the object and spawn sparkles
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         spawn_object(o, MODEL_SPARKLES, bhvCoinSparklesSpawner);
     }
 }
@@ -83,7 +83,7 @@ static void beta_boo_key_dropped_loop(void) {
     // If the key hits the floor or 90 frames have elapsed since it was dropped,
     // become tangible and handle collision.
     if (o->oTimer > 90 || o->oMoveFlags & OBJ_MOVE_LANDED) {
-        cur_obj_become_tangible();
+        s_hitON();
 
         if (obj_check_if_collided_with_object(o, gMarioObject)) {
             // This interaction status is 0x01, the first interaction status flag.
@@ -98,7 +98,7 @@ static void beta_boo_key_dropped_loop(void) {
             o->parentObj->oInteractStatus = TRUE; //! Note: Not a flag, treated as a TRUE/FALSE statement
 
             // Delete the object and spawn sparkles
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
             spawn_object(o, MODEL_SPARKLES, bhvCoinSparklesSpawner);
         }
     }

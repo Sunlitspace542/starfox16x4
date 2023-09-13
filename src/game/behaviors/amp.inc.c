@@ -178,7 +178,7 @@ static void amp_attack_cooldown_loop(void) {
 
     if (o->oTimer > 90) {
         o->oAnimState = 1;
-        cur_obj_become_tangible();
+        s_hitON();
         o->oAction = HOMING_AMP_ACT_CHASE;
     }
 }

@@ -42,7 +42,7 @@ void bhv_bowser_key_loop(void) {
         obj_set_hitbox(o, &sBowserKeyHitbox);
 
         if (o->oInteractStatus & INT_STATUS_INTERACTED) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
             o->oInteractStatus = INT_STATUS_NONE;
         }
     }

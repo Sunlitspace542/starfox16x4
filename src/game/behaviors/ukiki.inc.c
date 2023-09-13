@@ -293,7 +293,7 @@ void ukiki_act_jump(void) {
     } else {
         o->oForwardVel = 0.0f;
         cur_obj_init_animation_with_sound(UKIKI_ANIM_LAND);
-        cur_obj_become_tangible();
+        s_hitON();
 
         if (cur_obj_check_if_near_animation_end()) {
             o->oAction = UKIKI_ACT_RUN;
@@ -417,7 +417,7 @@ void ukiki_act_go_to_cage(void) {
 
         case UKIKI_SUB_ACT_CAGE_DESPAWN:
             if (o->oPosY < -1300.0f) {
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             }
             break;
     }

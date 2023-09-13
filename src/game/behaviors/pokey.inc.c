@@ -44,7 +44,7 @@ void bhv_pokey_body_part_update(void) {
 
     if (obj_update_standard_actions(3.0f)) {
         if (o->parentObj->oAction == POKEY_ACT_UNLOAD_PARTS) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         } else {
             cur_obj_update_floor_and_walls();
             obj_update_blinking(&o->oPokeyBodyPartBlinkTimer, 30, 60, 4);
@@ -173,7 +173,7 @@ static void pokey_act_wander(void) {
     s32 targetAngleOffset;
 
     if (o->oPokeyNumAliveBodyParts == POKEY_PART_BP_HEAD) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else if (o->oDistanceToMario > o->oDrawingDistance + 500.0f) {
         o->oAction = POKEY_ACT_UNLOAD_PARTS;
         o->oForwardVel = 0.0f;

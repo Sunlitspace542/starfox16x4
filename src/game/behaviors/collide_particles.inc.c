@@ -20,7 +20,7 @@ void bhv_punch_tiny_triangle_loop(void) {
     o->oCollisionParticleScale -= 0.2f;
 
     if (gDebugInfo[DEBUG_PAGE_EFFECTINFO][0] + 6 < o->oTimer) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 

@@ -16,7 +16,7 @@ void clam_act_0(void) {
     if (cur_obj_init_anim_check_frame(0, 25)) {
         cur_obj_play_sound_2(SOUND_GENERAL_CLAM_SHELL_CLOSE);
         spawn_mist_from_global();
-        cur_obj_become_tangible();
+        s_hitON();
 
         o->oClamShakeTimer = 10;
         o->oTimer = 0;

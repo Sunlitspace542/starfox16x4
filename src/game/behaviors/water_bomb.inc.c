@@ -166,7 +166,7 @@ static void water_bomb_act_drop(void) {
 static void water_bomb_act_explode(void) {
     water_bomb_spawn_explode_particles(25, 60, 10);
     o->parentObj->oWaterBombSpawnerBombActive = FALSE;
-    obj_mark_for_deletion(o);
+    s_remove_obj(o);
 }
 
 static struct SpawnParticlesInfo sWaterBombCannonParticle = {
@@ -189,7 +189,7 @@ static struct SpawnParticlesInfo sWaterBombCannonParticle = {
  */
 static void water_bomb_act_shot_from_cannon(void) {
     if (o->oTimer > 100) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         if (o->oTimer < 7) {
             if (o->oTimer == 1) {
@@ -237,7 +237,7 @@ void bhv_water_bomb_update(void) {
  */
 void bhv_water_bomb_shadow_update(void) {
     if (o->parentObj->oAction == WATER_BOMB_ACT_EXPLODE) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         // TODO: What is happening here
         f32 bombHeight = o->parentObj->oPosY - o->parentObj->oFloorHeight;

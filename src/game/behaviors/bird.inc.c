@@ -63,7 +63,7 @@ static void bird_act_fly(void) {
     // is itself. In other words, when a group of birds has its spawner bird
     // fly past Y=8000, they will all despawn simultaneously. Otherwise, fly.
     if (o->parentObj->oPosY > 8000.0f) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         // If the bird is a spawner bird, fly towards its home; otherwise,
         // fly towards the bird's spawner bird.

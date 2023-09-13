@@ -9,8 +9,10 @@ I noticed that for SM64, Nintendo decided to reuse the Strategy and PATH macros/
 Seeing that similarity i lost my mind for probably the 12th time and thought "Hey, I should try porting Star Fox to the N64! That'll be fun, right?" and now I'm here. ~ Sunlit  
 
 
-# Things that will need to be done
-- Turn Mario into an arwing  
-- Strip game down to just the engine (remove all unnecessary objs, behaviors, etc.)  
+# TODO
+- Strip Mario's behaviors down to only what is needed for the game to still work  
+- get PSTRATS up and running  
+- Rename all obj_helper and bhv macros to their PATH and STRAT equivalents  
+- Remove all objects/behaviors/models (clean slate)  
 - Figure out how i'm going to handle music/sounds  
 - Start porting strats/paths/models  

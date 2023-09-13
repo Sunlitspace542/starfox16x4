@@ -235,12 +235,12 @@ void bhv_fish_loop(void) {
 #ifdef ENABLE_VANILLA_LEVEL_SPECIFIC_CHECKS //! TODO: Make this a param
     // Delete fish if it's drifted to an area with no water.
     if (gCurrLevelNum != LEVEL_UNKNOWN_32 && o->oFishWaterLevel < FLOOR_LOWER_LIMIT_MISC) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         return;
     }
 #else
     if (o->oFishWaterLevel < FLOOR_LOWER_LIMIT_MISC) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         return;
     }
 #endif
@@ -251,6 +251,6 @@ void bhv_fish_loop(void) {
 
     // If the parent object has action set to two, then delete the fish object.
     if (o->parentObj->oAction == FISH_SPAWNER_ACT_RESPAWN) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }

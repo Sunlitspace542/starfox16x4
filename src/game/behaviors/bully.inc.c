@@ -343,7 +343,7 @@ void bhv_big_bully_with_minions_loop(void) {
             }
 
             o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
-            cur_obj_become_tangible();
+            s_hitON();
             break;
 
         case OBJ_ACT_LAVA_DEATH:

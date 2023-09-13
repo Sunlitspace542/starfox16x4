@@ -79,7 +79,7 @@ void bhv_treasure_chest_bottom_loop(void) {
                     o->parentObj->oTreasureChestNumOpenedChests = 1;
                     o->parentObj->oTreasureChestDoCloseChests = TRUE;
                     o->oAction = TREASURE_CHEST_BOTTOM_ACT_OPENED;
-                    cur_obj_become_tangible();
+                    s_hitON();
                     play_sound(SOUND_MENU_CAMERA_BUZZ, gGlobalSoundSource);
                 }
             }

@@ -36,7 +36,7 @@ s32 bhv_coin_sparkles_init(void) {
     if (o->oInteractStatus & INT_STATUS_INTERACTED
         && !(o->oInteractStatus & INT_STATUS_TOUCHED_BOB_OMB)) {
         spawn_object(o, MODEL_SPARKLES, bhvCoinSparklesSpawner);
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         return TRUE;
     }
 
@@ -65,7 +65,7 @@ void bhv_yellow_coin_init(void) {
     }
 
     if (o->oFloorHeight < FLOOR_LOWER_LIMIT_MISC) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
@@ -78,7 +78,7 @@ void bhv_temp_coin_loop(void) {
     o->oAnimState++;
 
     if (cur_obj_wait_then_blink(200, 20)) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     bhv_coin_sparkles_init();
@@ -119,18 +119,18 @@ void bhv_coin_loop(void) {
     }
 
     if (o->oVelY < 0) {
-        cur_obj_become_tangible();
+        s_hitON();
     }
 
     if (o->oMoveFlags & OBJ_MOVE_LANDED) {
 #ifdef COIN_LAVA_FLICKER
         if ((o->oMoveFlags & OBJ_MOVE_ABOVE_DEATH_BARRIER)
         || ((o->oMoveFlags & OBJ_MOVE_ABOVE_LAVA) && cur_obj_wait_then_blink(0, 20))) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         }
 #else
         if (o->oMoveFlags & (OBJ_MOVE_ABOVE_DEATH_BARRIER | OBJ_MOVE_ABOVE_LAVA)) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         }
 #endif
     }
@@ -143,7 +143,7 @@ void bhv_coin_loop(void) {
     }
 
     if (cur_obj_wait_then_blink(400, 20)) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     bhv_coin_sparkles_init();
@@ -158,7 +158,7 @@ void bhv_coin_formation_spawned_coin_loop(void) {
             cur_obj_update_floor_height();
 
             if (o->oPosY + FIND_FLOOR_BUFFER < o->oFloorHeight || o->oFloorHeight < FLOOR_LOWER_LIMIT_MISC) {
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             } else {
                 o->oPosY = o->oFloorHeight;
             }
@@ -176,7 +176,7 @@ void bhv_coin_formation_spawned_coin_loop(void) {
         o->oAnimState++;
     }
     if (o->parentObj->oAction == COIN_FORMATION_ACT_DEACTIVATE) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
@@ -264,7 +264,7 @@ void coin_inside_boo_act_dropped(void) {
 
     if (o->oTimer > 90 || o->oMoveFlags & OBJ_MOVE_LANDED) {
         obj_set_hitbox(o, &sYellowCoinHitbox);
-        cur_obj_become_tangible();
+        s_hitON();
         cur_obj_set_behavior(bhvYellowCoin);
     }
 
@@ -276,7 +276,7 @@ void coin_inside_boo_act_dropped(void) {
     }
 
     if (cur_obj_wait_then_blink(400, 20)) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 

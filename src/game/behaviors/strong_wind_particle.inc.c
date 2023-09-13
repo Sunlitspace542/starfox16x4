@@ -32,7 +32,7 @@ void bhv_strong_wind_particle_loop(void) {
 
     cur_obj_move_using_fvel_and_gravity();
     if (o->oTimer > 15) { // Deactivate after 15 frames
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     // If collided with the SL walking penguin, deactivate.
@@ -42,7 +42,7 @@ void bhv_strong_wind_particle_loop(void) {
         penguinZDist = penguinObj->oSLWalkingPenguinWindCollisionZPos - o->oPosZ;
         distanceFromPenguin = sqrtf(penguinXDist * penguinXDist + penguinZDist * penguinZDist);
         if (distanceFromPenguin < 300.0f) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
             cur_obj_become_intangible();
         }
     }

@@ -11,7 +11,7 @@ void bhv_white_puff_1_loop(void) {
     cur_obj_move_using_fvel_and_gravity();
 
     if (o->oTimer > 4) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 

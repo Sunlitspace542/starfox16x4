@@ -23,7 +23,7 @@ void bhv_unused_poundable_platform(void) {
             o->oAction++;
         }
     } else if (o->oTimer > 7) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     load_object_collision_model();

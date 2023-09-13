@@ -914,22 +914,22 @@ void return_to_main_menu(s16 prevMenuButtonID, struct Object *sourceButton) {
         // Hide buttons of corresponding button menu groups
         if (prevMenuButtonID == MENU_BUTTON_SCORE) {
             for (buttonID = MENU_BUTTON_SCORE_MIN; buttonID < MENU_BUTTON_SCORE_MAX; buttonID++) {
-                obj_mark_for_deletion(sMainMenuButtons[buttonID]);
+                s_remove_obj(sMainMenuButtons[buttonID]);
             }
         }
         if (prevMenuButtonID == MENU_BUTTON_COPY) {
             for (buttonID = MENU_BUTTON_COPY_MIN; buttonID < MENU_BUTTON_COPY_MAX; buttonID++) {
-                obj_mark_for_deletion(sMainMenuButtons[buttonID]);
+                s_remove_obj(sMainMenuButtons[buttonID]);
             }
         }
         if (prevMenuButtonID == MENU_BUTTON_ERASE) {
             for (buttonID = MENU_BUTTON_ERASE_MIN; buttonID < MENU_BUTTON_ERASE_MAX; buttonID++) {
-                obj_mark_for_deletion(sMainMenuButtons[buttonID]);
+                s_remove_obj(sMainMenuButtons[buttonID]);
             }
         }
         if (prevMenuButtonID == MENU_BUTTON_SOUND_MODE) {
             for (buttonID = MENU_BUTTON_OPTION_MIN; buttonID < MENU_BUTTON_OPTION_MAX; buttonID++) {
-                obj_mark_for_deletion(sMainMenuButtons[buttonID]);
+                s_remove_obj(sMainMenuButtons[buttonID]);
             }
         }
     }
@@ -950,17 +950,17 @@ void load_menu_from_submenu(s16 prevMenuButtonID, s16 selectedButtonID, struct O
         // Hide buttons of corresponding button menu groups
         if ((selectedButtonID != MENU_BUTTON_SCORE) && (prevMenuButtonID == MENU_BUTTON_SCORE)) {
             for (buttonID = MENU_BUTTON_SCORE_MIN; buttonID < MENU_BUTTON_SCORE_MAX; buttonID++) {
-                obj_mark_for_deletion(sMainMenuButtons[buttonID]);
+                s_remove_obj(sMainMenuButtons[buttonID]);
             }
         }
         if ((selectedButtonID != MENU_BUTTON_ERASE) && (prevMenuButtonID == MENU_BUTTON_COPY)) {
             for (buttonID = MENU_BUTTON_COPY_MIN; buttonID < MENU_BUTTON_COPY_MAX; buttonID++) {
-                obj_mark_for_deletion(sMainMenuButtons[buttonID]);
+                s_remove_obj(sMainMenuButtons[buttonID]);
             }
         }
         if ((selectedButtonID != MENU_BUTTON_ERASE) && (prevMenuButtonID == MENU_BUTTON_ERASE)) {
             for (buttonID = MENU_BUTTON_ERASE_MIN; buttonID < MENU_BUTTON_ERASE_MAX; buttonID++) {
-                obj_mark_for_deletion(sMainMenuButtons[buttonID]);
+                s_remove_obj(sMainMenuButtons[buttonID]);
             }
         }
         // Play zoom in sound, select score menu and render it's buttons

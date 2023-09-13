@@ -19,11 +19,11 @@ void bhv_orange_number_loop(void) {
         if (o->oTimer == 35) {
             struct Object *sparkleObj = spawn_object(o, MODEL_SPARKLES, bhvCoinSparklesSpawner);
             sparkleObj->oPosY -= 30.0f;
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         }
 #ifdef DIALOG_INDICATOR
     } else if (o->oTimer >= 1 || gMarioState->action == ACT_READING_SIGN) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 #endif
 }

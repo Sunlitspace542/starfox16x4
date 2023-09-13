@@ -41,7 +41,7 @@ struct ExclamationBoxContents sExclamationBoxContents[] = {
 
 void bhv_rotating_exclamation_mark_loop(void) {
     if (o->parentObj->oAction != EXCLAMATION_BOX_ACT_OUTLINE) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
@@ -82,7 +82,7 @@ void exclamation_box_act_active(void) {
     obj_set_hitbox(o, &sExclamationBoxHitbox);
     if (o->oTimer == 0) {
         cur_obj_unhide();
-        cur_obj_become_tangible();
+        s_hitON();
         o->oInteractStatus = INT_STATUS_NONE;
         o->oPosY = o->oHomeY;
         o->oGraphYOffset = 0.0f;
@@ -147,7 +147,7 @@ void exclamation_box_act_explode(void) {
         o->oAction = EXCLAMATION_BOX_ACT_WAIT_FOR_RESPAWN;
         cur_obj_hide();
     } else {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 

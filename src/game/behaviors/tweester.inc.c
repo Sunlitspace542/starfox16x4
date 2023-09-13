@@ -45,7 +45,7 @@ void tweester_scale_and_move(f32 preScale) {
  */
 void tweester_act_idle(void) {
     if (o->oSubAction == TWEESTER_SUB_ACT_WAIT) {
-        cur_obj_become_tangible();
+        s_hitON();
         cur_obj_set_pos_to_home();
         cur_obj_scale(0.0f);
 
@@ -165,6 +165,6 @@ void bhv_tweester_sand_particle_loop(void) {
     }
 
     if (o->oTimer > 15) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }

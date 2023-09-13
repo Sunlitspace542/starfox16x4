@@ -251,7 +251,7 @@ void whomp_die(void) {
         spawn_triangle_break_particles(20, MODEL_DIRT_ANIMATION, 3.0f, 4);
         cur_obj_shake_screen(SHAKE_POS_SMALL);
         create_sound_spawner(SOUND_OBJ_THWOMP);
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 

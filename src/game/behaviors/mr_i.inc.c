@@ -28,14 +28,14 @@ void mr_i_piranha_particle_act_move(void) {
         o->oAction = MR_I_PIRANHA_PARTICLE_ACT_INTERACTED;
     } else if ((o->oTimer > 100) || (o->oMoveFlags & OBJ_MOVE_HIT_WALL)
                || (o->activeFlags & ACTIVE_FLAG_IN_DIFFERENT_ROOM)) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         spawn_mist_particles();
     }
 }
 
 void mr_i_piranha_particle_act_interacted(void) {
     s32 i;
-    obj_mark_for_deletion(o);
+    s_remove_obj(o);
     for (i = 0; i < 10; i++) {
         spawn_object(o, MODEL_PURPLE_MARBLE, bhvPurpleParticle);
     }
@@ -89,7 +89,7 @@ void bhv_mr_i_iris_loop(void) {
     }
 
     if (o->parentObj->activeFlags == ACTIVE_FLAG_DEACTIVATED) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
@@ -131,7 +131,7 @@ void mr_i_body_act_spin_death(void) {
             if (o->oBehParams2ndByte != MR_I_BP_NORMAL) {
                 o->oPosY += 100.0f;
                 spawn_default_star(1370, 2000.0f, -320.0f);
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             } else {
                 cur_obj_spawn_loot_blue_coin();
             }
@@ -145,7 +145,7 @@ void mr_i_body_act_spin_death(void) {
 
         cur_obj_scale(o->oMrIScale);
     } else {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
@@ -228,7 +228,7 @@ void mr_i_body_act_idle(void) {
     s16 angleDiffMoveYawToMarioFaceYaw = abs_angle_diff(o->oMoveAngleYaw, gMarioObject->oFaceAngleYaw);
 
     if (o->oTimer == 0) {
-        cur_obj_become_tangible();
+        s_hitON();
         o->oMoveAnglePitch = 0;
         o->oMrIParticleTimer = 30;
         o->oMrIParticleTimerTarget = random_float() * 20.0f;

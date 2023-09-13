@@ -30,7 +30,7 @@ void bhv_wind_loop(void) {
     }
 
     if (o->oTimer > 8) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     o->oFaceAnglePitch += 4000.0f + 2000.0f * random_float();

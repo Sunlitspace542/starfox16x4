@@ -2,7 +2,7 @@
 
 void bhv_bubble_cannon_barrel_loop(void) {
     if (o->parentObj->oAction == 2) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         o->oMoveAngleYaw = o->parentObj->oFaceAngleYaw;
         o->oMoveAnglePitch = o->parentObj->oMoveAnglePitch + 0x4000;

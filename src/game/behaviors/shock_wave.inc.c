@@ -25,7 +25,7 @@ void bhv_bowser_shock_wave_loop(void) {
     }
     // Delete object when it's fully transparent
     if (o->oOpacity <= 0) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
     // If object times is less than 70 frame and Mario is not in the air...
     if (o->oTimer < fadeFrames && !mario_is_in_air_action()) {

@@ -209,7 +209,7 @@ void bookshelf_manager_act_3(void) {
 
 void bookshelf_manager_act_4(void) {
     if (o->oBookSwitchManagerNumCorrectChoices >= 3) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         o->oAction = 0;
     }
@@ -240,13 +240,13 @@ void bhv_book_switch_loop(void) {
     o->header.gfx.scale[1] = 0.9f;
 
     if (o->parentObj->oAction == 4) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         s32 attackType = obj_check_attacks(&sBookSwitchHitbox, o->oAction);
 
         if (o->parentObj->oBookSwitchManagerIsActive != 0 || o->oAction == 1) {
             if (o->oDistanceToMario < 100.0f) {
-                cur_obj_become_tangible();
+                s_hitON();
             } else {
                 cur_obj_become_intangible();
             }

@@ -6,7 +6,7 @@ void bhv_lll_rotating_hex_flame_loop(void) {
     o->oPosY = o->parentObj->oPosY + 100.0f;
 
     if (o->parentObj->oAction == LLL_FIRE_BAR_ACT_REMOVE_FLAMES) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 

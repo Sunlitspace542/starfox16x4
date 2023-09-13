@@ -39,7 +39,7 @@ void bhv_hidden_blue_coin_loop(void) {
         case HIDDEN_BLUE_COIN_ACT_ACTIVE:
             // Become tangible
             cur_obj_enable_rendering();
-            cur_obj_become_tangible();
+            s_hitON();
 #ifdef BLUE_COIN_SWITCH_RETRY
             o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
 #endif
@@ -47,7 +47,7 @@ void bhv_hidden_blue_coin_loop(void) {
             // Delete the coin once collected
             if (o->oInteractStatus & INT_STATUS_INTERACTED) {
                 spawn_object(o, MODEL_SPARKLES, bhvCoinSparklesSpawner);
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             }
 
             // After 200 frames of waiting and 20 2-frame blinks (for 240 frames total),
@@ -56,7 +56,7 @@ void bhv_hidden_blue_coin_loop(void) {
 #ifdef BLUE_COIN_SWITCH_RETRY
                 o->oAction = HIDDEN_BLUE_COIN_ACT_INACTIVE;
 #else
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
 #endif
             }
 
@@ -142,7 +142,7 @@ void bhv_blue_coin_switch_loop(void) {
 #ifdef BLUE_COIN_SWITCH_RETRY
             if (cur_obj_nearest_object_with_behavior(bhvHiddenBlueCoin) == NULL) {
                 spawn_mist_particles_variable(0, 0, 46.0f);
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             // Set to BLUE_COIN_SWITCH_ACT_EXTENDING after the coins unload after the 240-frame timer expires.
             } else if (o->oTimer > 240) {
                 o->oAction  = BLUE_COIN_SWITCH_ACT_EXTENDING;
@@ -165,7 +165,7 @@ void bhv_blue_coin_switch_loop(void) {
             // Delete the switch (which stops the sound) after the last coin is collected,
             // or after the coins unload after the 240-frame timer expires.
             if ((cur_obj_nearest_object_with_behavior(bhvHiddenBlueCoin) == NULL) || (o->oTimer > 240)) {
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             }
 #endif
             break;

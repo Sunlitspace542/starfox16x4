@@ -84,7 +84,7 @@ void bhv_courtyard_boo_triplet_init(void) {
     s32 i;
 #ifndef UNLOCK_ALL
     if (gHudDisplay.stars < SPAWN_CASTLE_BOO_STAR_REQUIREMENT) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else
 #endif
     {
@@ -230,7 +230,7 @@ static s32 boo_update_after_bounced_on(f32 a0) {
     if (o->oTimer < 32) {
         boo_move_during_hit(FALSE, sBooHitRotations[o->oTimer] / 5000.0f * a0);
     } else {
-        cur_obj_become_tangible();
+        s_hitON();
         boo_reset_after_hit();
         o->oAction = 1;
 
@@ -253,7 +253,7 @@ static s32 big_boo_update_during_nonlethal_hit(f32 a0) {
     } else if (o->oTimer < 48) {
         big_boo_shake_after_hit();
     } else {
-        cur_obj_become_tangible();
+        s_hitON();
         boo_reset_after_hit();
         o->oAction = 1;
 
@@ -438,7 +438,7 @@ static void boo_act_2(void) {
 static void boo_act_3(void) {
     if (boo_update_during_death()) {
         if (o->oBehParams2ndByte != 0) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         } else {
             o->oAction = 4;
             cur_obj_disable();
@@ -459,7 +459,7 @@ static void boo_act_4(void) {
 
     if (cur_obj_update_dialog(MARIO_DIALOG_LOOK_UP, DIALOG_FLAG_TEXT_DEFAULT, dialogID, 0)) {
         create_sound_spawner(SOUND_OBJ_DYING_ENEMY1);
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
 
         if (dialogID == DIALOG_108) { // If the Big Boo should spawn, play the jingle
             play_puzzle_jingle();
@@ -515,7 +515,7 @@ static void big_boo_act_0(void) {
         o->oHealth = 3;
 
         cur_obj_scale(3.0f);
-        cur_obj_become_tangible();
+        s_hitON();
     } else {
         cur_obj_hide();
         cur_obj_become_intangible();
@@ -630,10 +630,10 @@ static void big_boo_act_4(void) {
             spawn_object_relative(1, 0, 0, -200, o, MODEL_BBH_STAIRCASE_STEP, bhvBooStaircase);
             spawn_object_relative(2, 0, 0,  200, o, MODEL_BBH_STAIRCASE_STEP, bhvBooStaircase);
 
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         }
     } else {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
@@ -666,7 +666,7 @@ static void boo_with_cage_act_0(void) {
     o->oBooBaseScale = 2.0f;
 
     cur_obj_scale(2.0f);
-    cur_obj_become_tangible();
+    s_hitON();
 
     if (boo_should_be_active()) {
         o->oAction = 1;
@@ -701,14 +701,14 @@ static void boo_with_cage_act_2(void) {
 
 static void boo_with_cage_act_3(void) {
     if (boo_update_during_death()) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
 void bhv_boo_with_cage_init(void) {
 #ifndef UNLOCK_ALL
     if (gHudDisplay.stars < SPAWN_CASTLE_BOO_STAR_REQUIREMENT) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else
 #endif
     {
@@ -792,7 +792,7 @@ void bhv_boo_in_castle_loop(void) {
         cur_obj_hide();
 #ifndef UNLOCK_ALL
         if (gHudDisplay.stars < SPAWN_CASTLE_BOO_STAR_REQUIREMENT) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         }
 #endif
         if (gMarioCurrentRoom == 1) {

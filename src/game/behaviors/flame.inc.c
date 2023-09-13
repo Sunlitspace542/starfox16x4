@@ -3,7 +3,7 @@
 void bhv_moving_flame_loop(void) {
     if (GET_BPARAM2(o->oBehParams) == MOVING_FLAME_BP_1FRAME) {
         if (o->oTimer > 0) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         } else {
             f32 rnd = random_float() - 0.5f;
 
@@ -47,7 +47,7 @@ void bhv_moving_flame_particle_loop(void) {
     cur_obj_move_using_fvel_and_gravity();
 
     if (approach_f32_ptr(&o->header.gfx.scale[0], 0.0f, 0.6f)) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     cur_obj_scale(o->header.gfx.scale[0]);

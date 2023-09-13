@@ -12,11 +12,11 @@ void bhv_unused_particle_spawn_loop(void) {
     cur_obj_move_standard(78);
 
     if (o->oMoveFlags & OBJ_MOVE_ON_GROUND) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     if (obj_check_if_collided_with_object(o, gMarioObject)) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
 
         for (i = 0; i < 10; i++) {
             spawn_object(o, MODEL_PURPLE_MARBLE, bhvPurpleParticle);

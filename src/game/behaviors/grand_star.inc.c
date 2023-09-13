@@ -68,10 +68,10 @@ void bhv_grand_star_loop(void) {
 
         spawn_sparkle_particles(3, 200, 80, -60);
     } else {
-        cur_obj_become_tangible();
+        s_hitON();
 
         if (o->oInteractStatus & INT_STATUS_INTERACTED) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
             o->oInteractStatus = INT_STATUS_NONE;
         }
     }

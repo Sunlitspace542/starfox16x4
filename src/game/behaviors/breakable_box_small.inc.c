@@ -92,7 +92,7 @@ void breakable_box_small_idle_loop(void) {
 }
 
 void breakable_box_small_get_dropped(void) {
-    cur_obj_become_tangible();
+    s_hitON();
     cur_obj_enable_rendering();
     cur_obj_get_dropped();
     o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
@@ -102,7 +102,7 @@ void breakable_box_small_get_dropped(void) {
 }
 
 void breakable_box_small_get_thrown(void) {
-    cur_obj_become_tangible();
+    s_hitON();
 
     cur_obj_enable_rendering();
     o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;

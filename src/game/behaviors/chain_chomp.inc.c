@@ -34,7 +34,7 @@ static struct ObjectHitbox sChainChompHitbox = {
  */
 void bhv_chain_chomp_chain_part_update(void) {
     if (o->parentObj->oAction == CHAIN_CHOMP_ACT_UNLOAD_CHAIN) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else if (o->oBehParams2ndByte != CHAIN_CHOMP_CHAIN_PART_BP_PIVOT) {
         struct ChainSegment *segment = &o->parentObj->oChainChompSegments[o->oBehParams2ndByte];
 
@@ -408,7 +408,7 @@ static void chain_chomp_act_unload_chain(void) {
     o->oAction = CHAIN_CHOMP_ACT_UNINITIALIZED;
 
     if (o->oChainChompReleaseStatus != CHAIN_CHOMP_NOT_RELEASED) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
@@ -489,7 +489,7 @@ void bhv_chain_chomp_gate_update(void) {
         set_camera_shake_from_point(SHAKE_POS_SMALL, o->oPosX, o->oPosY, o->oPosZ);
         spawn_mist_particles_variable(0, 0x7F, 200.0f);
         spawn_triangle_break_particles(30, MODEL_DIRT_ANIMATION, 3.0f, 4);
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 

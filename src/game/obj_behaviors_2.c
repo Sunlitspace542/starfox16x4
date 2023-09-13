@@ -486,7 +486,7 @@ static void obj_die_if_health_non_positive(void) {
             cur_obj_hide();
             cur_obj_become_intangible();
         } else {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         }
     }
 }

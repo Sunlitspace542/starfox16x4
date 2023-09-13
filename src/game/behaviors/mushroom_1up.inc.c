@@ -99,7 +99,7 @@ void bhv_1up_walking_loop(void) {
             one_up_loop_in_air();
 
             if (o->oTimer == 37) {
-                cur_obj_become_tangible();
+                s_hitON();
                 o->oAction = MUSHROOM_ACT_MOVING;
                 o->oForwardVel = 2.0f;
             }
@@ -138,7 +138,7 @@ void bhv_1up_running_away_loop(void) {
             one_up_loop_in_air();
 
             if (o->oTimer == 37) {
-                cur_obj_become_tangible();
+                s_hitON();
                 o->oAction = MUSHROOM_ACT_MOVING;
                 o->oForwardVel = 8.0f;
             }
@@ -267,7 +267,7 @@ void bhv_1up_hidden_loop(void) {
             one_up_loop_in_air();
 
             if (o->oTimer == 37) {
-                cur_obj_become_tangible();
+                s_hitON();
                 o->oAction = MUSHROOM_ACT_MOVING;
                 o->oForwardVel = 8.0f;
             }
@@ -312,7 +312,7 @@ void bhv_1up_hidden_in_pole_loop(void) {
             one_up_loop_in_air();
 
             if (o->oTimer == 37) {
-                cur_obj_become_tangible();
+                s_hitON();
                 o->oAction = MUSHROOM_ACT_MOVING;
                 o->oForwardVel = 10.0f;
             }

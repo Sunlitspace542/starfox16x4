@@ -26,7 +26,7 @@ void common_anchor_mario_behavior(f32 forwardVel, f32 yVel, s32 flag) {
 
     o->oMoveAngleYaw = o->parentObj->oMoveAngleYaw;
     if (o->parentObj->activeFlags == ACTIVE_FLAG_DEACTIVATED) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
@@ -150,7 +150,7 @@ void chuckya_act_3(void) {
 
 void chuckya_act_2(void) {
     if (o->oMoveFlags & (OBJ_MOVE_HIT_WALL | OBJ_MOVE_MASK_IN_WATER | OBJ_MOVE_LANDED)) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         obj_spawn_loot_yellow_coins(o, 5, 20.0f);
         spawn_mist_particles_with_sound(SOUND_OBJ_CHUCKYA_DEATH);
     }

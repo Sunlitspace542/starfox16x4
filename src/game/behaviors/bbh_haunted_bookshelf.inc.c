@@ -34,7 +34,7 @@ void bhv_haunted_bookshelf_loop(void) {
 
             // Delete the object after 102 frames
             if (o->oTimer > 101) {
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             }
 
             break;

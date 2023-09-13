@@ -159,7 +159,7 @@ void bhv_skeeter_update(void) {
 
 void bhv_skeeter_wave_update(void) {
     if (approach_f32_ptr(&o->header.gfx.scale[0], 0.0f, 0.3f)) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     cur_obj_scale(o->header.gfx.scale[0]);

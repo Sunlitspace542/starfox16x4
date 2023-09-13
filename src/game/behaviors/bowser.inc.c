@@ -12,7 +12,7 @@
  */
 void bowser_tail_anchor_act_default(void) {
     struct Object *bowser = o->parentObj;
-    cur_obj_become_tangible();
+    s_hitON();
     cur_obj_scale(1.0f);
 
     if (bowser->oAction == BOWSER_ACT_TILT_LAVA_PLATFORM) {
@@ -139,7 +139,7 @@ void bhv_bowser_body_anchor_loop(void) {
         if (o->parentObj->oOpacity < 100) {
             cur_obj_become_intangible();
         } else {
-            cur_obj_become_tangible();
+            s_hitON();
         }
     }
     // Make body intangible while Bowser is getting grabbed
@@ -572,7 +572,7 @@ void bowser_act_teleport(void) {
             if (o->oOpacity == 255) {
                 o->oAction = BOWSER_ACT_DEFAULT;
             }
-            cur_obj_become_tangible();
+            s_hitON();
             break;
     }
 }

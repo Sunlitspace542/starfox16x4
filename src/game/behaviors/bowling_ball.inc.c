@@ -272,7 +272,7 @@ void bhv_free_bowling_ball_loop(void) {
             if (is_point_within_radius_of_mario(o->oPosX, o->oPosY, o->oPosZ, 3000)) {
                 o->oAction = FREE_BBALL_ACT_ROLL;
                 o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
-                cur_obj_become_tangible();
+                s_hitON();
             }
             break;
 

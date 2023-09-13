@@ -40,7 +40,7 @@ void bhv_koopa_shell_flame_loop(void) {
     cur_obj_move_using_fvel_and_gravity();
 
     if (o->oFloorHeight > o->oPosY || o->oTimer > 10) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     o->oKoopaShellFlameScale -= 0.3f;
@@ -99,7 +99,7 @@ void bhv_koopa_shell_loop(void) {
             o->oFaceAngleYaw = gMarioObject->oMoveAngleYaw;
 
             if (o->oInteractStatus & INT_STATUS_STOP_RIDING) {
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
                 spawn_mist_particles();
                 o->oAction = KOOPA_SHELL_ACT_MARIO_NOT_RIDING;
             }

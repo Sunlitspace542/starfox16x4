@@ -41,7 +41,7 @@ void bhv_flamethrower_flame_loop(void) {
     }
 
     if (o->oTimer > remainingTime) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     o->oInteractStatus = INT_STATUS_NONE;

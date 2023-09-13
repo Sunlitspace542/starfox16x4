@@ -57,7 +57,7 @@ void bhv_tumbling_bridge_platform_loop(void) {
     }
 
     if (o->parentObj->oAction == 3) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 

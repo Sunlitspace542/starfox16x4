@@ -53,7 +53,7 @@ void bhv_intro_peach_loop(void) {
             intro_peach_set_pos_and_opacity(o, 0.0f, 8.0f);
 
             if (o->oTimer > 60) {
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             }
             break;
     }

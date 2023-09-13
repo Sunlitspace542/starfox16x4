@@ -97,7 +97,7 @@ static void mr_blizzard_act_hide_unhide(void) {
 
         mr_blizzard_spawn_white_particles(8, -10, 15, 20, 10);
         cur_obj_unhide();
-        cur_obj_become_tangible();
+        s_hitON();
     } else {
         // If Mario is not in range, make Mr. Blizzard invisible.
         cur_obj_hide();
@@ -437,7 +437,7 @@ static void mr_blizzard_snowball_act_2(void) {
     if (o->oAction == -1 || o->oMoveFlags & (OBJ_MOVE_MASK_ON_GROUND | OBJ_MOVE_ENTERED_WATER)) {
         mr_blizzard_spawn_white_particles(6, 0, 5, 10, 3);
         create_sound_spawner(SOUND_GENERAL_MOVING_IN_SAND);
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     cur_obj_move_standard(78);

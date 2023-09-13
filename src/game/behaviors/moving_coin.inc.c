@@ -68,7 +68,7 @@ void bhv_moving_yellow_coin_loop(void) {
             if (o->oTimer < 10) {
                 cur_obj_become_intangible();
             } else {
-                cur_obj_become_tangible();
+                s_hitON();
             }
 
             if (o->oTimer > 300) {
@@ -84,12 +84,12 @@ void bhv_moving_yellow_coin_loop(void) {
 #ifdef COIN_LAVA_FLICKER
             moving_coin_flicker();
 #else
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
 #endif
             break;
 
         case OBJ_ACT_DEATH_PLANE_DEATH:
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
             break;
     }
 
@@ -223,12 +223,12 @@ void bhv_blue_coin_sliding_loop(void) {
 #ifdef COIN_LAVA_FLICKER
             o->oAction = MOV_BCOIN_ACT_FLICKERING;
 #else
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
 #endif
             break;
 
         case OBJ_ACT_DEATH_PLANE_DEATH:
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
             break;
     }
 
@@ -251,7 +251,7 @@ void bhv_blue_coin_jumping_loop(void) {
             object_step();
 
             if (o->oTimer == 15) {
-                cur_obj_become_tangible();
+                s_hitON();
                 o->oAction = MOV_BCOIN_ACT_MOVING;
             }
             break;

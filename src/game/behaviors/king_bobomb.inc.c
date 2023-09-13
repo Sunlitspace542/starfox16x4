@@ -46,7 +46,7 @@ s32 mario_is_far_below_object(f32 min) {
 }
 
 void king_bobomb_act_active(void) { // act 2
-    cur_obj_become_tangible();
+    s_hitON();
 
     if (o->oPosY - o->oHomeY < -100.0f) { // Thrown off hill
         o->oAction = KING_BOBOMB_ACT_RETURN_HOME;
@@ -166,7 +166,7 @@ void king_bobomb_act_hit_ground(void) { // act 6
 
             o->oInteractType = INTERACT_DAMAGE;
 
-            cur_obj_become_tangible();
+            s_hitON();
         }
 
         if (cur_obj_init_animation_and_check_if_near_end(KING_BOBOMB_ANIM_HIT_GROUND)) {

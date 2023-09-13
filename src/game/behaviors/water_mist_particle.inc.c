@@ -20,6 +20,6 @@ void bhv_water_mist_loop(void) {
     cur_obj_scale(scale);
 
     if (o->oOpacity < 2) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }

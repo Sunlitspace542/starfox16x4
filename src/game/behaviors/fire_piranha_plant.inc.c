@@ -109,7 +109,7 @@ static void fire_piranha_plant_act_grow(void) {
                           20.0f, 15.0f, 0x1000);
         }
     } else if (o->oFirePiranhaPlantScale > o->oFirePiranhaPlantNeutralScale / 2) {
-        cur_obj_become_tangible();
+        s_hitON();
     }
 }
 

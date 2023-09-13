@@ -174,8 +174,8 @@ void bhv_intro_lakitu_loop(void) {
             }
 
             if (o->oTimer == TIMER2) {
-                obj_mark_for_deletion(o);
-                obj_mark_for_deletion(o->oIntroLakituCloud);
+                s_remove_obj(o);
+                s_remove_obj(o->oIntroLakituCloud);
             }
 
             if (o->oTimer == 14) {

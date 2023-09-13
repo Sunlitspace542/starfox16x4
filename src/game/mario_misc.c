@@ -217,7 +217,7 @@ void bhv_toad_message_init(void) {
         o->oToadMessageState = TOAD_MESSAGE_FADED;
         o->oOpacity = 81;
     } else {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 
@@ -281,7 +281,7 @@ void bhv_unlock_door_star_loop(void) {
         case UNLOCK_DOOR_STAR_DONE: // The object stays loaded for an additional 50 frames so that the
                                     // sound doesn't immediately stop.
             if (o->oUnlockDoorStarTimer++ == 50) {
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             }
             break;
     }

@@ -56,7 +56,7 @@ static void triplet_butterfly_act_init(void) {
 
 static void triplet_butterfly_act_wander(void) {
     if (o->oDistanceToMario > 1500.0f) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         approach_f32_ptr(&o->oTripletButterflySpeed, 8.0f, 0.5f);
         if (o->oTimer < 60) {
@@ -100,7 +100,7 @@ static void triplet_butterfly_act_activate(void) {
             if (o->oTripletButterflyType != TRIPLET_BUTTERFLY_TYPE_EXPLODES) {
                 spawn_object(o, o->oTripletButterflyModel,
                              sTripletButterflyActivationData[o->oTripletButterflyType].behavior);
-                obj_mark_for_deletion(o);
+                s_remove_obj(o);
             } else {
                 o->oAction = TRIPLET_BUTTERFLY_ACT_EXPLODE;
                 o->oWallHitboxRadius = 100.0f;
@@ -122,7 +122,7 @@ static void triplet_butterfly_act_explode(void) {
     if (o->oAction == -1 || (o->oMoveFlags & OBJ_MOVE_HIT_WALL) || o->oTimer >= 158) {
         o->oPosY += o->oGraphYOffset;
         spawn_object(o, MODEL_EXPLOSION, bhvExplosion);
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         if (o->oTimer > 120) {
             f32 scaleIncrease = 0.04f * coss(o->oTripletButterflyScalePhase);

@@ -87,7 +87,7 @@ void falling_bowser_plat_act_fall(void) {
     cur_obj_move_using_fvel_and_gravity();
 
     if (o->oTimer > 300) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }
 

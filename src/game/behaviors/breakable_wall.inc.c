@@ -2,7 +2,7 @@
 
 void bhv_wf_breakable_wall_loop(void) {
     if (gMarioState->action == ACT_SHOT_FROM_CANNON) {
-        cur_obj_become_tangible();
+        s_hitON();
 
         if (obj_check_if_collided_with_object(o, gMarioObject)) {
             if (cur_obj_has_behavior(bhvWfBreakableWallRight)) {

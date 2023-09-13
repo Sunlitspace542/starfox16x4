@@ -139,7 +139,7 @@ static void cloud_act_main(void) {
  */
 static void cloud_act_unload(void) {
     if (o->oBehParams2ndByte != CLOUD_BP_FWOOSH) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         o->oAction = CLOUD_ACT_FWOOSH_HIDDEN;
         cur_obj_hide();
@@ -172,7 +172,7 @@ void bhv_cloud_update(void) {
  */
 void bhv_cloud_part_update(void) {
     if (o->parentObj->oAction == CLOUD_ACT_UNLOAD) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     } else {
         f32 scale = 2.0f / 3.0f * o->parentObj->header.gfx.scale[0];
         s16 angleFromCenter = o->parentObj->oFaceAngleYaw + 0x10000 / 5 * o->oBehParams2ndByte;

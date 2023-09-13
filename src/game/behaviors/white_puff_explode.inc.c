@@ -26,14 +26,14 @@ void bhv_white_puff_exploding_loop(void) {
     }
 
     if (o->oTimer > 20) {
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 
     if (o->oOpacity) {
         f32 scale;
         o->oOpacity += o->oWhitePuffOpacityDiff;
         if (o->oOpacity < 2) {
-            obj_mark_for_deletion(o);
+            s_remove_obj(o);
         }
         if (o->oWhitePuffSlowFade) {
             scale = o->oWhitePuffScaleX * ((254 - o->oOpacity) / 254.0f);

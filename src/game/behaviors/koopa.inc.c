@@ -383,7 +383,7 @@ static void koopa_unshelled_act_run(void) {
  */
 static void koopa_unshelled_act_dive(void) {
     if (o->oTimer > 10) {
-        cur_obj_become_tangible();
+        s_hitON();
     }
 
     if (o->oTimer > 10) {
@@ -405,7 +405,7 @@ static void koopa_unshelled_act_dive(void) {
             o->oForwardVel *= 0.5f;
 
             cur_obj_set_model(MODEL_KOOPA_WITH_SHELL);
-            obj_mark_for_deletion(shell);
+            s_remove_obj(shell);
             return;
         }
     }

@@ -6,6 +6,6 @@ void bhv_ccm_touched_star_spawn_loop(void) {
         o->oPosX = 2780.0f;
         o->oPosZ = 4666.0f;
         spawn_default_star(2500.0f, -4350.0f, 5750.0f);
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
     }
 }

@@ -41,7 +41,7 @@ static s32 spiny_check_active(void) {
         if (obj_has_behavior(o->parentObj, bhvEnemyLakitu)) {
             o->parentObj->oEnemyLakituNumSpinies--;
         }
-        obj_mark_for_deletion(o);
+        s_remove_obj(o);
         return FALSE;
     }
 
