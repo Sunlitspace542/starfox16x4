@@ -512,7 +512,7 @@ s32 act_reading_sign(struct MarioState *m) {
     return FALSE;
 }
 
-s32 act_debug_free_move(struct MarioState *m) {
+s32 act_debug_free_move(struct MarioState *m) { // ARWING ENTRYPOINT
     struct WallCollisionData wallData;
     struct Surface *floor, *ceil;
     Vec3f pos;
