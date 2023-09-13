@@ -512,6 +512,8 @@ s32 act_reading_sign(struct MarioState *m) {
     return FALSE;
 }
 
+#include "stratequ.h"
+
 s32 act_debug_free_move(struct MarioState *m) { // ARWING ENTRYPOINT
     struct WallCollisionData wallData;
     struct Surface *floor, *ceil;
@@ -524,17 +526,14 @@ s32 act_debug_free_move(struct MarioState *m) { // ARWING ENTRYPOINT
     set_mario_animation(m, MARIO_ANIM_A_POSE);
     vec3f_copy(pos, m->pos);
 
-    if (gPlayer1Controller->buttonDown & U_JPAD) {
-        pos[1] += 16.0f * speed;
-    }
-    if (gPlayer1Controller->buttonDown & D_JPAD) {
-        pos[1] -= 16.0f * speed;
+    if (!(gPlayer1Controller->buttonDown & (B_BUTTON | A_BUTTON))) {
+        pos[2] += medPspeed;
     }
 
     if (m->intendedMag > 0) {
         speed *= m->intendedMag * 2.0f;
         pos[0] += speed * sins(m->intendedYaw);
-        pos[2] += speed * coss(m->intendedYaw);
+        pos[0] += speed * coss(m->intendedYaw);
     }
 
     // TODO: Add ability to ignore collision
