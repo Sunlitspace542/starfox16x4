@@ -138,5 +138,6 @@ extern Vp sEndCutsceneVp;
 extern struct CreditsEntry *sDispCreditsEntry;
 void pstrats_update_shipflags(struct MarioState *m);
 void pstrats_update_turning(struct MarioState *m);
+void pstrats_update_pitch(struct MarioState *m);
 
 #endif // MARIO_ACTIONS_CUTSCENE_H

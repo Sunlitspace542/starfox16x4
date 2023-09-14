@@ -9,7 +9,7 @@
 // changes hardcoded modes to use c->defMode.
 //      Note: removes door cutscenes due to the way they're designed to work with specific modes.
 //      Search for FORCED_CAMERA_MODE in camera.c for more information.
-#define FORCED_CAMERA_MODE        CAMERA_MODE_8_DIRECTIONS
+#define FORCED_CAMERA_MODE        CAMERA_MODE_BEHIND_MARIO
 
 // Changes hardcoded camera mode reverting to instead use the area's default mode (defMode).
 // If you're using a FORCED_CAMERA_MODE, this must be on for it to work.

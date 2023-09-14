@@ -524,7 +524,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     struct Surface *floor, *ceil;
     Vec3f pos;
 
-    if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
+    //if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
 
     set_mario_animation(m, MARIO_ANIM_A_POSE);
     vec3f_copy(pos, m->pos);
@@ -548,17 +548,17 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     if (gPlayer1Controller->stickY > 0) {
-        pos[1] += 1.0f * medPspeed;
+        pos[1] += 1.0f * minPspeed;
     }
     if (gPlayer1Controller->stickY < 0) {
-        pos[1] -= 1.0f * medPspeed;
+        pos[1] -= 1.0f * minPspeed;
     }
 
     if (gPlayer1Controller->stickX < 0) {
-        pos[0] += 1.0f * medPspeed;
+        pos[0] += 1.0f * minPspeed;
     }
     if (gPlayer1Controller->stickX > 0) {
-        pos[0] -= 1.0f * medPspeed;
+        pos[0] -= 1.0f * minPspeed;
     }
 
     // WORLD.ASM
@@ -588,6 +588,7 @@ s32 act_debug_free_move(struct MarioState *m) {
 
     //m->faceAngle[1] = m->intendedYaw;
     pstrats_update_turning(m);
+    pstrats_update_pitch(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
 
@@ -611,6 +612,10 @@ void pstrats_update_turning(struct MarioState *m) {
 
         m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
         m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
+}
+
+void pstrats_update_pitch(struct MarioState *m) {
+
 }
 
 void pstrats_update_shipflags(struct MarioState *m) {
