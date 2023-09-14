@@ -37,7 +37,7 @@ const LevelScript level_dummy_entry[] = {
     AREA(/*index*/ 1, RCP_Stage35Scene1),
 
         TERRAIN(/*terrainData*/ dummy35_info),
-        SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0000, /*seq*/ SEQ_SOUND_PLAYER),
+        SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0003, /*seq*/ SEQ_SF_CONTROLS),
         TERRAIN_TYPE(/*terrainType*/ TERRAIN_GRASS),
 
     END_AREA(),

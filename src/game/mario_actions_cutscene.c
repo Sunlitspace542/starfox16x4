@@ -547,7 +547,7 @@ s32 act_debug_free_move(struct MarioState *m) {
         play_sound(SOUND_MOVING_TERRAIN_SLIDE, m->marioObj->header.gfx.cameraToObject);
     }
 
-    if (gPlayer1Controller->stickY > 0) {
+    if ((gPlayer1Controller->stickY > 0) && (pos[1] != 400)) {
         pos[1] += 1.0f * minPspeed;
     }
     if (gPlayer1Controller->stickY < 0) {
@@ -555,16 +555,26 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     if (gPlayer1Controller->stickX < 0) {
-        pos[0] += 1.0f * minPspeed;
+        pos[0] += 1.0f * medPspeed;
     }
+
     if (gPlayer1Controller->stickX > 0) {
-        pos[0] -= 1.0f * minPspeed;
+        pos[0] -= 1.0f * medPspeed;
     }
 
     // WORLD.ASM
     if (pos[2] > 4096) { // Loop pos at 4096
         pos[2] = 0;
+        zremove = 1;
     }
+
+    // firing.
+
+    
+    if (gPlayer1Controller->buttonPressed & Z_TRIG) {
+        spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
+    }
+
 
     // TODO: Add ability to ignore collision
     //      - spawn pseudo floor object to prevent OOB death

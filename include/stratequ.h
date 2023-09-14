@@ -370,3 +370,6 @@ int psf3_forcebrake = 0;
 int psf3_nocollisions = 8;
 int psf3_beamball = 16;
 
+// zremove
+int zremove = 0;
+
