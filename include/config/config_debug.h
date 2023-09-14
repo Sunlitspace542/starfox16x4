@@ -5,7 +5,7 @@
  ******************/
 
 // Enables most debug options, including PUPPYPRINT_DEBUG.
-#define DEBUG_ALL
+//#define DEBUG_ALL
 
 // Disables all debug options (except PUPPYPRINT).
 //#define DISABLE_ALL
@@ -27,7 +27,7 @@
 //#define ENABLE_DEBUG_FREE_MOVE
 
 // Enables a custom, enhanced performance profiler. (Enables PUPPYPRINT by default in config_safeguards).
-// #define PUPPYPRINT_DEBUG 1
+#define PUPPYPRINT_DEBUG 1
 
 // Uses cycles instead of microseconds in Puppyprint debug output.
 // #define PUPPYPRINT_DEBUG_CYCLES
@@ -48,7 +48,7 @@
 // #define COMPLETE_SAVE_FILE
 
 // Removes the limit on FPS.
-// #define UNLOCK_FPS
+//#define UNLOCK_FPS
 
 // Includes vanilla debug functionality.
 #define VANILLA_DEBUG

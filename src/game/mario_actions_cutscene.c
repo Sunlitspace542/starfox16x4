@@ -51,6 +51,164 @@ static s8 sPeachBlinkTimes[7] = { 2, 3, 2, 1, 2, 3, 2 };
 
 static u8 sStarsNeededForDialog[] = { 1, 3, 8, 30, 50, 70 };
 
+/*************************************************************************\
+*                                                                         *
+*                               Star Fox                                  *
+*                              -----------                                *
+*                                                                         *
+*                          Nintendo 64 version.                           *
+*                                                                         *
+*                                                                         *
+*                               16x4 team.           		              *
+*                                                                         *
+*_________________________________________________________________________*
+*                                                                         *
+*  File: mario_actions_cutscene.c                                         *
+*_________________________________________________________________________*
+*                                                                         *
+*  Descr: PLAYER'S STRATEGIES.                                            *
+*                                                                         *
+\*************************************************************************/
+
+//*******************************
+//*                             *
+//*  PLAYER MOVEMENT STRATEGY.  *
+//*                             *
+//*******************************
+#include "stratequ.h"
+
+s32 act_debug_free_move(struct MarioState *m) {
+    struct WallCollisionData wallData;
+    struct Surface *floor, *ceil;
+    Vec3f pos;
+
+    //if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
+
+    set_mario_animation(m, MARIO_ANIM_A_POSE);
+    vec3f_copy(pos, m->pos);
+    pstrats_update_shipflags(m);
+
+
+    // constantly move ship forward.
+    if (!(gPlayer1Controller->buttonDown & (B_BUTTON | A_BUTTON))) {
+        pos[2] += medPspeed;
+    }
+
+    // boosting and braking.
+    if (gPlayer1Controller->buttonDown & B_BUTTON) {
+        pos[2] += maxPspeed;
+        play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
+    }
+
+    if (gPlayer1Controller->buttonDown & A_BUTTON) { 
+        pos[2] += minPspeed;
+        play_sound(SOUND_MOVING_TERRAIN_SLIDE, m->marioObj->header.gfx.cameraToObject);
+    }
+
+
+    // we're flying a plane thing here, so let's make the flight controls make sense.
+    if ((gPlayer1Controller->stickY < 0) && (pos[1] != 400)) {
+        pos[1] += 1.0f * minPspeed;
+    }
+    if (gPlayer1Controller->stickY > 0) {
+        pos[1] -= 1.0f * minPspeed;
+    }
+
+    if (gPlayer1Controller->stickX < 0) {
+        pos[0] += 1.0f * medPspeed;
+    }
+
+    if (gPlayer1Controller->stickX > 0) {
+        pos[0] -= 1.0f * medPspeed;
+    }
+
+    // WORLD.ASM
+    if (pos[2] > 4096) { // Loop pos at 4096
+        pos[2] = 0;
+        zremove = 1;
+    }
+
+    // firing.
+    if (gPlayer1Controller->buttonPressed & Z_TRIG) {
+        spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
+    }
+
+
+    // TODO: Add ability to ignore collision
+    //      - spawn pseudo floor object to prevent OOB death
+    resolve_and_return_wall_collisions(pos, 60.0f, 50.0f, &wallData);
+
+    set_mario_wall(m, ((wallData.numWalls > 0) ? wallData.walls[0] : NULL));
+    f32 floorHeight = find_floor(pos[0], pos[1], pos[2], &floor);
+    f32 ceilHeight = find_mario_ceil(pos, floorHeight, &ceil);
+
+    if (floor == NULL) return FALSE;
+
+    if (ceilHeight - floorHeight >= 160.0f) {
+        if (floor != NULL && pos[1] < floorHeight) {
+            pos[1] = floorHeight;
+        }
+        if (ceil != NULL && pos[1] + 160.0f > ceilHeight) {
+            pos[1] = ceilHeight - 160.0f;
+        }
+        vec3f_copy(m->pos, pos);
+    }
+
+    //m->faceAngle[1] = m->intendedYaw;
+    //pstrats_update_turning(m);
+    pstrats_update_pitch(m);
+    vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
+    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
+
+    return FALSE;
+}
+
+void pstrats_update_turning(struct MarioState *m) {
+    f32 dragThreshold;
+    s16 intendedDYaw;
+    f32 intendedMag;
+
+        m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.35f, 0.35f);
+
+        if (m->input & INPUT_NONZERO_ANALOG) {
+            intendedDYaw = m->intendedYaw - m->faceAngle[1];
+            intendedMag = m->intendedMag / 32.0f;
+
+            //m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
+            m->faceAngle[1] += 512.0f * sins(intendedDYaw) * intendedMag;
+        }
+
+        m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
+        m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
+}
+
+void pstrats_update_pitch(struct MarioState *m) {
+
+}
+
+void pstrats_update_shipflags(struct MarioState *m) {
+    if (psf3_enginesnd = 1) {
+    play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject); // arwing engine sound
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Data for the jumbo star cutscene. It specifies the flight path after triple
  * jumping. Each entry is one keyframe.
@@ -510,128 +668,6 @@ s32 act_reading_sign(struct MarioState *m) {
     vec3f_copy(marioObj->header.gfx.pos, m->pos);
     vec3s_set(marioObj->header.gfx.angle, 0x0, m->faceAngle[1], 0x0);
     return FALSE;
-}
-//          PSTRATS
-//*******************************
-//*                             *
-//*  PLAYER MOVEMENT STRATEGY.  *
-//*                             *
-//*******************************
-#include "stratequ.h"
-
-s32 act_debug_free_move(struct MarioState *m) {
-    struct WallCollisionData wallData;
-    struct Surface *floor, *ceil;
-    Vec3f pos;
-
-    //if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
-
-    set_mario_animation(m, MARIO_ANIM_A_POSE);
-    vec3f_copy(pos, m->pos);
-    pstrats_update_shipflags(m);
-
-
-    // constantly move ship forward.
-    if (!(gPlayer1Controller->buttonDown & (B_BUTTON | A_BUTTON))) {
-        pos[2] += medPspeed;
-    }
-
-    // boosting and braking.
-    if (gPlayer1Controller->buttonDown & B_BUTTON) {
-        pos[2] += maxPspeed;
-        play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
-    }
-
-    if (gPlayer1Controller->buttonDown & A_BUTTON) { 
-        pos[2] += minPspeed;
-        play_sound(SOUND_MOVING_TERRAIN_SLIDE, m->marioObj->header.gfx.cameraToObject);
-    }
-
-    if ((gPlayer1Controller->stickY > 0) && (pos[1] != 400)) {
-        pos[1] += 1.0f * minPspeed;
-    }
-    if (gPlayer1Controller->stickY < 0) {
-        pos[1] -= 1.0f * minPspeed;
-    }
-
-    if (gPlayer1Controller->stickX < 0) {
-        pos[0] += 1.0f * medPspeed;
-    }
-
-    if (gPlayer1Controller->stickX > 0) {
-        pos[0] -= 1.0f * medPspeed;
-    }
-
-    // WORLD.ASM
-    if (pos[2] > 4096) { // Loop pos at 4096
-        pos[2] = 0;
-        zremove = 1;
-    }
-
-    // firing.
-
-    
-    if (gPlayer1Controller->buttonPressed & Z_TRIG) {
-        spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
-    }
-
-
-    // TODO: Add ability to ignore collision
-    //      - spawn pseudo floor object to prevent OOB death
-    resolve_and_return_wall_collisions(pos, 60.0f, 50.0f, &wallData);
-
-    set_mario_wall(m, ((wallData.numWalls > 0) ? wallData.walls[0] : NULL));
-    f32 floorHeight = find_floor(pos[0], pos[1], pos[2], &floor);
-    f32 ceilHeight = find_mario_ceil(pos, floorHeight, &ceil);
-
-    if (floor == NULL) return FALSE;
-
-    if (ceilHeight - floorHeight >= 160.0f) {
-        if (floor != NULL && pos[1] < floorHeight) {
-            pos[1] = floorHeight;
-        }
-        if (ceil != NULL && pos[1] + 160.0f > ceilHeight) {
-            pos[1] = ceilHeight - 160.0f;
-        }
-        vec3f_copy(m->pos, pos);
-    }
-
-    //m->faceAngle[1] = m->intendedYaw;
-    //pstrats_update_turning(m);
-    pstrats_update_pitch(m);
-    vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
-    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
-
-    return FALSE;
-}
-
-void pstrats_update_turning(struct MarioState *m) {
-    f32 dragThreshold;
-    s16 intendedDYaw;
-    f32 intendedMag;
-
-        m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.35f, 0.35f);
-
-        if (m->input & INPUT_NONZERO_ANALOG) {
-            intendedDYaw = m->intendedYaw - m->faceAngle[1];
-            intendedMag = m->intendedMag / 32.0f;
-
-            //m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
-            m->faceAngle[1] += 512.0f * sins(intendedDYaw) * intendedMag;
-        }
-
-        m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
-        m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
-}
-
-void pstrats_update_pitch(struct MarioState *m) {
-
-}
-
-void pstrats_update_shipflags(struct MarioState *m) {
-    if (psf3_enginesnd = 1) {
-    play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject); // arwing engine sound
-    }
 }
 
 void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
