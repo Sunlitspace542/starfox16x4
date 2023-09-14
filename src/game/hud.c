@@ -400,6 +400,39 @@ void render_hud_mario_lives(void) {
     print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(54), HUD_TOP_Y, "%d", gHudDisplay.lives);
 }
 
+int hudY = 32;
+void render_hud_bombs(void) {
+    int numNukes = 4;
+    switch(numNukes) {
+    case 4:
+    print_text(230, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    print_text(247, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    print_text(264, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    print_text(281, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    break;
+    case 3:
+    print_text(230, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    print_text(247, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    print_text(264, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    break;
+    case 2:
+    print_text(230, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    print_text(247, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    break;
+    case 1:
+    print_text(230, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    break;
+    case 0:
+    break;
+    }
+}
+
+void render_hud_shield_text(void) {
+    print_text(30, hudY-4, "_"); // 'Coin' glyph // placeholder SHIELD text
+    print_text(46, hudY-4, "("); // 'Coin' glyph // placeholder SHIELD text
+    print_text(62, hudY-4, ")"); // 'Coin' glyph // placeholder SHIELD text
+}
+
 #ifdef VANILLA_STYLE_CUSTOM_DEBUG
 void render_debug_mode(void) {
     print_text(180, 40, "DEBUG MODE");
@@ -565,6 +598,8 @@ void render_hud(void) {
 #ifndef DISABLE_LIVES
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_LIVES) {
             render_hud_mario_lives();
+            render_hud_bombs();
+            render_hud_shield_text();
         }
 #endif
 

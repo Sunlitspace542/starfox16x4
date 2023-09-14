@@ -1,0 +1,42 @@
+player wobble values:
+pZrotfloattab
+
+	db	0
+
+	db	1
+	db	2
+	db	3
+	db	4,4
+	db	5,5,5
+	db	4,4
+	db	3
+	db	2
+	db	1
+
+	db	0
+
+	db	-1
+	db	-2
+	db	-3
+	db	-4,-4
+	db	-5,-5,-5
+	db	-4,-4
+	db	-3
+	db	-2
+	db	-1
+
+
+icon pos's:
+; Original Lives position ($YYXX)
+livesPos1 equ $11, $10 (16, 17)
+livesPos2 equ $11, $18 (24, 17)
+livesPos3 equ $11, $20 (32, 17)
+
+; Original Shield text position ($YYXX)
+ShieldTextPos1 equ $b7, $18
+ShieldTextPos2 equ $b7, $20
+ShieldTextPos3 equ $b7, $28
+ShieldTextPos4 equ $b7, $30
+
+; Original Nova Bomb Icon Position ($YYXX)
+BombIconPos equ $b6, $e1 (225 ,182)

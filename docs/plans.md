@@ -5,3 +5,4 @@
 - ZREMOVE: check for certain Z distance and kill shape  
 - STRATS/PATHS: keep SM64's macros for those, port PATH macros and strat macros from sf1  
 - PLANETS.ASM: I kinda want to do 3d models for planets instead of whatever f3d witchcraft sf64 does  
+- FACE.CGX: Possibly abuse text printing to do that?  

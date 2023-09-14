@@ -356,6 +356,18 @@ s32 char_to_glyph_index(char c) {
         return GLYPH_BETA_KEY; // beta key, JP only. Reused for Ü in EU.
     }
 
+    if (c == '_') {
+        return GLYPH_SHIELD1; // SHIELD sprite 1
+    }
+
+    if (c == '(') {
+        return GLYPH_SHIELD2; // SHIELD sprite 2
+    }
+
+    if (c == ')') {
+        return GLYPH_SHIELD3; // SHIELD sprite 3
+    }
+
     return GLYPH_SPACE;
 }
 
