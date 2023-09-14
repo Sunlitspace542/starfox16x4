@@ -44,7 +44,7 @@ const LevelScript level_dummy_entry[] = {
 
     FREE_LEVEL_POOL(),
 
-    MARIO_POS(/*area*/ 1, /*yaw*/ 0, /*pos*/ 0, 30, 0), // Y as in MAPP.ASM
+    MARIO_POS(/*area*/ 1, /*yaw*/ 0, /*pos*/ 0, 60, 0), // starting player Y
     CALL(/*arg*/ 0, /*func*/ lvl_init_or_update),
     CALL_LOOP(/*arg*/ 1, /*func*/ lvl_init_or_update),
     CLEAR_LEVEL(),

@@ -511,27 +511,33 @@ s32 act_reading_sign(struct MarioState *m) {
     vec3s_set(marioObj->header.gfx.angle, 0x0, m->faceAngle[1], 0x0);
     return FALSE;
 }
-
+//          PSTRATS
+//*******************************
+//*                             *
+//*  PLAYER MOVEMENT STRATEGY.  *
+//*                             *
+//*******************************
 #include "stratequ.h"
 
-s32 act_debug_free_move(struct MarioState *m) { // ARWING ENTRYPOINT
+s32 act_debug_free_move(struct MarioState *m) {
     struct WallCollisionData wallData;
     struct Surface *floor, *ceil;
     Vec3f pos;
+    s16 targetPitch = -(s16)(252.0f * m->controller->stickY);
+    s16 pitchVel;
 
-    f32 speed = (gPlayer1Controller->buttonDown & B_BUTTON) ? 4.0f : 1.0f;
-    if (gPlayer1Controller->buttonDown & Z_TRIG) speed = 0.01f;
     if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
 
     set_mario_animation(m, MARIO_ANIM_A_POSE);
     vec3f_copy(pos, m->pos);
+    pstrats_update_flying_pitch(m);
 
     if (!(gPlayer1Controller->buttonDown & (B_BUTTON | A_BUTTON))) {
         pos[2] += medPspeed;
     }
 
-    if (m->controller->stickY ) {
-        // do something ()
+    if (pos[2] > 4096) { // Loop pos at 4096
+        pos[2] = 0;
     }
 
     // TODO: Add ability to ignore collision
@@ -560,6 +566,35 @@ s32 act_debug_free_move(struct MarioState *m) { // ARWING ENTRYPOINT
 
     return FALSE;
 }
+
+void pstrats_update_flying_pitch(struct MarioState *m) {
+    s16 targetPitchVel = -(s16)(m->controller->stickY * (m->forwardVel / 5.0f));
+
+    if (targetPitchVel > 0) {
+        if (m->angleVel[0] < 0) {
+            m->angleVel[0] += 0x40;
+            if (m->angleVel[0] > 0x20) {
+                m->angleVel[0] = 0x20;
+                m->faceAngle[1] +20;
+            }
+        } else {
+            m->angleVel[0] = approach_s32(m->angleVel[0], targetPitchVel, 0x20, 0x40);
+        }
+    } else if (targetPitchVel < 0) {
+        if (m->angleVel[0] > 0) {
+            m->angleVel[0] -= 0x40;
+            if (m->angleVel[0] < -0x20) {
+                m->angleVel[0] = -0x20;
+                m->faceAngle[1] -20;
+            }
+        } else {
+            m->angleVel[0] = approach_s32(m->angleVel[0], targetPitchVel, 0x40, 0x20);
+        }
+    } else {
+        m->angleVel[0] = approach_s32(m->angleVel[0], 0, 0x40, 0x40);
+    }
+}
+
 
 void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
     struct Object *celebStar = NULL;
