@@ -599,23 +599,14 @@ void pstrats_update_turning(struct MarioState *m) {
     s16 intendedDYaw;
     f32 intendedMag;
 
-            dragThreshold = m->action == ACT_LONG_JUMP ? 48.0f : 32.0f;
         m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.35f, 0.35f);
 
         if (m->input & INPUT_NONZERO_ANALOG) {
             intendedDYaw = m->intendedYaw - m->faceAngle[1];
             intendedMag = m->intendedMag / 32.0f;
 
-            m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
+            //m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
             m->faceAngle[1] += 512.0f * sins(intendedDYaw) * intendedMag;
-        }
-
-        //! Uncapped air speed. Net positive when moving forward.
-        if (m->forwardVel > dragThreshold) {
-            m->forwardVel -= 1.0f;
-        }
-        if (m->forwardVel < -16.0f) {
-            m->forwardVel += 2.0f;
         }
 
         m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
