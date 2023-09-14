@@ -328,7 +328,6 @@ int playerB_z = 0;
 
 int playerB_Ystop = -20;
 
-
 int pBhardAP = 4;
 int pBsoftAP = 2;
 int pWhardAP = 1;
@@ -341,3 +340,33 @@ int minPspeed = 20;
 int pexitbasespeed = 50;
 
 int nullpship = 2;
+
+// Player's ship flags.
+
+// pshipflags
+int psf_bodycoll = 1;
+int psf_LWingcoll = 2;
+int psf_Rwingcoll = 4;	
+int psf_brkLWing = 8;
+int psf_brkRwing = 16;	
+int psf_noctrl = 32;
+int psf_nofire = 64;
+int psf_noYctrl = 128;
+
+// pshipflags2
+int psf2_doublaser = 1;
+int psf2_wireship = 2;
+int psf2_nospark = 4;
+int psf2_turn180 = 8;
+int psf2_forceboost = 0;
+int psf2_boosting = 32;
+int psf2_braking = 64;
+int psf2_playerHP0 = 128;
+
+//pshipflags3
+int psf3_intunnel = 1;
+int psf3_enginesnd = 2;	// 0/1 , off/on
+int psf3_forcebrake = 0;
+int psf3_nocollisions = 8;
+int psf3_beamball = 16;
+

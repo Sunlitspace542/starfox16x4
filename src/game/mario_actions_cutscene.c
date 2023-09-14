@@ -523,19 +523,45 @@ s32 act_debug_free_move(struct MarioState *m) {
     struct WallCollisionData wallData;
     struct Surface *floor, *ceil;
     Vec3f pos;
-    s16 targetPitch = -(s16)(252.0f * m->controller->stickY);
-    s16 pitchVel;
 
     if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
 
     set_mario_animation(m, MARIO_ANIM_A_POSE);
     vec3f_copy(pos, m->pos);
-    pstrats_update_flying_pitch(m);
+    pstrats_update_shipflags(m);
 
+
+    // constantly move ship forward.
     if (!(gPlayer1Controller->buttonDown & (B_BUTTON | A_BUTTON))) {
         pos[2] += medPspeed;
     }
 
+    // boosting and braking.
+    if (gPlayer1Controller->buttonDown & B_BUTTON) {
+        pos[2] += maxPspeed;
+        play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
+    }
+
+    if (gPlayer1Controller->buttonDown & A_BUTTON) { 
+        pos[2] += minPspeed;
+        play_sound(SOUND_MOVING_TERRAIN_SLIDE, m->marioObj->header.gfx.cameraToObject);
+    }
+
+    if (gPlayer1Controller->stickY > 0) {
+        pos[1] += 1.0f * medPspeed;
+    }
+    if (gPlayer1Controller->stickY < 0) {
+        pos[1] -= 1.0f * medPspeed;
+    }
+
+    if (gPlayer1Controller->stickX < 0) {
+        pos[0] += 1.0f * medPspeed;
+    }
+    if (gPlayer1Controller->stickX > 0) {
+        pos[0] -= 1.0f * medPspeed;
+    }
+
+    // WORLD.ASM
     if (pos[2] > 4096) { // Loop pos at 4096
         pos[2] = 0;
     }
@@ -560,41 +586,47 @@ s32 act_debug_free_move(struct MarioState *m) {
         vec3f_copy(m->pos, pos);
     }
 
-    m->faceAngle[1] = m->intendedYaw;
+    //m->faceAngle[1] = m->intendedYaw;
+    pstrats_update_turning(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
 
     return FALSE;
 }
 
-void pstrats_update_flying_pitch(struct MarioState *m) {
-    s16 targetPitchVel = -(s16)(m->controller->stickY * (m->forwardVel / 5.0f));
+void pstrats_update_turning(struct MarioState *m) {
+    f32 dragThreshold;
+    s16 intendedDYaw;
+    f32 intendedMag;
 
-    if (targetPitchVel > 0) {
-        if (m->angleVel[0] < 0) {
-            m->angleVel[0] += 0x40;
-            if (m->angleVel[0] > 0x20) {
-                m->angleVel[0] = 0x20;
-                m->faceAngle[1] +20;
-            }
-        } else {
-            m->angleVel[0] = approach_s32(m->angleVel[0], targetPitchVel, 0x20, 0x40);
+            dragThreshold = m->action == ACT_LONG_JUMP ? 48.0f : 32.0f;
+        m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.35f, 0.35f);
+
+        if (m->input & INPUT_NONZERO_ANALOG) {
+            intendedDYaw = m->intendedYaw - m->faceAngle[1];
+            intendedMag = m->intendedMag / 32.0f;
+
+            m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
+            m->faceAngle[1] += 512.0f * sins(intendedDYaw) * intendedMag;
         }
-    } else if (targetPitchVel < 0) {
-        if (m->angleVel[0] > 0) {
-            m->angleVel[0] -= 0x40;
-            if (m->angleVel[0] < -0x20) {
-                m->angleVel[0] = -0x20;
-                m->faceAngle[1] -20;
-            }
-        } else {
-            m->angleVel[0] = approach_s32(m->angleVel[0], targetPitchVel, 0x40, 0x20);
+
+        //! Uncapped air speed. Net positive when moving forward.
+        if (m->forwardVel > dragThreshold) {
+            m->forwardVel -= 1.0f;
         }
-    } else {
-        m->angleVel[0] = approach_s32(m->angleVel[0], 0, 0x40, 0x40);
-    }
+        if (m->forwardVel < -16.0f) {
+            m->forwardVel += 2.0f;
+        }
+
+        m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
+        m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
 }
 
+void pstrats_update_shipflags(struct MarioState *m) {
+    if (psf3_enginesnd = 1) {
+    play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject); // arwing engine sound
+    }
+}
 
 void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
     struct Object *celebStar = NULL;

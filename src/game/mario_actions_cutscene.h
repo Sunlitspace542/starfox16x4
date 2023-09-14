@@ -136,6 +136,7 @@ s32 set_mario_npc_dialog(s32 actionArg);
 s32 mario_execute_cutscene_action(struct MarioState *m);
 extern Vp sEndCutsceneVp;
 extern struct CreditsEntry *sDispCreditsEntry;
-void pstrats_update_flying_pitch(struct MarioState *m);
+void pstrats_update_shipflags(struct MarioState *m);
+void pstrats_update_turning(struct MarioState *m);
 
 #endif // MARIO_ACTIONS_CUTSCENE_H
