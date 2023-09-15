@@ -119,11 +119,11 @@ s32 act_debug_free_move(struct MarioState *m) {
         pos[1] -= 1.0f * minPspeed;
     }
 
-    if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
+    if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
         pos[0] += 1.0f * medPspeed;
     }
 
-    if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
+    if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
         pos[0] -= 1.0f * medPspeed;
     }
 
