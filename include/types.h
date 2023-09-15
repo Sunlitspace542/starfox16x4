@@ -422,6 +422,7 @@ struct MarioState {
     /*0x1C*/ u32 actionArg;
     /*0x20*/ f32 intendedMag;
     /*0x24*/ s16 intendedYaw;
+    /*0x24*/ s16 intendedPitch;
     /*0x26*/ s16 invincTimer;
     /*0x28*/ u8 framesSinceA;
     /*0x29*/ u8 framesSinceB;

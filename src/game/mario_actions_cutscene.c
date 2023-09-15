@@ -133,7 +133,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     // firing.
-    if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonDown & A_BUTTON)) {
+    if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
         spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
     }
 
@@ -159,7 +159,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     //m->faceAngle[1] = m->intendedYaw;
-    //pstrats_update_turning(m);
+    pstrats_update_yaw(m);
     pstrats_update_pitch(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
@@ -167,8 +167,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     return FALSE;
 }
 
-void pstrats_update_turning(struct MarioState *m) {
-    f32 dragThreshold;
+void pstrats_update_yaw(struct MarioState *m) {
     s16 intendedDYaw;
     f32 intendedMag;
 
@@ -178,7 +177,7 @@ void pstrats_update_turning(struct MarioState *m) {
             intendedDYaw = m->intendedYaw - m->faceAngle[1];
             intendedMag = m->intendedMag / 32.0f;
 
-            //m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
+            m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
             m->faceAngle[1] += 512.0f * sins(intendedDYaw) * intendedMag;
         }
 
@@ -187,26 +186,11 @@ void pstrats_update_turning(struct MarioState *m) {
 }
 
 void pstrats_update_pitch(struct MarioState *m) {
-
 }
 
 void pstrats_update_shipflags(struct MarioState *m) {
     if (psf3_enginesnd = 1) {
     play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject); // arwing engine sound
-    }
-}
-
-void mapmacs_do_objs(struct MarioState *m) {
-    if(gLocalTimer == 230) {
-    spawn_object_relative(0, -500, 30, 4000, gCurrentObject, MODEL_MARIO, P_Elaser);
-    spawn_object_relative(0, 500, 30, 4000, gCurrentObject, MODEL_MARIO, P_Elaser);
-    }
-
-    if(gLocalTimer == 300) {
-    spawn_object_relative(0, -600, 30, 4000, gCurrentObject, MODEL_MARIO, P_Elaser);
-    spawn_object_relative(0, 600, 30, 4000, gCurrentObject, MODEL_MARIO, P_Elaser);
-    spawn_object_relative(0, -600, 30, 5000, gCurrentObject, MODEL_MARIO, P_Elaser);
-    spawn_object_relative(0, 600, 30, 5000, gCurrentObject, MODEL_MARIO, P_Elaser);
     }
 }
 

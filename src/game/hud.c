@@ -434,9 +434,12 @@ void render_hud_shield_text(void) {
 //DBG
     print_text_fmt_int(5, 20, "Z %d", gMarioState->pos[2]);
     print_text_fmt_int(5, 40, "Y %d", gMarioState->pos[1]);
-    print_text_fmt_int(5, 60, "X %d", gMarioState->pos[0]);
-    print_text_fmt_int(16, 80, "GTIMER %d", gGlobalTimer);
-    print_text_fmt_int(16, 100, "LTIMER %d", gLocalTimer);
+    print_text_fmt_int(16, 60, "X %d", gMarioState->pos[0]);
+    print_text_fmt_int(16, 80, "ROL %d", (u16) gMarioState->faceAngle[2]);
+    print_text_fmt_int(16, 100, "YAW %d", (u16) gMarioState->faceAngle[1]);
+    print_text_fmt_int(16, 120, "PCH %d", (u16) gMarioState->faceAngle[0]);
+    print_text_fmt_int(16, 140, "GTIMER %d", gGlobalTimer);
+    print_text_fmt_int(16, 160, "LTIMER %d", gLocalTimer);
 }
 
 #ifdef VANILLA_STYLE_CUSTOM_DEBUG
