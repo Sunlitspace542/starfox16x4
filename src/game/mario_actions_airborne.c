@@ -334,16 +334,24 @@ void update_flying_pitch(struct MarioState *m) {
 }
 
 void update_flying(struct MarioState *m) {
+    // Update the pitch (up/down angle) of Mario's orientation.
     update_flying_pitch(m);
+    
+    // Update the yaw (left/right angle) of Mario's orientation.
     update_flying_yaw(m);
 
+    // Decelerate Mario's forward velocity based on his pitch angle.
     m->forwardVel -= 2.0f * ((f32) m->faceAngle[0] / 0x4000) + 0.1f;
+    
+    // Decelerate Mario's forward velocity based on his angle velocity (yaw).
     m->forwardVel -= 0.5f * (1.0f - coss(m->angleVel[1]));
 
+    // Ensure forward velocity doesn't become negative.
     if (m->forwardVel < 0.0f) {
         m->forwardVel = 0.0f;
     }
 
+    // Adjust Mario's pitch angle based on his forward velocity.
     if (m->forwardVel > 16.0f) {
         m->faceAngle[0] += (m->forwardVel - 32.0f) * 6.0f;
     } else if (m->forwardVel > 4.0f) {
@@ -352,8 +360,10 @@ void update_flying(struct MarioState *m) {
         m->faceAngle[0] -= 0x400;
     }
 
+    // Add the pitch change caused by angle velocity (pitch).
     m->faceAngle[0] += m->angleVel[0];
 
+    // Ensure pitch angle is within certain limits.
     if (m->faceAngle[0] > DEGREES(60)) {
         m->faceAngle[0] = DEGREES(60);
     }
@@ -361,13 +371,16 @@ void update_flying(struct MarioState *m) {
         m->faceAngle[0] = -DEGREES(60);
     }
 
+    // Calculate Mario's velocity components in 3D space.
     m->vel[0] = m->forwardVel * coss(m->faceAngle[0]) * sins(m->faceAngle[1]);
     m->vel[1] = m->forwardVel * sins(m->faceAngle[0]);
     m->vel[2] = m->forwardVel * coss(m->faceAngle[0]) * coss(m->faceAngle[1]);
 
+    // Set the slide velocities to the respective 2D components of the velocity.
     m->slideVelX = m->vel[0];
     m->slideVelZ = m->vel[2];
 }
+
 
 u32 common_air_action_step(struct MarioState *m, u32 landAction, s32 animation, u32 stepArg) {
     u32 stepResult;

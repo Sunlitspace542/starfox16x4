@@ -171,15 +171,14 @@ void pstrats_update_turning(struct MarioState *m) {
     s16 intendedDYaw;
     f32 intendedMag;
 
-    // Gradually reduce forward velocity when there's no analog stick input.
     m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.150f, 0.150f);
 
-    if (m->input & INPUT_NONZERO_ANALOG) {
+    if ((m->input & INPUT_NONZERO_ANALOG)) {
         intendedDYaw = m->intendedYaw - m->faceAngle[1];
         intendedMag = m->intendedMag / 32.0f;
 
         // Apply forward velocity based on analog stick input.
-        m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
+       // m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
         m->faceAngle[1] += 512.0f * sins(intendedDYaw) * intendedMag;
 
         // Ensure the angle stays within the range [-5600, 5600].
@@ -189,7 +188,6 @@ void pstrats_update_turning(struct MarioState *m) {
             m->faceAngle[1] = -5600;
         }
     } else {
-        // If there's no analog stick input, gradually return the angle to 0.
         m->faceAngle[1] = approach_s32(m->faceAngle[1], 0, 0x1F0, 0x1F0);
 
         // Ensure the angle stays within the range [-5600, 5600].
@@ -206,10 +204,11 @@ void pstrats_update_turning(struct MarioState *m) {
 }
 
 void pstrats_update_pitch(struct MarioState *m) {
+
 }
 
 void pstrats_update_shipflags(struct MarioState *m) {
-    if (psf3_enginesnd = 1) {
+    if (psf3_enginesnd == 1) {
     play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject); // arwing engine sound
     }
 }
