@@ -431,6 +431,12 @@ void render_hud_shield_text(void) {
     print_text(30, hudY-4, "_"); // 'Coin' glyph // placeholder SHIELD text
     print_text(46, hudY-4, "("); // 'Coin' glyph // placeholder SHIELD text
     print_text(62, hudY-4, ")"); // 'Coin' glyph // placeholder SHIELD text
+//DBG
+    print_text_fmt_int(5, 20, "Z %d", gMarioState->pos[2]);
+    print_text_fmt_int(5, 40, "Y %d", gMarioState->pos[1]);
+    print_text_fmt_int(5, 60, "X %d", gMarioState->pos[0]);
+    print_text_fmt_int(16, 80, "GTIMER %d", gGlobalTimer);
+    print_text_fmt_int(16, 100, "LTIMER %d", gLocalTimer);
 }
 
 #ifdef VANILLA_STYLE_CUSTOM_DEBUG

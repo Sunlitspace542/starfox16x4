@@ -13,3 +13,4 @@
 #include "levels/dummy/header.h"
 
 #include "levels/dummy/areas/1/1/geo.inc.c"
+#include "levels/dummy/geo.inc.c"

@@ -442,7 +442,7 @@ static void level_cmd_load_model_from_geo(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_23(void) {
+/*static void level_cmd_23(void) {
     ModelID16 model = (CMD_GET(ModelID16, 2) & 0x0FFF);
     s16 layer = (((u16)CMD_GET(s16, 2)) >> 12);
     void *dl  = CMD_GET(void *, 4);
@@ -456,7 +456,18 @@ static void level_cmd_23(void) {
     }
 
     sCurrentCmd = CMD_NEXT;
+}*/
+
+static void level_cmd_23(void) { // get frame from globaltimer
+    u32 frame = CMD_GET(u32,   4);
+    if (gGlobalTimer == frame) {
+        sCurrentCmd = CMD_NEXT;
+        return;
+    }
+
+    sCurrentCmd = CMD_NEXT;
 }
+
 
 static void level_cmd_init_mario(void) {
     vec3_zero(gMarioSpawnInfo->startPos);

@@ -10,3 +10,5 @@
 #include "make_const_nonconst.h"
 #include "levels/dummy/areas/1/1/model.inc.c"
 #include "levels/dummy/areas/1/collision.inc.c"
+
+#include "levels/dummy/leveldata.inc.c"

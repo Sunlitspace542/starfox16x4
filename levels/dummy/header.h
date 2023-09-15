@@ -12,5 +12,8 @@ extern const Collision dummy35_info[];
 
 // script
 extern const LevelScript level_dummy_entry[];
+void scriptbypasstest(void);
+
+#include "levels/dummy/header.inc.h"
 
 #endif

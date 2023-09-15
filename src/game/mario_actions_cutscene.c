@@ -82,6 +82,9 @@ s32 act_debug_free_move(struct MarioState *m) {
     struct Surface *floor, *ceil;
     Vec3f pos;
 
+    if(gGlobalTimer > 0) {
+    gLocalTimer++;
+    }
     //if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
 
     set_mario_animation(m, MARIO_ANIM_A_POSE);
@@ -123,15 +126,14 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     // WORLD.ASM
-    if (pos[2] > 4096) { // Loop pos at 4096
-        pos[2] = 0;
-        zremove = 1;
-    }
+    //if (pos[2] > 16895) { // Loop pos at 4096
+    //    pos[2] = 0;
+    //}
 
     // firing.
-    if (gPlayer1Controller->buttonPressed & Z_TRIG) {
+    /*if (gPlayer1Controller->buttonPressed & Z_TRIG) {
         spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
-    }
+    }*/
 
 
     // TODO: Add ability to ignore collision
@@ -192,8 +194,19 @@ void pstrats_update_shipflags(struct MarioState *m) {
     }
 }
 
+void mapmacs_do_objs(struct MarioState *m) {
+    if(gLocalTimer == 230) {
+    spawn_object_relative(0, -500, 30, 4000, gCurrentObject, MODEL_MARIO, P_Elaser);
+    spawn_object_relative(0, 500, 30, 4000, gCurrentObject, MODEL_MARIO, P_Elaser);
+    }
 
-
+    if(gLocalTimer == 300) {
+    spawn_object_relative(0, -600, 30, 4000, gCurrentObject, MODEL_MARIO, P_Elaser);
+    spawn_object_relative(0, 600, 30, 4000, gCurrentObject, MODEL_MARIO, P_Elaser);
+    spawn_object_relative(0, -600, 30, 5000, gCurrentObject, MODEL_MARIO, P_Elaser);
+    spawn_object_relative(0, 600, 30, 5000, gCurrentObject, MODEL_MARIO, P_Elaser);
+    }
+}
 
 
 

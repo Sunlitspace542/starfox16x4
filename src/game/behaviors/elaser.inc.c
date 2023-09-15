@@ -1,5 +1,7 @@
 // player's single laser strategy.
 
+#include "types.h"
+
 struct ObjectHitbox sElaserHitbox = {
     /* interactType:      */ INTERACT_KOOPA_SHELL,
     /* downOffset:        */ 0,

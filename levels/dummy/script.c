@@ -1,13 +1,3 @@
-/********************************************************************************
-						Ultra 64 MARIO Brothers
-
-						stage 35 sequence module
-
-			Copyright 1995 Nintendo co., ltd.  All rights reserved
-
-							December 8, 1995
- ********************************************************************************/
-
 #include <ultra64.h>
 #include "sm64.h"
 #include "behavior_data.h"
@@ -23,31 +13,46 @@
 
 #include "actors/common1.h"
 
+/* Fast64 begin persistent block [includes] */
+/* Fast64 end persistent block [includes] */
+
 #include "make_const_nonconst.h"
 #include "levels/dummy/header.h"
 
+/* Fast64 begin persistent block [scripts] */
+/* Fast64 end persistent block [scripts] */
+
 const LevelScript level_dummy_entry[] = {
+	INIT_LEVEL(),
+	LOAD_YAY0(0x07, _dummy_segment_7SegmentRomStart, _dummy_segment_7SegmentRomEnd), 
+	LOAD_YAY0(0x0A, _water_skybox_yay0SegmentRomStart, _water_skybox_yay0SegmentRomEnd), 
+	ALLOC_LEVEL_POOL(),
+	MARIO(MODEL_MARIO, 0x00000001, bhvMario), 
 
-    INIT_LEVEL(),
-    LOAD_YAY0(        /*seg*/ 0x07, _dummy_segment_7SegmentRomStart, _dummy_segment_7SegmentRomEnd),
-    LOAD_YAY0(        /*seg*/ 0x0A, _water_skybox_yay0SegmentRomStart, _water_skybox_yay0SegmentRomEnd),
-    ALLOC_LEVEL_POOL(),
-    MARIO(/*model*/ MODEL_MARIO, /*behParam*/ 0x00000001, /*beh*/ bhvMario),
+	/* Fast64 begin persistent block [level commands] */
+	/* Fast64 end persistent block [level commands] */
 
-    AREA(/*index*/ 1, RCP_Stage35Scene1),
+	AREA(1, dummy_area_1),
+		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF0, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF1, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		OBJECT(MODEL_NONE, 0, 200, 0, 0, 0, 0, 0x000A0000, bhvSpinAirborneWarp),
+		// MAPOBJ(frame, model, posX, posY, posZ, beh)
+		//MAPOBJ(200, MODEL_MARIO, 0, 200, 200, P_Elaser),
+		MARIO_POS(0x01, 0, 0, 200, -5000),
+		TERRAIN(dummy_area_1_collision),
+		MACRO_OBJECTS(dummy_area_1_macro_objs),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_SF_CORNERIA),
+		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
+	END_AREA(),
 
-        TERRAIN(/*terrainData*/ dummy35_info),
-        SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0003, /*seq*/ SEQ_SF_CORNERIA),
-        TERRAIN_TYPE(/*terrainType*/ TERRAIN_GRASS),
-
-    END_AREA(),
-
-    FREE_LEVEL_POOL(),
-
-    MARIO_POS(/*area*/ 1, /*yaw*/ 0, /*pos*/ 0, 60, 0), // starting player Y
-    CALL(/*arg*/ 0, /*func*/ lvl_init_or_update),
-    CALL_LOOP(/*arg*/ 1, /*func*/ lvl_init_or_update),
-    CLEAR_LEVEL(),
-    SLEEP_BEFORE_EXIT(/*frames*/ 1),
-    EXIT(),
+	FREE_LEVEL_POOL(),
+	MARIO_POS(0x01, 0, 0, 200, 0),
+	CALL(0, lvl_init_or_update),
+	CALL_LOOP(1, lvl_init_or_update),
+	CLEAR_LEVEL(),
+	SLEEP_BEFORE_EXIT(1),
+	EXIT(),
 };
