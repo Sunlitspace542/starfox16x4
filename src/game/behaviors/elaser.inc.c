@@ -19,7 +19,7 @@ void elaser_Istrat(void) {
 
 s16 position = o->oPosX;
 
-    position + 24;
+    position += 24;
 
     if (position > 4096) { // despawn.
         s_remove_obj(o);

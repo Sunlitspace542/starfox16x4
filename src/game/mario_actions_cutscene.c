@@ -110,7 +110,7 @@ s32 act_debug_free_move(struct MarioState *m) {
 
 
     // we're flying a plane thing here, so let's make the flight controls make sense.
-    if ((gPlayer1Controller->stickY < 0) && (pos[1] != 400)) {
+    if ((gPlayer1Controller->stickY < 0) && (pos[1] != 520)) {
         pos[1] += 1.0f * minPspeed;
     }
     if (gPlayer1Controller->stickY > 0) {
@@ -126,14 +126,14 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     // WORLD.ASM
-    //if (pos[2] > 16895) { // Loop pos at 4096
-    //    pos[2] = 0;
-    //}
+    if (pos[2] > 20450) { // Loop pos at 4096
+        pos[2] = 0;
+    }
 
     // firing.
-    /*if (gPlayer1Controller->buttonPressed & Z_TRIG) {
+    if (gPlayer1Controller->buttonPressed & Z_TRIG) {
         spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
-    }*/
+    }
 
 
     // TODO: Add ability to ignore collision

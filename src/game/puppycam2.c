@@ -517,7 +517,7 @@ void puppycam_init(void) {
 }
 
 void puppycam_input_pitch(void) {
-    if (gPuppyCam.flags & PUPPYCAM_BEHAVIOUR_PITCH_ROTATION) {
+/*    if (gPuppyCam.flags & PUPPYCAM_BEHAVIOUR_PITCH_ROTATION) {
         // Handles vertical inputs.
         if (gPlayer1Controller->buttonDown & U_CBUTTONS || gPuppyCam.stick2[1] != 0) {
             gPuppyCam.pitchAcceleration -= 50 * (gPuppyCam.options.sensitivityY / 100.f);
@@ -526,18 +526,18 @@ void puppycam_input_pitch(void) {
         } else {
             gPuppyCam.pitchAcceleration = 0;
         }
-        gPuppyCam.pitchAcceleration = CLAMP(gPuppyCam.pitchAcceleration, -100, 100);
+        gPuppyCam.pitchAcceleration = CLAMP(gPuppyCam.pitchAcceleration, -100, 100);*/
 
         // When Mario's moving, his pitch is clamped pretty aggressively, so this exists so you can shift your view up and down momentarily at an actually usable range, rather than the otherwise baby range.
         if (gMarioState->action & ACT_FLAG_MOVING && (gPuppyCam.pitch >= 0x3800 || gPuppyCam.pitch <= 0x2000)) {
             gPuppyCam.moveFlagAdd = 8;
         }
     }
-}
+//}
 
 void puppycam_input_zoom(void) {
     // Handles R button zooming.
-    if (gPlayer1Controller->buttonPressed & R_TRIG && gPuppyCam.flags & PUPPYCAM_BEHAVIOUR_ZOOM_CHANGE) {
+    /*if (gPlayer1Controller->buttonPressed & R_TRIG && gPuppyCam.flags & PUPPYCAM_BEHAVIOUR_ZOOM_CHANGE) {
         gPuppyCam.zoomSet++;
 
         if (gPuppyCam.zoomSet >= 3) {
@@ -545,11 +545,11 @@ void puppycam_input_zoom(void) {
         }
         gPuppyCam.zoomTarget = gPuppyCam.zoomPoints[gPuppyCam.zoomSet];
         play_sound(SOUND_MENU_CLICK_CHANGE_VIEW,gGlobalSoundSource);
-    }
+    }*/
 }
 
 void puppycam_input_centre(void) {
-    if (gPuppyCam.flags & PUPPYCAM_BEHAVIOUR_FREE) {
+    /*if (gPuppyCam.flags & PUPPYCAM_BEHAVIOUR_FREE) {
         return;
     }
     s32 inputDefault = L_TRIG;
@@ -561,12 +561,12 @@ void puppycam_input_centre(void) {
     !(gPuppyCam.flags & PUPPYCAM_BEHAVIOUR_INPUT_8DIR) && !(gPuppyCam.flags & PUPPYCAM_BEHAVIOUR_INPUT_4DIR) && !(gPlayer1Controller->buttonDown & U_JPAD)) {
         gPuppyCam.yawTarget = gMarioState->faceAngle[1] + 0x8000;
         play_sound(SOUND_MENU_CLICK_CHANGE_VIEW,gGlobalSoundSource);
-    }
+    }*/
 }
 
 // The default control scheme. Hold the button down to turn the camera, and double tap to turn quickly.
 static void puppycam_input_hold_preset1(f32 ivX) {
-    if (!gPuppyCam.options.analogue && gPlayer1Controller->buttonPressed & L_CBUTTONS && gPuppyCam.framesSinceC[0] <= 5) {
+    /*if (!gPuppyCam.options.analogue && gPlayer1Controller->buttonPressed & L_CBUTTONS && gPuppyCam.framesSinceC[0] <= 5) {
         gPuppyCam.yawTarget -= 0x4000 * ivX;
         play_sound(SOUND_MENU_CAMERA_ZOOM_IN, gGlobalSoundSource);
     } else if (!gPuppyCam.options.analogue && gPlayer1Controller->buttonPressed & R_CBUTTONS && gPuppyCam.framesSinceC[1] <= 5) {
@@ -582,12 +582,12 @@ static void puppycam_input_hold_preset1(f32 ivX) {
         gPuppyCam.framesSinceC[1] = 0;
     } else {
         gPuppyCam.yawAcceleration = 0;
-    }
+    }*/
 }
 
 // An alternative control scheme, hold the button down to turn the camera, or press it once to turn it quickly.
 static void puppycam_input_hold_preset2(f32 ivX) {
-    // These set the initial button press.
+/*    // These set the initial button press.
     if (gPlayer1Controller->buttonPressed & L_CBUTTONS) gPuppyCam.framesSinceC[0] = 0;
     if (gPlayer1Controller->buttonPressed & R_CBUTTONS) gPuppyCam.framesSinceC[1] = 0;
     // These handle when you release the button
@@ -610,7 +610,7 @@ static void puppycam_input_hold_preset2(f32 ivX) {
         gPuppyCam.yawAcceleration += 75 * (gPuppyCam.options.sensitivityX / 100.f);
     } else {
         gPuppyCam.yawAcceleration = 0;
-    }
+    }*/
 }
 
 // Another alternative control scheme. This one aims to mimic the parallel camera scheme down to the last bit from the original game.
