@@ -93,7 +93,7 @@ s32 act_debug_free_move(struct MarioState *m) {
 
 
     // constantly move ship forward.
-    if (!(gPlayer1Controller->buttonDown & (B_BUTTON | A_BUTTON))) {
+    if (!(gPlayer1Controller->buttonDown & (U_CBUTTONS | D_CBUTTONS))) {
         pos[2] += medPspeed;
     }
 
