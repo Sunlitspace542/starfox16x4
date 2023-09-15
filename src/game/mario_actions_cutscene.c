@@ -133,7 +133,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     // firing.
-    if (gPlayer1Controller->buttonPressed & L_CBUTTONS) {
+    if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonDown & A_BUTTON)) {
         spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
     }
 
