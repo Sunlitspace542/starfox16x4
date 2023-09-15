@@ -159,7 +159,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     //m->faceAngle[1] = m->intendedYaw;
-    pstrats_update_yaw(m);
+    pstrats_update_turning(m);
     pstrats_update_pitch(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
@@ -167,22 +167,42 @@ s32 act_debug_free_move(struct MarioState *m) {
     return FALSE;
 }
 
-void pstrats_update_yaw(struct MarioState *m) {
+void pstrats_update_turning(struct MarioState *m) {
     s16 intendedDYaw;
     f32 intendedMag;
 
-        m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.35f, 0.35f);
+    // Gradually reduce forward velocity when there's no analog stick input.
+    m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.150f, 0.150f);
 
-        if (m->input & INPUT_NONZERO_ANALOG) {
-            intendedDYaw = m->intendedYaw - m->faceAngle[1];
-            intendedMag = m->intendedMag / 32.0f;
+    if (m->input & INPUT_NONZERO_ANALOG) {
+        intendedDYaw = m->intendedYaw - m->faceAngle[1];
+        intendedMag = m->intendedMag / 32.0f;
 
-            m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
-            m->faceAngle[1] += 512.0f * sins(intendedDYaw) * intendedMag;
+        // Apply forward velocity based on analog stick input.
+        m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
+        m->faceAngle[1] += 512.0f * sins(intendedDYaw) * intendedMag;
+
+        // Ensure the angle stays within the range [-5600, 5600].
+        if (m->faceAngle[1] > 5600) {
+            m->faceAngle[1] = 5600;
+        } else if (m->faceAngle[1] < -5600) {
+            m->faceAngle[1] = -5600;
         }
+    } else {
+        // If there's no analog stick input, gradually return the angle to 0.
+        m->faceAngle[1] = approach_s32(m->faceAngle[1], 0, 0x1F0, 0x1F0);
 
-        m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
-        m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
+        // Ensure the angle stays within the range [-5600, 5600].
+        if (m->faceAngle[1] > 5600) {
+            m->faceAngle[1] = 5600;
+        } else if (m->faceAngle[1] < -5600) {
+            m->faceAngle[1] = -5600;
+        }
+    }
+
+    // Update velocity components based on the updated angle and forward velocity.
+    m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
+    m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
 }
 
 void pstrats_update_pitch(struct MarioState *m) {

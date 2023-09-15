@@ -260,32 +260,50 @@ void update_lava_boost_or_twirling(struct MarioState *m) {
     m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
 }
 
+// This function updates the yaw (rotation around the vertical axis) of Mario
+// when he is flying or in a similar state.
+
 void update_flying_yaw(struct MarioState *m) {
+    // Calculate the target yaw velocity based on Mario's stick input and forward velocity.
     s16 targetYawVel = -(s16)(m->controller->stickX * (m->forwardVel / 4.0f));
 
+    // If the target yaw velocity is positive (turning right):
     if (targetYawVel > 0) {
+        // If Mario is currently turning left (negative angle velocity):
         if (m->angleVel[1] < 0) {
+            // Increase the angle velocity by 0x40 (hexadecimal) until it reaches 0x10.
             m->angleVel[1] += 0x40;
             if (m->angleVel[1] > 0x10) {
                 m->angleVel[1] = 0x10;
             }
         } else {
+            // Gradually approach the target yaw velocity with acceleration and deceleration.
             m->angleVel[1] = approach_s32(m->angleVel[1], targetYawVel, 0x10, 0x20);
         }
-    } else if (targetYawVel < 0) {
+    }
+    // If the target yaw velocity is negative (turning left):
+    else if (targetYawVel < 0) {
+        // If Mario is currently turning right (positive angle velocity):
         if (m->angleVel[1] > 0) {
+            // Decrease the angle velocity by 0x40 until it reaches -0x10.
             m->angleVel[1] -= 0x40;
             if (m->angleVel[1] < -0x10) {
                 m->angleVel[1] = -0x10;
             }
         } else {
+            // Gradually approach the target yaw velocity with acceleration and deceleration.
             m->angleVel[1] = approach_s32(m->angleVel[1], targetYawVel, 0x20, 0x10);
         }
     } else {
+        // If there's no target yaw velocity, gradually bring Mario to a stop.
         m->angleVel[1] = approach_s32(m->angleVel[1], 0, 0x40, 0x40);
     }
 
+    // Update Mario's face angle (yaw) based on the calculated angle velocity.
     m->faceAngle[1] += m->angleVel[1];
+
+    // Set Mario's pitch (faceAngle[2]) based on the negative of his yaw velocity.
+    // This gives a rolling effect when he turns.
     m->faceAngle[2] = 20 * -m->angleVel[1];
 }
 

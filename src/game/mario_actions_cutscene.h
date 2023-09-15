@@ -137,7 +137,7 @@ s32 mario_execute_cutscene_action(struct MarioState *m);
 extern Vp sEndCutsceneVp;
 extern struct CreditsEntry *sDispCreditsEntry;
 void pstrats_update_shipflags(struct MarioState *m);
-void pstrats_update_yaw(struct MarioState *m);
+void pstrats_update_turning(struct MarioState *m);
 void pstrats_update_pitch(struct MarioState *m);
 
 
