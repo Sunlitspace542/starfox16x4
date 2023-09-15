@@ -98,30 +98,32 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     // boosting and braking.
-    if (gPlayer1Controller->buttonDown & B_BUTTON) {
+    if (gPlayer1Controller->buttonDown & D_CBUTTONS) {
         pos[2] += maxPspeed;
         play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
     }
 
-    if (gPlayer1Controller->buttonDown & A_BUTTON) { 
+    if (gPlayer1Controller->buttonDown & L_CBUTTONS) { 
         pos[2] += minPspeed;
         play_sound(SOUND_MOVING_TERRAIN_SLIDE, m->marioObj->header.gfx.cameraToObject);
     }
 
 
     // we're flying a plane thing here, so let's make the flight controls make sense.
-    if ((gPlayer1Controller->stickY < 0) && (pos[1] != 520)) {
-        pos[1] += 1.0f * minPspeed;
+    if (pos[1] != 520) {
+        if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
+            pos[1] += 1.0f * minPspeed;
+        }
     }
-    if (gPlayer1Controller->stickY > 0) {
+    if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
         pos[1] -= 1.0f * minPspeed;
     }
 
-    if (gPlayer1Controller->stickX < 0) {
+    if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
         pos[0] += 1.0f * medPspeed;
     }
 
-    if (gPlayer1Controller->stickX > 0) {
+    if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
         pos[0] -= 1.0f * medPspeed;
     }
 
@@ -131,7 +133,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     // firing.
-    if (gPlayer1Controller->buttonPressed & Z_TRIG) {
+    if (gPlayer1Controller->buttonPressed & L_CUTTONS) {
         spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
     }
 
