@@ -98,12 +98,12 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     // boosting and braking.
-    if (gPlayer1Controller->buttonDown & D_CBUTTONS) {
+    if (gPlayer1Controller->buttonDown & U_CBUTTONS) {
         pos[2] += maxPspeed;
         play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
     }
 
-    if (gPlayer1Controller->buttonDown & L_CBUTTONS) { 
+    if (gPlayer1Controller->buttonDown & D_CBUTTONS) { 
         pos[2] += minPspeed;
         play_sound(SOUND_MOVING_TERRAIN_SLIDE, m->marioObj->header.gfx.cameraToObject);
     }
