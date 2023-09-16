@@ -7,13 +7,7 @@
 extern const BehaviorScript bhvExitPodiumWarp[];
 extern const BehaviorScript bhvFadingWarp[];
 extern const BehaviorScript bhvWarp[];
-// WARPS
-
-// WARPS
 extern const BehaviorScript bhvDoorWarp[];
-// WARPS
-
-// WARPS
 extern const BehaviorScript bhvDddWarp[];
 // WARPS
 
@@ -21,6 +15,7 @@ extern const BehaviorScript bhvDddWarp[];
 extern const BehaviorScript P_Elaser[]; // Player's single laser.
 extern const BehaviorScript hard180yr_Istrat[];
 // NEW PATHS
+
 // MARIO
 extern const BehaviorScript bhvMario[];
 // MARIO
@@ -41,7 +36,7 @@ extern const BehaviorScript bhvLaunchStarCollectWarp[];
 extern const BehaviorScript bhvLaunchDeathWarp[];
 extern const BehaviorScript bhvSwimmingWarp[];
 // WARPS
-extern const BehaviorScript bhvRandomAnimatedTexture[];
+
 // MENU
 extern const BehaviorScript bhvYellowBackgroundInMenu[];
 extern const BehaviorScript bhvMenuButton[];

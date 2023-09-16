@@ -431,16 +431,12 @@ const BehaviorScript bhvWarp[] = {
 		p_program(bhv_warp_loop),
 	p_loop(),
 };
-// WARPS
 
-// WARP
 const BehaviorScript bhvDoorWarp[] = {
 	p_initialize(OBJ_LIST_SURFACE),
 	p_setd(oInteractType, INTERACT_WARP_DOOR),
 };
-// WARP
 
-// warp
 const BehaviorScript bhvDddWarp[] = {
 	p_initialize(OBJ_LIST_SURFACE),
 	p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
@@ -450,7 +446,7 @@ const BehaviorScript bhvDddWarp[] = {
 		p_program(load_object_collision_model),
 	p_loop(),
 };
-// warp
+// WARPS
 
 // MARIO
 UNUSED static const u64 behavior_data_unused_0 = 0;
