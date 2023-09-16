@@ -164,9 +164,10 @@ s32 act_debug_free_move(struct MarioState *m) {
     }
 
     //m->faceAngle[1] = m->intendedYaw;
+    pstrats_update_interactions(m);
     pstrats_update_turning(m);
     pstrats_update_pitch(m);
-    mapmacs_do_objs(m);
+    //mapmacs_do_objs(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
 
@@ -219,8 +220,19 @@ void pstrats_update_shipflags(struct MarioState *m) {
     }
 }
 
+void pstrats_update_interactions(struct MarioState *m) {
+    mario_process_interactions(m);
+        if (m->marioObj->collidedObjInteractTypes & (INTERACT_DAMAGE)) {
+        m->hurtCounter += 4 * 8;
+    }
+}
+
 void mapmacs_do_objs(struct MarioState *m) {
     // TODO: this is dumb
+
+	MAPOBJ(0,1200,000,5000,MODEL_MARIO,P_Elaser);
+	MAPOBJ(0,-1200,000,5000,MODEL_MARIO,P_Elaser);
+
 	MAPOBJ(30,1200,000,5000,MODEL_MARIO,P_Elaser);
 	MAPOBJ(30,-1200,000,5000,MODEL_MARIO,P_Elaser);
 
@@ -235,6 +247,15 @@ void mapmacs_do_objs(struct MarioState *m) {
 
 	MAPOBJ(150,1200,000,5000,MODEL_MARIO,P_Elaser);
 	MAPOBJ(150,-1200,000,5000,MODEL_MARIO,P_Elaser);
+
+	MAPOBJ(180,1200,000,5000,MODEL_MARIO,P_Elaser);
+	MAPOBJ(180,-1200,000,5000,MODEL_MARIO,P_Elaser);
+
+	MAPOBJ(200,1200,000,5000,MODEL_MARIO,P_Elaser);
+	MAPOBJ(200,-1200,000,5000,MODEL_MARIO,P_Elaser);
+
+	MAPOBJ(230,1200,000,5000,MODEL_MARIO,P_Elaser);
+	MAPOBJ(230,-1200,000,5000,MODEL_MARIO,P_Elaser);
 
 }
 

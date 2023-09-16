@@ -2,8 +2,8 @@
 
 #include "game/game_init.h"
 
-struct ObjectHitbox mspawnertestlev_Hitbox = {
-    /* interactType:      */ INTERACT_NONE,
+struct ObjectHitbox hard180yr_Hitbox = {
+    /* interactType:      */ INTERACT_DAMAGE,
     /* downOffset:        */ 0,
     /* damageOrCoinValue: */ 0,
     /* health:            */ 1,
@@ -15,11 +15,15 @@ struct ObjectHitbox mspawnertestlev_Hitbox = {
 };
 
 
-void lvltest_scr(void) {
+void hard180yr_main(void) {
 
-    MAPOBJ(200, 100, 100, 5000, MODEL_MARIO, P_Elaser);
-    MAPOBJ(200, -100, 100, 5000, MODEL_MARIO, P_Elaser);
+s16 position = o->oPosX;
 
+    position += 24;
+
+    if (position > 4096) { // despawn.
+        s_remove_obj(o);
+    }
 
     o->oInteractStatus = INT_STATUS_NONE;
 }

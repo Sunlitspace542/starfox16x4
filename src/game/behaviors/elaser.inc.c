@@ -3,7 +3,7 @@
 #include "types.h"
 
 struct ObjectHitbox sElaserHitbox = {
-    /* interactType:      */ INTERACT_KOOPA_SHELL,
+    /* interactType:      */ INTERACT_DAMAGE,
     /* downOffset:        */ 0,
     /* damageOrCoinValue: */ 4,
     /* health:            */ 1,

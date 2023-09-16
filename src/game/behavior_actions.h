@@ -188,7 +188,7 @@ void bhv_lll_rotating_hexagonal_ring_loop(void);
 void bhv_lll_sinking_rectangular_platform_loop(void);
 void bhv_lll_sinking_square_platforms_loop(void);
 void elaser_Istrat(void); // player's single laser.
-void lvltest_scr(void);
+void hard180yr_main(void);
 void bhv_koopa_shell_loop(void);
 void bhv_koopa_shell_flame_loop(void);
 void bhv_tox_box_loop(void);

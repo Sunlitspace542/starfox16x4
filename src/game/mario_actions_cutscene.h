@@ -139,6 +139,7 @@ extern struct CreditsEntry *sDispCreditsEntry;
 void pstrats_update_shipflags(struct MarioState *m);
 void pstrats_update_turning(struct MarioState *m);
 void pstrats_update_pitch(struct MarioState *m);
+void pstrats_update_interactions(struct MarioState *m);
 void mapmacs_do_objs(struct MarioState *m);
 
 
