@@ -119,8 +119,6 @@ extern const BehaviorScript bhvTreeSnow[];
 extern const BehaviorScript bhvTreeLeaf[];
 extern const BehaviorScript bhvAnotherTiltingPlatform[];
 extern const BehaviorScript bhvSquarishPathMoving[];
-extern const BehaviorScript bhvPiranhaPlantBubble[];
-extern const BehaviorScript bhvPiranhaPlantWakingBubbles[];
 extern const BehaviorScript bhvFloorSwitchAnimatesObject[];
 extern const BehaviorScript bhvFloorSwitchGrills[];
 extern const BehaviorScript bhvFloorSwitchHardcodedModel[];
@@ -184,11 +182,12 @@ extern const BehaviorScript bhvLllSinkingRectangularPlatform[];
 extern const BehaviorScript bhvLllSinkingSquarePlatforms[];
 extern const BehaviorScript bhvLllTiltingInvertedPyramid[];
 extern const BehaviorScript bhvKoopaShell[];
+// NEW PATHS
 extern const BehaviorScript P_Elaser[]; // Player's single laser.
 extern const BehaviorScript hard180yr_Istrat[];
+// NEW PATHS
 extern const BehaviorScript bhvKoopaShellFlame[];
 extern const BehaviorScript bhvToxBox[];
-extern const BehaviorScript bhvPiranhaPlant[];
 extern const BehaviorScript bhvLllBowserPuzzlePiece[];
 extern const BehaviorScript bhvLllBowserPuzzle[];
 extern const BehaviorScript bhvTuxiesMother[];
@@ -502,7 +501,6 @@ extern const BehaviorScript bhvFlyingBookend[];
 extern const BehaviorScript bhvBookendSpawn[];
 extern const BehaviorScript bhvHauntedBookshelfManager[];
 extern const BehaviorScript bhvBookSwitch[];
-extern const BehaviorScript bhvFirePiranhaPlant[];
 extern const BehaviorScript bhvMovingFlame[];
 #define bhvSmallPiranhaFlame bhvMovingFlame // backwards compatibility
 extern const BehaviorScript bhvFireSpitter[];

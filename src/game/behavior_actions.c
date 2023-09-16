@@ -119,7 +119,6 @@ void spawn_mist_particles_variable(s32 count, s32 offsetY, f32 size) {
 #include "behaviors/tower_platform.inc.c"
 #include "behaviors/tree_particles.inc.c"
 #include "behaviors/square_platform_cycle.inc.c"
-#include "behaviors/piranha_bubbles.inc.c"
 #include "behaviors/purple_switch.inc.c"
 #include "behaviors/metal_box.inc.c"
 #include "behaviors/breakable_box.inc.c"
@@ -187,7 +186,6 @@ void spawn_sparkle_particles(s32 n, s32 radius, s32 height, s32 r) {
 #include "behaviors/lll_sinking_rectangle.inc.c"
 #include "behaviors/tilting_inverted_pyramid.inc.c"
 #include "behaviors/tox_box.inc.c"
-#include "behaviors/piranha_plant.inc.c"
 #include "behaviors/bowser_puzzle_piece.inc.c"
 
 void set_obj_anim_with_accel_and_sound(s16 frame1, s16 frame2, s32 sound) {

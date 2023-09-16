@@ -266,7 +266,6 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_250
     {bhvMacroUkiki,                     MODEL_UKIKI,                        UKIKI_BP_CAGE}, // macro_ukiki - unused
     {bhvMacroUkiki,                     MODEL_UKIKI,                        UKIKI_BP_CAP}, // macro_ukiki_2 - unused
-    {bhvPiranhaPlant,                   MODEL_PIRANHA_PLANT,                0}, // macro_piranha_plant - unused
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_254
     {bhvSmallWhomp,                     MODEL_WHOMP,                        0}, // macro_whomp
     {bhvChainChomp,                     MODEL_CHAIN_CHOMP,                  0}, // macro_chain_chomp
@@ -274,8 +273,6 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvKoopa,                          MODEL_KOOPA_WITH_SHELL,             KOOPA_BP_NORMAL   }, // macro_koopa
     {bhvKoopa,                          MODEL_KOOPA_WITHOUT_SHELL,          KOOPA_BP_UNSHELLED}, // macro_koopa_shellless - unused
     {bhvWoodenPost,                     MODEL_WOODEN_POST,                  0}, // macro_wooden_post_copy - unused
-    {bhvFirePiranhaPlant,               MODEL_PIRANHA_PLANT,                FIRE_PIRANHA_PLANT_BP_NORMAL}, // macro_fire_piranha_plant
-    {bhvFirePiranhaPlant,               MODEL_PIRANHA_PLANT,                FIRE_PIRANHA_PLANT_BP_THI   }, // macro_fire_piranha_plant_2 - unused
     {bhvKoopa,                          MODEL_KOOPA_WITH_SHELL,             KOOPA_BP_TINY}, // macro_thi_koopa_the_quick
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_264
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_265

@@ -1649,25 +1649,6 @@ const BehaviorScript bhvSquarishPathMoving[] = {
 	p_loop(),
 };
 
-const BehaviorScript bhvPiranhaPlantBubble[] = {
-	p_initialize(OBJ_LIST_UNIMPORTANT),
-	p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-	p_softspritemodeON(),
-	p_while(),
-		p_program(bhv_piranha_plant_bubble_loop),
-	p_loop(),
-};
-
-const BehaviorScript bhvPiranhaPlantWakingBubbles[] = {
-	p_initialize(OBJ_LIST_UNIMPORTANT),
-	p_softspritemodeON(),
-	p_setbit(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-	p_do(10),
-		p_program(bhv_piranha_plant_waking_bubbles_loop),
-	p_next(),
-	p_killshape(),
-};
-
 const BehaviorScript bhvFloorSwitchAnimatesObject[] = {
 	p_initialize(OBJ_LIST_SURFACE),
 	p_setd(oBehParams2ndByte, PURPLE_SWITCH_BP_ANIMATES),
@@ -2396,25 +2377,6 @@ const BehaviorScript bhvToxBox[] = {
 	p_save_nowpos(),
 	p_while(),
 		p_program(bhv_tox_box_loop),
-	p_loop(),
-};
-
-const BehaviorScript bhvPiranhaPlant[] = {
-	p_initialize(OBJ_LIST_GENACTOR),
-	p_setbit(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-	p_set_pointer(oAnimations, piranha_plant_seg6_anims_0601C31C),
-	p_set_skelanime_number(PIRANHA_PLANT_ANIM_BITE),
-	p_setobjname(INTERACT_DAMAGE),
-	p_sethitbox(/*Radius*/ 100, /*Height*/ 200),
-	p_setdamagebox(/*Radius*/ 50, /*Height*/ 200),
-	p_setd(oIntangibleTimer,   0),
-	p_setd(oDamageOrCoinValue, 3),
-	p_setd(oNumLootCoins,	  5),
-	p_makeshape(/*Model*/ MODEL_BUBBLE, /*Behavior*/ bhvPiranhaPlantBubble),
-	p_setf(oDrawingDistance, 2000),
-	p_save_nowpos(),
-	p_while(),
-		p_program(bhv_piranha_plant_loop),
 	p_loop(),
 };
 
@@ -5678,20 +5640,6 @@ const BehaviorScript bhvBookSwitch[] = {
 	p_program(bhv_init_room),
 	p_while(),
 		p_program(bhv_book_switch_loop),
-	p_loop(),
-};
-
-const BehaviorScript bhvFirePiranhaPlant[] = {
-	p_initialize(OBJ_LIST_GENACTOR),
-	p_setbit(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-	p_BGcheckYset(),
-	p_set_pointer(oAnimations, piranha_plant_seg6_anims_0601C31C),
-	p_set_skelanime_number(FIRE_PIRANHA_PLANT_ANIM_SHRINK),
-	p_save_nowpos(),
-	P_shapeOFF(),
-	p_program(bhv_fire_piranha_plant_init),
-	p_while(),
-		p_program(bhv_fire_piranha_plant_update),
 	p_loop(),
 };
 

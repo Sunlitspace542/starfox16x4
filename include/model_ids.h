@@ -405,7 +405,6 @@
 #define MODEL_SKEETER                     0x69        // skeeter_geo
 
 // group 14
-#define MODEL_PIRANHA_PLANT               0x64        // piranha_plant_geo
 #define MODEL_WHOMP                       0x67        // whomp_geo
 #define MODEL_KOOPA_WITH_SHELL            0x68        // koopa_with_shell_geo
 #define MODEL_METALLIC_BALL               0x65        // metallic_ball_geo
