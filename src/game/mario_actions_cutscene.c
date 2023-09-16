@@ -75,7 +75,7 @@ static u8 sStarsNeededForDialog[] = { 1, 3, 8, 30, 50, 70 };
 //*  PLAYER MOVEMENT STRATEGY.  *
 //*                             *
 //*******************************
-#include "stratequ.h"
+#include "stratequ.h" // strategy equates for player speed and stuff
 
 s32 act_debug_free_move(struct MarioState *m) {
     struct WallCollisionData wallData;

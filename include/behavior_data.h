@@ -311,11 +311,13 @@ extern const BehaviorScript bhvLaunchStarCollectWarp[];
 extern const BehaviorScript bhvLaunchDeathWarp[];
 extern const BehaviorScript bhvSwimmingWarp[];
 extern const BehaviorScript bhvRandomAnimatedTexture[];
+// MENU
 extern const BehaviorScript bhvYellowBackgroundInMenu[];
 extern const BehaviorScript bhvMenuButton[];
 extern const BehaviorScript bhvMenuButtonManager[];
 extern const BehaviorScript bhvActSelectorStarType[];
 extern const BehaviorScript bhvActSelector[];
+// MENU
 extern const BehaviorScript bhvMovingYellowCoin[];
 extern const BehaviorScript bhvMovingBlueCoin[];
 extern const BehaviorScript bhvBlueCoinSliding[];
