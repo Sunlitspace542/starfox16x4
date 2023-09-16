@@ -304,7 +304,6 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_288
     {bhvSwoop,                          MODEL_SWOOP,                        SWOOP_BP_0}, // macro_swoop
     {bhvSwoop,                          MODEL_SWOOP,                        SWOOP_BP_1}, // macro_swoop_2
-    {bhvMrI,                            MODEL_NONE,                         0}, // macro_mr_i
     {bhvScuttlebugSpawn,                MODEL_NONE,                         0}, // macro_scuttlebug_spawner
     {bhvScuttlebug,                     MODEL_SCUTTLEBUG,                   0}, // macro_scuttlebug
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_294

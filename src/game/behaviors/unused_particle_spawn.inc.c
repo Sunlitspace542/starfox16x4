@@ -19,7 +19,7 @@ void bhv_unused_particle_spawn_loop(void) {
         s_remove_obj(o);
 
         for (i = 0; i < 10; i++) {
-            spawn_object(o, MODEL_PURPLE_MARBLE, bhvPurpleParticle);
+            //spawn_object(o, MODEL_PURPLE_MARBLE, bhvPurpleParticle);
         }
     }
 }

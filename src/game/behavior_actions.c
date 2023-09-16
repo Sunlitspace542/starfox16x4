@@ -46,8 +46,6 @@
 #include "rumble_init.h"
 #include "puppylights.h"
 
-#include "behaviors/star_door.inc.c"
-#include "behaviors/mr_i.inc.c"
 #include "behaviors/pole.inc.c"
 #include "behaviors/thi_top.inc.c"
 #include "behaviors/capswitch.inc.c"

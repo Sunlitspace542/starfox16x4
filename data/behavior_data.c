@@ -394,72 +394,6 @@ enum BehaviorCommands {
 	BC_B(BHV_CMD_SPAWN_WATER_DROPLET), \
 	BC_PTR(dropletParams)
 
-
-const BehaviorScript bhvStarDoor[] = {
-	p_initialize(OBJ_LIST_SURFACE),
-	p_setd(oInteractType, INTERACT_DOOR),
-	p_setshapeinfo(inside_castle_seg7_collision_star_door),
-	p_setd(oInteractionSubtype, INT_SUBTYPE_STAR_DOOR),
-	p_setbit(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-	p_sethitbox(/*Radius*/ 80, /*Height*/ 100),
-	p_save_nowpos(),
-	p_setf(oDrawingDistance, 20000),
-	p_program(bhv_door_init),
-	p_setd(oIntangibleTimer, 0),
-	p_while(),
-		p_program(bhv_star_door_loop),
-		p_program(bhv_door_rendering_loop),
-		p_program(load_object_collision_model),
-	p_loop(),
-};
-
-const BehaviorScript bhvMrI[] = {
-	p_initialize(OBJ_LIST_GENACTOR),
-	p_setbit(oFlags, (OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-	p_save_nowpos(),
-	p_makeshape(/*Model*/ MODEL_MR_I_IRIS, /*Behavior*/ bhvMrIIris),
-	p_changeshape(MODEL_MR_I_BODY),
-	p_softspritemodeON(),
-	p_program(bhv_init_room),
-	p_while(),
-		p_program(bhv_mr_i_body_loop),
-	p_loop(),
-};
-
-const BehaviorScript bhvMrIIris[] = {
-	p_initialize(OBJ_LIST_DEFAULT),
-	p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-	p_program(bhv_init_room),
-	p_while(),
-		p_program(bhv_mr_i_iris_loop),
-	p_loop(),
-};
-
-const BehaviorScript bhvMrIParticle[] = {
-	p_initialize(OBJ_LIST_LEVEL),
-	p_softspritemodeON(),
-	p_setbit(oFlags, (OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-	p_setd(oIntangibleTimer, 0),
-	p_sethitbox(50, 50),
-	p_setd(oDamageOrCoinValue, 1),
-	p_setd(oInteractType, INTERACT_DAMAGE),
-	p_setmovedata(/*Wall hitbox radius*/ 30, /*Gravity*/ 0, /*Bounciness*/ 0, /*Drag strength*/ 0, /*Friction*/ 0, /*Buoyancy*/ 0, /*Unused*/ 0, 0),
-	p_program(bhv_init_room),
-	p_while(),
-		p_program(bhv_mr_i_particle_loop),
-	p_loop(),
-};
-
-const BehaviorScript bhvPurpleParticle[] = {
-	p_initialize(OBJ_LIST_UNIMPORTANT),
-	p_softspritemodeON(),
-	p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-	p_do(10),
-		p_program(bhv_piranha_particle_loop),
-	p_next(),
-	p_killshape(),
-};
-
 const BehaviorScript bhvGiantPole[] = {
 	p_initialize(OBJ_LIST_POLELIKE),
 	p_setbit(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
@@ -3599,6 +3533,7 @@ const BehaviorScript bhvRandomAnimatedTexture[] = {
 	p_loop(),
 };
 
+// MENU
 const BehaviorScript bhvYellowBackgroundInMenu[] = {
 	p_initialize(OBJ_LIST_LEVEL),
 	p_setbit(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
@@ -3646,6 +3581,8 @@ const BehaviorScript bhvActSelector[] = {
 		p_program(bhv_act_selector_loop),
 	p_loop(),
 };
+
+// MENU
 
 const BehaviorScript bhvMovingYellowCoin[] = {
 	p_initialize(OBJ_LIST_LEVEL),

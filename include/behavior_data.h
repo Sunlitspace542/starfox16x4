@@ -3,12 +3,6 @@
 
 #include "types.h"
 
-extern const BehaviorScript bhvStarDoor[];
-extern const BehaviorScript bhvMrI[];
-extern const BehaviorScript bhvMrIIris[];
-#define bhvMrIBody bhvMrIIris // backwards compatibility
-extern const BehaviorScript bhvMrIParticle[];
-extern const BehaviorScript bhvPurpleParticle[];
 extern const BehaviorScript bhvGiantPole[];
 extern const BehaviorScript bhvPoleGrabbing[];
 extern const BehaviorScript bhvThiHugeIslandTop[];
