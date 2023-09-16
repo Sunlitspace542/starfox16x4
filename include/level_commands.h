@@ -363,9 +363,8 @@ enum GoddardScene {
 #define OBJECT(model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh) \
     OBJECT_WITH_ACTS(model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh, 0x1F)
 
-#define MAPOBJ(frame, model, posX, posY, posZ, beh) \
-    CMD_BBH(LEVEL_CMD_23, 0x00, frame), \
-    OBJECT(model, posX, posY, posZ, 0, 0, 0, 0x00000000, beh)
+#define MAPWAIT(frame) \
+    CMD_BBH(LEVEL_CMD_23, 0x04, frame)
 
 #define MARIO(model, behArg, beh) \
     CMD_BBH(LEVEL_CMD_INIT_MARIO, 0x0C, model), \

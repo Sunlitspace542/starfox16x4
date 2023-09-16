@@ -2456,6 +2456,15 @@ const BehaviorScript P_Elaser[] = {
 	p_loop(),
 };
 
+const BehaviorScript P_TestlevelMasterSpawner[] = {
+	p_initialize(OBJ_LIST_LEVEL),
+	p_setbit(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+	p_setmovedata(/*Wall hitbox radius*/ 30, /*Gravity*/ 0, /*Bounciness*/ -50, /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
+	p_while(),
+		p_program(lvltest_scr),
+	p_loop(),
+};
+
 const BehaviorScript bhvKoopaShellFlame[] = {
 	p_initialize(OBJ_LIST_UNIMPORTANT),
 	p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),

@@ -69,7 +69,7 @@ static u8 sStarsNeededForDialog[] = { 1, 3, 8, 30, 50, 70 };
 *  Descr: PLAYER'S STRATEGIES.                                            *
 *                                                                         *
 \*************************************************************************/
-
+// PSTRATS
 //*******************************
 //*                             *
 //*  PLAYER MOVEMENT STRATEGY.  *
@@ -85,6 +85,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     if(gGlobalTimer > 0) {
     gLocalTimer++;
     }
+
     //if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
 
     set_mario_animation(m, MARIO_ANIM_A_POSE);
@@ -110,7 +111,10 @@ s32 act_debug_free_move(struct MarioState *m) {
 
 
     // we're flying a plane thing here, so let's make the flight controls make sense.
-    if (pos[1] != 520) {
+    // up - dive
+    // down - climb
+    // also add dpad for those who want a more SNES-like control scheme.
+    if (pos[1] != 520) { // set level "ceiling" for now
         if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
             pos[1] += 1.0f * minPspeed;
         }
@@ -127,6 +131,7 @@ s32 act_debug_free_move(struct MarioState *m) {
         pos[0] -= 1.0f * medPspeed;
     }
 
+
     // WORLD.ASM
     if (pos[2] > 20450) { // Loop pos at 4096
         pos[2] = 0;
@@ -134,7 +139,7 @@ s32 act_debug_free_move(struct MarioState *m) {
 
     // firing.
     if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
-        spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
+    //    spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, model_goomba, P_Elaser);
     }
 
 
@@ -161,6 +166,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     //m->faceAngle[1] = m->intendedYaw;
     pstrats_update_turning(m);
     pstrats_update_pitch(m);
+    mapmacs_do_objs(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
 
@@ -213,6 +219,20 @@ void pstrats_update_shipflags(struct MarioState *m) {
     }
 }
 
+void mapmacs_do_objs(struct MarioState *m) {
+    // TODO: this is dumb
+	MAPOBJ(30,1200,000,5000,MODEL_MARIO,P_Elaser);
+	MAPOBJ(30,-1200,000,5000,MODEL_MARIO,P_Elaser);
+
+	MAPOBJ(60,1200,000,5000,MODEL_MARIO,P_Elaser);
+	MAPOBJ(60,-1200,000,5000,MODEL_MARIO,P_Elaser);
+
+	MAPOBJ(90,000,000,4000,MODEL_MARIO,P_Elaser);
+
+	MAPOBJ(120,1200,000,5000,MODEL_MARIO,P_Elaser);
+	MAPOBJ(90,-1200,000,5000,MODEL_MARIO,P_Elaser);
+
+}
 
 
 

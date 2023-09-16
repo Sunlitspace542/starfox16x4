@@ -458,9 +458,10 @@ static void level_cmd_load_model_from_geo(void) {
     sCurrentCmd = CMD_NEXT;
 }*/
 
-static void level_cmd_23(void) { // get frame from globaltimer
-    u32 frame = CMD_GET(u32,   4);
-    if (gGlobalTimer == frame) {
+// mapwait
+static void level_cmd_23(void) { // get frame from localtimer
+    u32 frame = CMD_GET(u32, 4);
+    if (gLocalTimer == frame) {
         sCurrentCmd = CMD_NEXT;
         return;
     }

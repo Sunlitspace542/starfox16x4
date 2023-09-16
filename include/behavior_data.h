@@ -193,6 +193,7 @@ extern const BehaviorScript bhvLllSinkingSquarePlatforms[];
 extern const BehaviorScript bhvLllTiltingInvertedPyramid[];
 extern const BehaviorScript bhvKoopaShell[];
 extern const BehaviorScript P_Elaser[]; // Player's single laser.
+extern const BehaviorScript P_TestlevelMasterSpawner[];
 extern const BehaviorScript bhvKoopaShellFlame[];
 extern const BehaviorScript bhvToxBox[];
 extern const BehaviorScript bhvPiranhaPlant[];

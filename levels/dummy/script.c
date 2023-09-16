@@ -26,6 +26,12 @@ const LevelScript level_dummy_entry[] = {
 	INIT_LEVEL(),
 	LOAD_YAY0(0x07, _dummy_segment_7SegmentRomStart, _dummy_segment_7SegmentRomEnd), 
 	LOAD_YAY0(0x0A, _water_skybox_yay0SegmentRomStart, _water_skybox_yay0SegmentRomEnd), 
+    LOAD_YAY0(        /*seg*/ 0x05, _group10_yay0SegmentRomStart, _group10_yay0SegmentRomEnd),
+    LOAD_RAW(         /*seg*/ 0x0C, _group10_geoSegmentRomStart,  _group10_geoSegmentRomEnd),
+    LOAD_YAY0(        /*seg*/ 0x06, _group15_yay0SegmentRomStart, _group15_yay0SegmentRomEnd),
+    LOAD_RAW(         /*seg*/ 0x0D, _group15_geoSegmentRomStart,  _group15_geoSegmentRomEnd),
+    LOAD_YAY0(        /*seg*/ 0x08, _common0_yay0SegmentRomStart, _common0_yay0SegmentRomEnd),
+    LOAD_RAW(         /*seg*/ 0x0F, _common0_geoSegmentRomStart,  _common0_geoSegmentRomEnd),
 	ALLOC_LEVEL_POOL(),
 	MARIO(MODEL_MARIO, 0x00000001, bhvMario), 
 
@@ -37,8 +43,6 @@ const LevelScript level_dummy_entry[] = {
 		WARP_NODE(0xF0, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF1, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, 0, 200, 0, 0, 0, 0, 0x000A0000, bhvSpinAirborneWarp),
-		// MAPOBJ(frame, model, posX, posY, posZ, beh)
-		//MAPOBJ(200, MODEL_MARIO, 0, 200, 200, P_Elaser),
 		MARIO_POS(0x01, 0, 0, 200, -5000),
 		TERRAIN(dummy_area_1_collision),
 		MACRO_OBJECTS(dummy_area_1_macro_objs),
