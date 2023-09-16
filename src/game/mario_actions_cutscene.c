@@ -167,7 +167,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     pstrats_update_interactions(m);
     pstrats_update_turning(m);
     pstrats_update_pitch(m);
-    //mapmacs_do_objs(m);
+    mapmacs_do_objs(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
 

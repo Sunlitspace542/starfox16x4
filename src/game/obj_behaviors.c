@@ -679,3 +679,6 @@ UNUSED s32 debug_sequence_tracker(s16 debugInputSequence[]) {
 
     return FALSE;
 }
+
+#include "behaviors/elaser.inc.c"
+#include "behaviors/hard180yr.inc.c"
