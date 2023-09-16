@@ -77,8 +77,6 @@ void bhv_intro_lakitu_loop(void) {
 
             o->oIntroLakituSplineSegment = 0.0f;
             o->oIntroLakituSplineSegmentProgress = 0.0f;
-            o->oIntroLakituCloud =
-                spawn_object_relative_with_scale(CLOUD_BP_LAKITU_CLOUD, 0, 0, 0, 2.0f, o, MODEL_MIST, bhvCloud);
 
             if (gCamera->cutscene == CUTSCENE_END_WAVING) {
                 o->oAction = INTRO_LAKITU_ACT_CUTSCENE_END_WAVING_1;

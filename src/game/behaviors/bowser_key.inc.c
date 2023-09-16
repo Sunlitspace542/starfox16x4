@@ -28,11 +28,6 @@ void bhv_bowser_key_loop(void) {
             o->oVelY = 70.0f;
         }
 
-        spawn_sparkle_particles(3, 200, 80, -60);
-        spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
-        cur_obj_update_floor_and_walls();
-        cur_obj_move_standard(78);
-
         if (o->oMoveFlags & OBJ_MOVE_ON_GROUND) {
             o->oAction = 1;
         } else if (o->oMoveFlags & OBJ_MOVE_LANDED) {

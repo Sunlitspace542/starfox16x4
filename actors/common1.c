@@ -31,9 +31,6 @@ UNUSED static const u64 binid_4 = 4;
 #include "door/collision.inc.c"
 UNUSED static const u64 binid_5 = 5;
 
-#include "bowser_key/model.inc.c"
-#include "bowser_key/anims/data.inc.c"
-#include "bowser_key/anims/table.inc.c"
 UNUSED static const u64 binid_6 = 6;
 
 #include "flame/model.inc.c"
@@ -84,6 +81,3 @@ UNUSED static const u64 binid_20 = 20;
 #include "wooden_signpost/model.inc.c"
 #include "wooden_signpost/collision.inc.c"
 UNUSED static const u64 binid_21 = 21;
-
-#include "tree/model.inc.c"
-UNUSED static const u64 binid_22 = 22;

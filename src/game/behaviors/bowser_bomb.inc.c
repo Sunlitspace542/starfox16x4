@@ -7,25 +7,12 @@ void bhv_bowser_bomb_loop(void) {
         o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
     }
 
-    if (o->oInteractStatus & INT_STATUS_HIT_MINE) {
-        spawn_object(o, MODEL_BOWSER_FLAMES, bhvBowserBombExplosion);
-        create_sound_spawner(SOUND_GENERAL_BOWSER_BOMB_EXPLOSION);
-        set_camera_shake_from_point(SHAKE_POS_LARGE, o->oPosX, o->oPosY, o->oPosZ);
-        o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
-    }
 
     set_object_visibility(o, 7000);
 }
 
 void bhv_bowser_bomb_explosion_loop(void) {
     cur_obj_scale((f32) o->oTimer / 14.0f * 9.0f + 1.0f);
-
-    if ((o->oTimer % 4 == 0) && (o->oTimer < 20)) {
-        struct Object *mineSmoke = spawn_object(o, MODEL_BOWSER_SMOKE, bhvBowserBombSmoke);
-        mineSmoke->oPosX += random_float() * 600.0f - 400.0f;
-        mineSmoke->oPosZ += random_float() * 600.0f - 400.0f;
-        mineSmoke->oVelY += random_float() * 10.0f;
-    }
 
     if (o->oTimer % 2 == 0) {
         o->oAnimState++;

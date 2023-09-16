@@ -1766,18 +1766,6 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
         update_mario_info_for_cam(gMarioState);
         mario_update_hitbox_and_cap_model(gMarioState);
 
-        // Both of the wind handling portions play wind audio only in
-        // non-Japanese releases.
-        if (gMarioState->floor->type == SURFACE_HORIZONTAL_WIND) {
-            spawn_wind_particles(0, (gMarioState->floor->force << 8));
-            play_sound(SOUND_ENV_WIND2, gMarioState->marioObj->header.gfx.cameraToObject);
-        }
-
-        if (gMarioState->floor->type == SURFACE_VERTICAL_WIND) {
-            spawn_wind_particles(1, 0);
-            play_sound(SOUND_ENV_WIND2, gMarioState->marioObj->header.gfx.cameraToObject);
-        }
-
         play_infinite_stairs_music();
         gMarioState->marioObj->oInteractStatus = INT_STATUS_NONE;
 #if ENABLE_RUMBLE
@@ -1855,13 +1843,6 @@ void init_mario(void) {
     vec3s_set(gMarioState->marioObj->header.gfx.angle, 0, gMarioState->faceAngle[1], 0);
 
     Vec3s capPos;
-    if (save_file_get_cap_pos(capPos)) {
-        struct Object *capObject = spawn_object(gMarioState->marioObj, MODEL_MARIOS_CAP, bhvNormalCap);
-        vec3s_to_vec3f(&capObject->oPosVec, capPos);
-
-        capObject->oForwardVel = 0;
-        capObject->oMoveAngleYaw = 0;
-    }
 }
 
 void init_mario_from_save_file(void) {

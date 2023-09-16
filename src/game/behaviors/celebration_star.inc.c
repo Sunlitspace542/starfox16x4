@@ -30,7 +30,6 @@ void celeb_star_act_spin_around_mario(void) {
     }
 
     if (o->oTimer < 35) {
-        spawn_object(o, MODEL_SPARKLES, bhvCelebrationStarSparkle);
         o->oCelebStarDiameterOfRotation++;
     } else {
         o->oCelebStarDiameterOfRotation -= 20;

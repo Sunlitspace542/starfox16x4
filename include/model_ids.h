@@ -31,16 +31,7 @@
 #define MODEL_LEVEL_GEOMETRY_15                0x15
 #define MODEL_LEVEL_GEOMETRY_16                0x16
 
-#define MODEL_BOB_BUBBLY_TREE                  0x17        // bubbly_tree_geo
-#define MODEL_WDW_BUBBLY_TREE                  0x17        // bubbly_tree_geo
-#define MODEL_CASTLE_GROUNDS_BUBBLY_TREE       0x17        // bubbly_tree_geo
-#define MODEL_WF_BUBBLY_TREE                   0x17        // bubbly_tree_geo
-#define MODEL_THI_BUBBLY_TREE                  0x17        // bubbly_tree_geo
-#define MODEL_COURTYARD_SPIKY_TREE             0x18        // spiky_tree_geo
-#define MODEL_CCM_SNOW_TREE                    0x19        // snow_tree_geo
-#define MODEL_SL_SNOW_TREE                     0x19        // snow_tree_geo
 #define MODEL_UNKNOWN_TREE_1A                  0x1A        // referenced in special presets, undefined
-#define MODEL_SSL_PALM_TREE                    0x1B        // palm_tree_geo
 #define MODEL_CASTLE_CASTLE_DOOR_UNUSED        0x1C        // castle_door_geo - unused, original id
 #define MODEL_CASTLE_WOODEN_DOOR_UNUSED        0x1D        // wooden_door_geo - unused, original id
 #define MODEL_BBH_HAUNTED_DOOR                 0x1D        // haunted_door_geo

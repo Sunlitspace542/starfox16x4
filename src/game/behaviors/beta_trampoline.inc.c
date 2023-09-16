@@ -57,16 +57,6 @@ void bhv_beta_trampoline_top_loop(void) {
     cur_obj_set_model(MODEL_TRAMPOLINE);
 
     // When initialized, spawn the rest of the trampoline
-    if (o->oTimer == 0) {
-        struct Object *trampolinePart;
-
-        trampolinePart = spawn_object(o, MODEL_TRAMPOLINE_CENTER, bhvBetaTrampolineSpring);
-        trampolinePart->oPosY -= 75.0f;
-
-        trampolinePart = spawn_object(o, MODEL_TRAMPOLINE_BASE, bhvStaticObject);
-        trampolinePart->oPosY -= 150.0f;
-    }
-
     // Update o->oBetaTrampolineMarioOnTrampoline, and reset
     // the trampoline's position if Mario's not on it.
     // Since the trampoline never moves, this doesn't do anything.

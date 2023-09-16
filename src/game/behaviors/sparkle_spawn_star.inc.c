@@ -71,8 +71,6 @@ void bhv_spawned_star_loop(void) {
             o->oGravity = -4.0f;
             spawn_mist_particles();
         }
-        cur_obj_play_sound_1(SOUND_ENV_STAR);
-        spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
         if (o->oVelY < 0 && o->oPosY < o->oHomeY) {
             o->oAction++; // SPAWN_STAR_POS_CUTSCENE_ACT_BOUNCE
             o->oForwardVel = 0;
@@ -90,7 +88,7 @@ void bhv_spawned_star_loop(void) {
             o->oGravity = 0;
             o->oAction++; // SPAWN_STAR_POS_CUTSCENE_ACT_END
         }
-        spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
+
     } else if (o->oAction == SPAWN_STAR_POS_CUTSCENE_ACT_END) {
         if (gCamera->cutscene == 0 && gRecentCutscene == 0) {
             clear_time_stop_flags(TIME_STOP_ENABLED | TIME_STOP_MARIO_AND_DOORS);

@@ -55,8 +55,7 @@ void bhv_koopa_shell_flame_spawn(void) {
 }
 
 void koopa_shell_spawn_sparkles(f32 a) {
-    struct Object *sparkleObj = spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
-    sparkleObj->oPosY += a;
+
 }
 
 void bhv_koopa_shell_loop(void) {

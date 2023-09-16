@@ -17,7 +17,6 @@ void bhv_camera_lakitu_init(void) {
             s_remove_obj(o);
         }
     } else {
-        spawn_object_relative_with_scale(CLOUD_BP_LAKITU_CLOUD, 0, 0, 0, 2.0f, o, MODEL_MIST, bhvCloud);
     }
 }
 
@@ -54,7 +53,6 @@ static void camera_lakitu_intro_act_spawn_cloud(void) {
         o->oCameraLakituSpeed = 60.0f;
         o->oCameraLakituCircleRadius = 1000.0f;
 
-        spawn_object_relative_with_scale(CLOUD_BP_LAKITU_CLOUD, 0, 0, 0, 2.0f, o, MODEL_MIST, bhvCloud);
     }
 }
 

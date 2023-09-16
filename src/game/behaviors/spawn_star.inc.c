@@ -70,30 +70,12 @@ void bhv_star_spawn_loop(void) {
             }
             break;
 
-        case SPAWN_STAR_ARC_CUTSCENE_ACT_GO_TO_HOME:
-            obj_move_xyz_using_fvel_and_yaw(o);
-            o->oStarSpawnVelY += o->oVelY;
-            o->oPosY = o->oStarSpawnVelY + sins((o->oTimer * 0x8000) / 30) * 400.0f;
-            o->oFaceAngleYaw += 0x1000;
-            spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
-            cur_obj_play_sound_1(SOUND_ENV_STAR);
-            if (o->oTimer == 29) {
-                o->oAction = SPAWN_STAR_ARC_CUTSCENE_ACT_BOUNCE;
-                o->oForwardVel = 0;
-                // Set to exact home coordinates
-                vec3f_copy(&o->oPosVec, &o->oHomeVec);
-                play_power_star_jingle();
-            }
-            break;
-
         case SPAWN_STAR_ARC_CUTSCENE_ACT_BOUNCE:
             if (o->oTimer < 20) {
                 o->oVelY = 20 - o->oTimer;
             } else {
                 o->oVelY = -10.0f;
             }
-
-            spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
             obj_move_xyz_using_fvel_and_yaw(o);
             o->oFaceAngleYaw = o->oFaceAngleYaw - o->oTimer * 0x10 + 0x1000;
             cur_obj_play_sound_1(SOUND_ENV_STAR);

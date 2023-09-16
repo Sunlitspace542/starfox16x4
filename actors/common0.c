@@ -25,9 +25,6 @@ UNUSED static const u64 binid_3 = 3;
 #include "cannon_barrel/model.inc.c"
 UNUSED static const u64 binid_4 = 4;
 
-#include "chuckya/model.inc.c"
-#include "chuckya/anims/data.inc.c"
-#include "chuckya/anims/table.inc.c"
 UNUSED static const u64 binid_5 = 5;
 
 #include "purple_switch/model.inc.c"

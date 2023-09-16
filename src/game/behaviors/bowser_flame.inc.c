@@ -231,10 +231,6 @@ void bhv_flame_bouncing_init(void) {
 void bhv_flame_bouncing_loop(void) {
     struct Object *bowser;
 
-    if (o->oTimer == 0) {
-        o->oFlameBowser = cur_obj_nearest_object_with_behavior(bhvBowser);
-    }
-
     bowser = o->oFlameBowser;
     o->oForwardVel = 15.0f;
     o->oBounciness = -1.0f;

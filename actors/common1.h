@@ -259,10 +259,6 @@ extern const Gfx transparent_star_seg3_sub_dl_body[];
 extern const Gfx transparent_star_seg3_dl_body[];
 
 // tree
-extern const GeoLayout bubbly_tree_geo[];
-extern const GeoLayout spiky_tree_geo[];
-extern const GeoLayout snow_tree_geo[];
-extern const GeoLayout palm_tree_geo[];
 extern const Gfx tree_seg3_dl_bubbly[];
 extern const Gfx tree_seg3_dl_bubbly_transparent[];
 extern const Gfx tree_seg3_dl_spiky[];

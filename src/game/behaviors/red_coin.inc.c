@@ -26,14 +26,6 @@ static struct ObjectHitbox sRedCoinHitbox = {
 void bhv_red_coin_init(void) {
     // Set the red coins to have a parent of the closest red coin star.
     struct Object *hiddenRedCoinStar = cur_obj_nearest_object_with_behavior(bhvHiddenRedCoinStar);
-    if (hiddenRedCoinStar != NULL) {
-        o->parentObj = hiddenRedCoinStar;
-    } else if ((hiddenRedCoinStar = cur_obj_nearest_object_with_behavior(bhvBowserCourseRedCoinStar)) != NULL) {
-        o->parentObj = hiddenRedCoinStar;
-    } else {
-        o->parentObj = NULL;
-    }
-
     obj_set_hitbox(o, &sRedCoinHitbox);
 }
 

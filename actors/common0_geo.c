@@ -14,7 +14,6 @@
 #include "cannon_lid/geo.inc.c"
 #include "cannon_base/geo.inc.c"
 #include "cannon_barrel/geo.inc.c"
-#include "chuckya/geo.inc.c"
 #include "purple_switch/geo.inc.c"
 #include "checkerboard_platform/geo.inc.c"
 #include "heart/geo.inc.c"

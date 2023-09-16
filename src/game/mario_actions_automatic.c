@@ -22,17 +22,17 @@
 #define HANG_DISTANCE 144.0f
 
 void add_tree_leaf_particles(struct MarioState *m) {
-    if (m->usedObj->behavior == segmented_to_virtual(bhvTree)) {
+/*    if (m->usedObj->behavior == segmented_to_virtual(bhvTree)) {
         // make leaf effect spawn higher on the Shifting Sand Land palm tree
         f32 leafHeight = (obj_has_model(m->usedObj, MODEL_SSL_PALM_TREE) ? 250.0f : 100.0f);
         if (m->pos[1] - m->floorHeight > leafHeight) {
             m->particleFlags |= PARTICLE_LEAF;
         }
-    }
+    }*/
 }
 
 void play_climbing_sounds(struct MarioState *m, s32 b) {
-    s32 isOnTree = (m->usedObj->behavior == segmented_to_virtual(bhvTree));
+/*    s32 isOnTree = (m->usedObj->behavior == segmented_to_virtual(bhvTree));
 
     if (b == 1) {
         if (is_anim_past_frame(m, 1)) {
@@ -42,7 +42,7 @@ void play_climbing_sounds(struct MarioState *m, s32 b) {
     } else {
         play_sound(isOnTree ? SOUND_MOVING_SLIDE_DOWN_TREE : SOUND_MOVING_SLIDE_DOWN_POLE,
                    m->marioObj->header.gfx.cameraToObject);
-    }
+    }*/
 }
 
 s32 set_pole_position(struct MarioState *m, f32 offsetY) {

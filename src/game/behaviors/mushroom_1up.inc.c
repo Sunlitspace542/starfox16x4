@@ -88,10 +88,6 @@ void bhv_1up_walking_loop(void) {
 
     switch (o->oAction) {
         case MUSHROOM_ACT_INIT:
-            if (o->oTimer > 17) {
-                spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
-            }
-
             if (o->oTimer == 0) {
                 play_sound(SOUND_GENERAL2_1UP_APPEAR, gGlobalSoundSource);
             }
@@ -127,9 +123,6 @@ void bhv_1up_running_away_loop(void) {
 
     switch (o->oAction) {
         case MUSHROOM_ACT_INIT:
-            if (o->oTimer > 17) {
-                spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
-            }
 
             if (o->oTimer == 0) {
                 play_sound(SOUND_GENERAL2_1UP_APPEAR, gGlobalSoundSource);
@@ -142,11 +135,6 @@ void bhv_1up_running_away_loop(void) {
                 o->oAction = MUSHROOM_ACT_MOVING;
                 o->oForwardVel = 8.0f;
             }
-            break;
-
-        case MUSHROOM_ACT_MOVING:
-            spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
-            one_up_move_away_from_mario(collisionFlags);
             break;
 
         case MUSHROOM_ACT_DISAPPEARING:
@@ -197,7 +185,7 @@ void bhv_1up_sliding_loop(void) {
     }
 
     bhv_1up_interact();
-    spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
+
 }
 
 void bhv_1up_loop(void) {
@@ -214,12 +202,6 @@ void bhv_1up_jump_on_approach_loop(void) {
                 o->oVelY = 40.0f;
                 o->oAction = MUSHROOM_ACT_MOVING;
             }
-            break;
-
-        case MUSHROOM_ACT_MOVING:
-            collisionFlags = object_step();
-            one_up_move_away_from_mario(collisionFlags);
-            spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
             break;
 
         case MUSHROOM_ACT_DISAPPEARING:
@@ -246,23 +228,11 @@ void bhv_1up_hidden_loop(void) {
             }
             break;
 
-        case MUSHROOM_ACT_MOVING:
-            collisionFlags = object_step();
-            one_up_move_away_from_mario(collisionFlags);
-            spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
-            break;
-
         case MUSHROOM_ACT_DISAPPEARING:
             collisionFlags = object_step();
             bhv_1up_interact();
             obj_flicker_and_disappear(o, 30);
             break;
-
-        case MUSHROOM_ACT_LOOP_IN_AIR:
-            collisionFlags = object_step();
-            if (o->oTimer > 17) {
-                spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
-            }
 
             one_up_loop_in_air();
 
@@ -302,12 +272,6 @@ void bhv_1up_hidden_in_pole_loop(void) {
             pole_1up_move_towards_mario();
             object_step();
             break;
-
-        case MUSHROOM_ACT_LOOP_IN_AIR:
-            object_step();
-            if (o->oTimer > 17) {
-                spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
-            }
 
             one_up_loop_in_air();
 

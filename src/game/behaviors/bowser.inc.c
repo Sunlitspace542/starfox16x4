@@ -153,11 +153,7 @@ void bhv_bowser_body_anchor_loop(void) {
  * Bowser's shockwave attack, spawns only in BitS
  */
 s32 bowser_spawn_shockwave(void) {
-    if (o->oBehParams2ndByte == BOWSER_BP_BITS) {
-        struct Object *wave = spawn_object(o, MODEL_BOWSER_WAVE, bhvBowserShockWave);
-        wave->oPosY = o->oFloorHeight;
-        return TRUE;
-    }
+
     return FALSE;
 }
 
@@ -927,11 +923,7 @@ void bowser_act_charge_mario(void) {
  */
 s32 bowser_check_hit_mine(void) {
     f32 dist;
-    struct Object *mine = cur_obj_find_nearest_object_with_behavior(bhvBowserBomb, &dist);
-    if (mine != NULL && dist < 800.0f) {
-        mine->oInteractStatus |= INT_STATUS_HIT_MINE;
-        return TRUE;
-    }
+
 
     return FALSE;
 }
@@ -1093,12 +1085,6 @@ void bowser_act_dance(void) {
  * Spawns a Key in BitDW/BitFS or Grand Star in BitS
  */
 void bowser_spawn_collectable(void) {
-    if (o->oBehParams2ndByte == BOWSER_BP_BITS) {
-        gSecondCameraFocus = spawn_object(o, MODEL_STAR, bhvGrandStar);
-    } else {
-        gSecondCameraFocus = spawn_object(o, MODEL_BOWSER_KEY, bhvBowserKey);
-        cur_obj_play_sound_2(SOUND_GENERAL2_BOWSER_KEY);
-    }
     gSecondCameraFocus->oAngleVelYaw = o->oAngleVelYaw;
 }
 

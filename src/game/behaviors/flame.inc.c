@@ -21,12 +21,8 @@ void bhv_moving_flame_loop(void) {
 
         obj_compute_vel_from_move_pitch(o->oSmallPiranhaFlameStartSpeed);
         cur_obj_move_standard(-78);
-        spawn_object_with_scale(o, o->oSmallPiranhaFlameModel, bhvMovingFlame,
-                                0.4f * o->header.gfx.scale[0]);
 
         if (o->oTimer > o->oSmallPiranhaFlameNextFlameTimer) {
-            spawn_object_relative_with_scale(1, 0, o->oGraphYOffset, 0, o->header.gfx.scale[0], o,
-                                             o->oSmallPiranhaFlameModel, bhvMovingFlameEmber);
             o->oSmallPiranhaFlameNextFlameTimer = random_linear_offset(8, 15);
             o->oTimer = 0;
         }

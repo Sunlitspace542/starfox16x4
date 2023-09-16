@@ -60,9 +60,6 @@ void bhv_boo_cage_loop(void) {
             cur_obj_update_floor_and_walls();
             cur_obj_move_standard(-78);
 
-            // Spawn sparkles while the cage falls.
-            spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
-
             // When the cage lands/bounces, play a landing/bouncing sound.
             if (o->oMoveFlags & OBJ_MOVE_LANDED) {
                 cur_obj_play_sound_2(SOUND_GENERAL_BOO_CAGE_SOFT_LANDING);

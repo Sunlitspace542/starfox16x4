@@ -201,19 +201,6 @@ static void mr_blizzard_act_death(void) {
             cur_obj_play_sound_2(SOUND_OBJ_SNOW_SAND1);
             // If Mr. Blizzard is wearing Mario's cap, clear
             // the save flag and spawn Mario's cap.
-            if (o->oAnimState != 0) {
-                struct Object *cap;
-                save_file_clear_flags(SAVE_FLAG_CAP_ON_MR_BLIZZARD);
-
-                cap = spawn_object_relative(0, 5, 105, 0, o, MODEL_MARIOS_CAP, bhvNormalCap);
-                if (cap != NULL) {
-                    cap->oMoveAngleYaw = o->oFaceAngleYaw + (o->oFaceAngleRoll < 0 ? 0x4000 : -0x4000);
-                    cap->oForwardVel = 10.0f;
-                }
-
-                // Mr. Blizzard no longer spawns with Mario's cap on.
-                o->oAnimState = 0;
-            }
 
             o->oMrBlizzardChangeInDizziness = 0.0f;
         }

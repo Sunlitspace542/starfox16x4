@@ -11,7 +11,6 @@
 #include "swoop/anims/table.inc.c"
 UNUSED static const u64 binid_2 = 2;
 
-#include "snufit/model.inc.c"
 UNUSED static const u64 binid_3 = 3;
 
 #include "dorrie/model.inc.c"

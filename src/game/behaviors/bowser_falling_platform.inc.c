@@ -22,11 +22,7 @@ struct BowserFallingPlatformData sBowserFallingPlatform[] = {
 };
 
 void falling_bowser_plat_act_start(void) {
-    o->oBitsPlatformBowser = cur_obj_nearest_object_with_behavior(bhvBowser);
-    obj_set_collision_data(o, sBowserFallingPlatform[o->oBehParams2ndByte].collision);
-    if (o->oBitsPlatformBowser != NULL) {
-        o->oAction = BOWSER_BITS_PLAT_ACT_CHECK;
-    }
+
 }
 
 void falling_bowser_plat_act_check(void) {
