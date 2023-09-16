@@ -3029,15 +3029,6 @@ const BehaviorScript bhvStaticCheckeredPlatform[] = {
 	p_loop(),
 };
 
-const BehaviorScript bhvUnusedFakeStar[] = {
-	p_initialize(OBJ_LIST_DEFAULT),
-	p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-	p_while(),
-		p_addd(oFaceAnglePitch, 0x100),
-		p_addd(oFaceAngleYaw,   0x100),
-	p_loop(),
-};
-
 const BehaviorScript bhvStaticObject[] = {
 	p_initialize(OBJ_LIST_DEFAULT),
 	p_setbit(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
