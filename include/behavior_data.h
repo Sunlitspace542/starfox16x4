@@ -3,8 +3,6 @@
 
 #include "types.h"
 
-extern const BehaviorScript bhvGiantPole[];
-extern const BehaviorScript bhvPoleGrabbing[];
 extern const BehaviorScript bhvThiHugeIslandTop[];
 extern const BehaviorScript bhvThiTinyIslandTop[];
 extern const BehaviorScript bhvCapSwitchBase[];

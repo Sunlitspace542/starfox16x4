@@ -394,30 +394,6 @@ enum BehaviorCommands {
 	BC_B(BHV_CMD_SPAWN_WATER_DROPLET), \
 	BC_PTR(dropletParams)
 
-const BehaviorScript bhvGiantPole[] = {
-	p_initialize(OBJ_LIST_POLELIKE),
-	p_setbit(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-	p_setd(oInteractType, INTERACT_POLE),
-	p_sethitbox(/*Radius*/ 80, /*Height*/ 2100),
-	p_save_nowpos(),
-	p_setd(oIntangibleTimer, 0),
-	p_while(),
-		p_program(bhv_giant_pole_loop),
-	p_loop(),
-};
-
-const BehaviorScript bhvPoleGrabbing[] = {
-	p_initialize(OBJ_LIST_POLELIKE),
-	p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-	p_setd(oInteractType, INTERACT_POLE),
-	p_sethitbox(/*Radius*/ 80, /*Height*/ 1500),
-	p_program(bhv_pole_init),
-	p_setd(oIntangibleTimer, 0),
-	p_while(),
-		p_program(bhv_pole_base_loop),
-	p_loop(),
-};
-
 const BehaviorScript bhvThiHugeIslandTop[] = {
 	p_initialize(OBJ_LIST_SURFACE),
 	p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
@@ -1391,7 +1367,6 @@ const BehaviorScript bhvDddMovingPole[] = {
 	p_setd(oIntangibleTimer, 0),
 	p_while(),
 		p_program(bhv_ddd_moving_pole_loop),
-		p_program(bhv_pole_base_loop),
 	p_loop(),
 };
 
@@ -3134,7 +3109,7 @@ const BehaviorScript bhvTree[] = {
 	p_sethitbox(/*Radius*/ 80, /*Height*/ 500),
 	p_setd(oIntangibleTimer, 0),
 	p_while(),
-		p_program(bhv_pole_base_loop),
+//		p_program(bhv_pole_base_loop),
 	p_loop(),
 };
 
@@ -5019,7 +4994,7 @@ const BehaviorScript bhvKoopaFlag[] = {
 	p_set_pointer(oAnimations, koopa_flag_seg6_anims_06001028),
 	p_set_skelanime_number(KOOPA_FLAG_ANIM_WAVE),
 	p_while(),
-		p_program(bhv_pole_base_loop),
+	//	p_program(bhv_pole_base_loop),
 	p_loop(),
 };
 
@@ -5960,7 +5935,7 @@ const BehaviorScript bhvDDDPole[] = {
 	p_setf(oDDDPoleVel, 10),
 	p_while(),
 		p_program(bhv_ddd_pole_update),
-		p_program(bhv_pole_base_loop),
+	//	p_program(bhv_pole_base_loop),
 	p_loop(),
 };
 

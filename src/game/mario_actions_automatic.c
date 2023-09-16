@@ -117,9 +117,6 @@ s32 act_holding_pole(struct MarioState *m) {
             return set_mario_action(m, ACT_CLIMBING_POLE, 0);
         }
 
-        if (poleBehavior != bhvGiantPole && m->controller->stickY > 50.0f) {
-            return set_mario_action(m, ACT_TOP_OF_POLE_TRANSITION, 0);
-        }
     }
 
     if (m->controller->stickY < -16.0f) {
