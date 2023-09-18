@@ -26,7 +26,7 @@ Sunlit: programming, assets
 
 ## List of important things to be done
 
-### Overall:
+### Freeing up ROM space:
 - [X] Remove all SM64 object behaviors
 - [ ] Remove SM64 actor models (partially done)
 - [ ] Remove all vanilla music and their instrument banks
