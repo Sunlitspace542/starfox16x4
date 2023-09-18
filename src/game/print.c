@@ -368,6 +368,19 @@ s32 char_to_glyph_index(char c) {
         return GLYPH_SHIELD3; // SHIELD sprite 3
     }
 
+    if (c == '}') {
+        return GLYPH_SHIELDBOOSTBOX1; // SHIELD/BOOST box sprite 1
+    }
+
+    if (c == '{') {
+        return GLYPH_SHIELDBOOSTBOX2; // SHIELD/BOOST box sprite 2 (rept twice)
+    }
+
+    if (c == ']') {
+        return GLYPH_SHIELDBOOSTBOX3; // SHIELD/BOOST box sprite 3
+    }
+
+
     return GLYPH_SPACE;
 }
 

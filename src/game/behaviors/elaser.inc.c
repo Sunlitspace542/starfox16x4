@@ -44,15 +44,15 @@ elaser_strat
 
 
 void elaser_Istrat(void) {
-    cur_obj_scale(1.0f);
-        o->oVelZ = 66 * 4;
-        o->oForwardVel = 66 * 4;
-        o->oTimer++;
+    cur_obj_scale(1.0f); // scale object
+        o->oVelZ = 66 * 4; // Set Z velocity
+        o->oForwardVel = 66 * 4; // Set Forward velocity
+        o->oTimer++; // increment the object timer
 
     // TODO: add collisions with objects
 
-    if (o->oTimer > 100) { // despawn.
+    if (o->oTimer > 100) { // despawn if object timer is 100
         s_remove_obj(o);
     }
-    cur_obj_move_using_fvel_and_gravity();
+    cur_obj_move_using_fvel_and_gravity(); // actually tell the thing to move
 }

@@ -8,6 +8,8 @@
 #define TEXRECT_MIN_Y 5
 #define TEXRECT_MAX_Y 220
 
+
+// SUNLITNOTE these correspond to the entries in the main_hud_lut LUT.
 enum PrintfGlyphs {
     GLYPH_SPACE           = -1,
     GLYPH_U               = 30,
@@ -19,6 +21,9 @@ enum PrintfGlyphs {
     GLYPH_SHIELD1         = 41,
     GLYPH_SHIELD2         = 42,
     GLYPH_SHIELD3         = 43,
+    GLYPH_SHIELDBOOSTBOX1 = 44,
+    GLYPH_SHIELDBOOSTBOX2 = 45,
+    GLYPH_SHIELDBOOSTBOX3 = 46,
     GLYPH_MINUS           = 47,
     GLYPH_MULTIPLY        = 48,
     GLYPH_COIN            = 49,

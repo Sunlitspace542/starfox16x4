@@ -51,6 +51,15 @@
 //*******************************
 #include "stratequ.h" // strategy equates for player speed and stuff
 
+// TODO: we can't start working on WORLD and objs and stuff until basic player functionality is complete.
+// That means:
+// - pitch change (for climbing and diving)
+// - roll change (for barrel rolls), both pch and rol needed for player wobble
+// - firing (laser strategy, needs model)
+// - Boost/Brake meter and the associated HUD elements (basic boost/brake already exists)
+// - SHIELD meter
+// Anything that isn't on this list has already been done.
+
 s32 player_istrat(struct MarioState *m) {
     struct WallCollisionData wallData;
     struct Surface *floor, *ceil;
@@ -72,10 +81,13 @@ s32 player_istrat(struct MarioState *m) {
         pos[2] += medPspeed;
     }
 
+    // TODO for boosting and braking:
+    // Add boost meter timer for these actions.
+
     // boosting and braking.
     if (gPlayer1Controller->buttonDown & U_CBUTTONS) {
         pos[2] += maxPspeed;
-        play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
+        create_sound_spawner(SOUND_ACTION_FLYING_FAST);
     }
 
     if (gPlayer1Controller->buttonDown & D_CBUTTONS) { 
@@ -117,8 +129,7 @@ s32 player_istrat(struct MarioState *m) {
     }
 
 
-    // TODO: Add ability to ignore collision
-    //      - spawn pseudo floor object to prevent OOB death
+    // spawn pseudo floor object to prevent OOB death
     resolve_and_return_wall_collisions(pos, 60.0f, 50.0f, &wallData);
 
     set_mario_wall(m, ((wallData.numWalls > 0) ? wallData.walls[0] : NULL));
@@ -184,8 +195,10 @@ void pstrats_update_turning(struct MarioState *m) {
     m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
 }
 
-void pstrats_update_pitch(struct MarioState *m) {
     // TODO: this (and roll)
+
+void pstrats_update_pitch(struct MarioState *m) {
+
 }
 
 void pstrats_update_roll(struct MarioState *m) {

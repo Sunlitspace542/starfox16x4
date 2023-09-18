@@ -1,4 +1,5 @@
 #include <PR/ultratypes.h>
+#include <ultra64.h>
 
 #include "sm64.h"
 #include "actors/common1.h"
@@ -427,12 +428,30 @@ void render_hud_bombs(void) {
     }
 }
 
-void render_hud_shield_text(void) {
-    print_text(30, hudY-4, "_"); // 'Coin' glyph // placeholder SHIELD text
-    print_text(46, hudY-4, "("); // 'Coin' glyph // placeholder SHIELD text
-    print_text(62, hudY-4, ")"); // 'Coin' glyph // placeholder SHIELD text
-//DBG
+int shieldboxY = 14;
 
+void render_hud_shield_text(void) {
+    print_text(30, hudY-4, "_"); // SHIELD text
+    print_text(46, hudY-4, "("); // SHIELD text
+    print_text(62, hudY-4, ")"); // SHIELD text
+
+/*
+            render_hud_shield_meter(28, 28); // x, y
+            render_hud_boost_meter(246, 28); // x, y  
+*/
+
+    print_text(28-3, shieldboxY, "}"); // SHIELD BOOST box
+    print_text(44-3, shieldboxY, "{"); // SHIELD BOOST box
+    print_text(60-3, shieldboxY, "{"); // SHIELD BOOST box
+    print_text(76-3, shieldboxY, "]"); // SHIELD BOOST box
+
+    print_text(246-3, shieldboxY, "}"); // SHIELD BOOST box
+    print_text(262-3, shieldboxY, "{"); // SHIELD BOOST box
+    print_text(278-3, shieldboxY, "{"); // SHIELD BOOST box
+    print_text(294-3, shieldboxY, "]"); // SHIELD BOOST box
+    
+//DBG
+/*
     print_text_fmt_int(16, 20, "Z %d", gMarioState->pos[2]);
     print_text_fmt_int(16, 40, "Y %d", gMarioState->pos[1]);
     print_text_fmt_int(16, 60, "X %d", gMarioState->pos[0]);
@@ -442,8 +461,54 @@ void render_hud_shield_text(void) {
     print_text_fmt_int(16, 140, "GTMR %d", gGlobalTimer);
     print_text_fmt_int(16, 160, "LTMR %d", gLocalTimer);
     //print_text_fmt_int(16, 180, "MAG %d", gMarioState->intendedMag);
-    
+    */
     print_fps(10,30); // puppyprint needs to be on for this
+
+}
+
+// shield and boost meters.
+
+void render_hud_shield_meter(s16 x, s16 y) {
+
+    create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
+    create_dl_scale_matrix(MENU_MTX_NOPUSH, 1.2f, 0.8f, 1.0f); // XX YY ZZ
+    gDPSetEnvColor(gDisplayListHead++, 247, 99, 33, 255); // RRR, GGG, BBB, AAA
+    gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
+    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+
+// these have to be here for now until i understand how this works
+    create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
+    create_dl_rotation_matrix(MENU_MTX_NOPUSH, 90.0f, 0, 0, 1.0f);
+    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 0);
+    gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
+    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+
+    create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
+    create_dl_rotation_matrix(MENU_MTX_NOPUSH, 270.0f, 0, 0, 1.0f);
+    gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
+    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+
+}
+
+void render_hud_boost_meter(s16 x, s16 y) {
+
+    create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
+    create_dl_scale_matrix(MENU_MTX_NOPUSH, 1.2f, 0.8f, 1.0f); // XX YY ZZ
+    gDPSetEnvColor(gDisplayListHead++, 140, 189, 239, 255); // RRR, GGG, BBB, AAA
+    gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
+    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+
+// these have to be here for now until i understand how this works
+    create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
+    create_dl_rotation_matrix(MENU_MTX_NOPUSH, 90.0f, 0, 0, 1.0f);
+    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 0);
+    gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
+    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+
+    create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
+    create_dl_rotation_matrix(MENU_MTX_NOPUSH, 270.0f, 0, 0, 1.0f);
+    gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
+    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 
 }
 
@@ -609,24 +674,14 @@ void render_hud(void) {
             render_hud_cannon_reticle();
         }
 
-#ifndef DISABLE_LIVES
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_LIVES) {
             render_hud_mario_lives();
             render_hud_bombs();
-            render_hud_shield_text();
-        }
-#endif
-
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_COIN_COUNT) {
-        //    render_hud_coins();
-        }
-
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_STAR_COUNT) {
-        //    render_hud_stars();
-        }
-
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_KEYS) {
-            render_hud_keys();
+            render_hud_shield_text(); // also shield/boost outer boxes
+            // soon:
+            // render_hud_meter_boxes();
+            render_hud_shield_meter(28, 28); // x, y
+            render_hud_boost_meter(246, 28); // x, y
         }
 
 #ifdef BREATH_METER
