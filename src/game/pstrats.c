@@ -120,19 +120,19 @@ s32 player_istrat(struct MarioState *m) {
     // also add dpad for those who want a more SNES-like control scheme.
     if (pos[1] != 520) { // set level "ceiling" for now
         if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
-            pos[1] += 1.0f * minPspeed;
+            pos[1] += minPspeed;
         }
     }
     if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
-        pos[1] -= 1.0f * minPspeed;
+        pos[1] -= minPspeed;
     }
 
     if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
-        pos[0] += 1.0f * medPspeed;
+        pos[0] += medPspeed;
     }
 
     if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
-        pos[0] -= 1.0f * medPspeed;
+        pos[0] -= medPspeed;
     }
 
 
@@ -179,7 +179,8 @@ s32 player_istrat(struct MarioState *m) {
     pstrats_update_roll(m);
     //mapmacs_do_objs(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
-    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
+    vec3s_copy(m->marioObj->header.gfx.angle, m->faceAngle); // THE ALL IMPORTANT LINE
+    // this allows for pitch and roll changes, along with yaw.
 
     return FALSE;
 }
@@ -222,24 +223,36 @@ void pstrats_update_turning(struct MarioState *m) {
     // TODO: this (and roll)
 
 void pstrats_update_pitch(struct MarioState *m) {
-            if (gPlayer1Controller->stickY < 0) {
-                m->faceAngle[0] += DEGREES(5);
-            }
+    if (gPlayer1Controller->stickY > 0) {
+        m->faceAngle[0] += 512.0f;
+    } else if (gPlayer1Controller->stickY < 0) {
+        m->faceAngle[0] -= 512.0f;
+    } else {
+        m->faceAngle[0] = approach_s32(m->faceAngle[0], 0, 0x1F0, 0x1F0);
+    }
 
-            if (gPlayer1Controller->stickY > 0) {
-                m->faceAngle[0] += DEGREES(5);
-            }
-            vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[0], 0);
+    // Ensure the pitch angle stays within the range [-4608, 4608].
+    if (m->faceAngle[0] > 4608) {
+        m->faceAngle[0] = 4608;
+    } else if (m->faceAngle[0] < -4608) {
+        m->faceAngle[0] = -4608;
+    }
+
+    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[0], 0);
 }
+
+
 
 void pstrats_update_roll(struct MarioState *m) {
             if (gPlayer1Controller->buttonDown & L_TRIG) {
-                m->faceAngle[2] += DEGREES(5);
+                            //s32 approach_s32(s32 current, s32 target, s32 inc, s32 dec);
+                m->faceAngle[2] = approach_s32(m->faceAngle[2], -17000, 0x400, 0x400);
+            } else if (gPlayer1Controller->buttonDown & R_TRIG) {
+                m->faceAngle[2] = approach_s32(m->faceAngle[2], 17000, 0x400, 0x400);
+            } else {
+                m->faceAngle[2] = approach_s32(m->faceAngle[2], 0, 0x400, 0x400);
             }
 
-            if (gPlayer1Controller->buttonDown & R_TRIG) {
-                m->faceAngle[2] += DEGREES(5);
-            }
             vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[2], 0);
 }
 
