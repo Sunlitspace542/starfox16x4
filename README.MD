@@ -2,12 +2,11 @@
 (todo: cool logo thing)  
 Based on [HackerSM64](https://github.com/HackerN64/HackerSM64)
 
-## What the hey is this?
+## What??
 I've started reading through and documenting the source code of the original Star Fox as part of my [UltraStarFox](https://github.com/Sunlitspace542/ultrastarfox) fork of the source code.  
-I noticed that for SM64, Nintendo decided to reuse the Strategy and PATH macros/scripting languages Star Fox uses.  
-Seeing that similarity I lost my mind for probably the 12th time and thought "Hey, I should try porting Star Fox to the N64! That'll be fun, right?" and now I'm here. ~ Sunlit  
+After various observations regarding SM64's development and Star Fox's influence on it, I decided to try to port the game to the N64 using the SM64 engine.  
 
-## Credits so far
+## Credits (so far)
 AloXado320: Programming assistance, answering my dumb questions  
 Church of Kondo: Restored music used for BGM  
 HackerSM64 developers/contributors: Making HackerSM64 in the first place  
