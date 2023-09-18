@@ -113,7 +113,7 @@ s32 player_istrat(struct MarioState *m) {
 
     // firing.
     if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
-    //    spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, model_goomba, P_Elaser);
+        spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
     }
 
 

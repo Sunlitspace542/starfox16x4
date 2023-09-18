@@ -452,7 +452,7 @@ const BehaviorScript bhvDddWarp[] = {
 
 const BehaviorScript P_Elaser[] = {
 	p_initialize(OBJ_LIST_LEVEL),
-	p_setbit(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
 	p_setmovedata(/*Wall hitbox radius*/ 30, /*Gravity*/ 0, /*Bounciness*/ -50, /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
 	p_while(),
 		p_program(elaser_Istrat),
@@ -463,8 +463,6 @@ const BehaviorScript hard180yr_Istrat[] = {
 	p_initialize(OBJ_LIST_LEVEL),
 	p_setobjname(INTERACT_DAMAGE),
 	p_sethitbox(/*Radius*/ 100, /*Height*/ 200),
-	//p_setbit(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-	//p_setmovedata(/*Wall hitbox radius*/ 30, /*Gravity*/ 0, /*Bounciness*/ -50, /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
 	p_while(),
 		p_program(hard180yr_main),
 	p_loop(),

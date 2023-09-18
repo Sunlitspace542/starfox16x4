@@ -1,29 +1,13 @@
 // player's single laser strategy.
 
-#include "types.h"
-
-struct ObjectHitbox sElaserHitbox = {
-    /* interactType:      */ INTERACT_DAMAGE,
-    /* downOffset:        */ 0,
-    /* damageOrCoinValue: */ 4,
-    /* health:            */ 1,
-    /* numLootCoins:      */ 1,
-    /* radius:            */ 50,
-    /* height:            */ 50,
-    /* hurtboxRadius:     */ 50,
-    /* hurtboxHeight:     */ 50,
-};
-
-
 void elaser_Istrat(void) {
-
-s16 position = o->oPosX;
-
-    position += 24;
-
-    if (position > 4096) { // despawn.
-        s_remove_obj(o);
+    if (o->oTimer == 0) {
+        o->oVelZ = 66 * 2;
+        o->oForwardVel = 66 * 2;
     }
 
-    o->oInteractStatus = INT_STATUS_NONE;
+    if (o->oPosZ > 4096) { // despawn.
+        s_remove_obj(o);
+    }
+    cur_obj_move_using_fvel_and_gravity();
 }
