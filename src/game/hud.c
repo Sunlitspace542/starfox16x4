@@ -468,10 +468,15 @@ void render_hud_shield_text(void) {
 
 // shield and boost meters.
 
+f32 shieldMeterFull = 1.2f;
+f32 boostMeterScale = 1.2f;
+f32 hp_ratio = playerB_HP / playerB_Max_HP;
+
+
 void render_hud_shield_meter(s16 x, s16 y) {
 
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
-    create_dl_scale_matrix(MENU_MTX_NOPUSH, 1.2f, 0.8f, 1.0f); // XX YY ZZ
+    create_dl_scale_matrix(MENU_MTX_NOPUSH, hp_ratio, 0.8f, 1.0f); // XX YY ZZ
     gDPSetEnvColor(gDisplayListHead++, 247, 99, 33, 255); // RRR, GGG, BBB, AAA
     gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
@@ -493,7 +498,7 @@ void render_hud_shield_meter(s16 x, s16 y) {
 void render_hud_boost_meter(s16 x, s16 y) {
 
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
-    create_dl_scale_matrix(MENU_MTX_NOPUSH, 1.2f, 0.8f, 1.0f); // XX YY ZZ
+    create_dl_scale_matrix(MENU_MTX_NOPUSH, boostMeterScale, 0.8f, 1.0f); // XX YY ZZ
     gDPSetEnvColor(gDisplayListHead++, 140, 189, 239, 255); // RRR, GGG, BBB, AAA
     gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);

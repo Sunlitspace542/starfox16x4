@@ -313,7 +313,7 @@ int coreAP = 4;
  // PLAYER.
 
 int playerW_HP = 5;	 // Wings HP/health/shield (Stock = 5)
-int playerB_HP = 40;	 // Player Body HP/health/shield (Stock = 40)
+//int playerB_HP = 40;	 // Player Body HP/health/shield (Stock = 40) (redef'd in sm64.h)
 int playerW_AP = 3;
 int playerB_AP = 3;	       
 int playerB_boxsize = 10;

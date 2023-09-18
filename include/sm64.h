@@ -723,4 +723,11 @@ enum MarioActionFlags {
 
 #define JPAD_BUTTONS  (U_JPAD     | D_JPAD     | L_JPAD     | R_JPAD       )
 
+
+// strat equates
+
+int playerB_HP = 40;
+int playerB_Max_HP = 40;
+
+
 #endif // SM64_H
