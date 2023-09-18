@@ -146,6 +146,11 @@ s32 player_istrat(struct MarioState *m) {
         spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
     }
 
+    // Special weapon (bomb/nuke).
+    if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON)) {
+        spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_nuke);
+    }
+
 
     // spawn pseudo floor object to prevent OOB death
     resolve_and_return_wall_collisions(pos, 60.0f, 50.0f, &wallData);
