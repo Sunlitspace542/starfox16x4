@@ -19,6 +19,7 @@
 #include "puppycam2.h"
 #include "puppyprint.h"
 #include "mario.h"
+#include "ingame_menu.h"
 
 #include "config.h"
 
