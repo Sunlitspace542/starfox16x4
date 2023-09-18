@@ -32,8 +32,11 @@ Sunlit: programming, assets
 
 ### Game:
 ``src/game/hud.c``:  
+
 - [X] Implement HUD (shield, boost, brake, bombs)  
+
 ``src/game/pstrats.c``:  
+
 - [ ] Player pitch, yaw & roll
 - [X] Get a basic laser strat in
 - [ ] Proper boosting and braking
