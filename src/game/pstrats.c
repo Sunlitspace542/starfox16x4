@@ -185,7 +185,7 @@ void pstrats_update_turning(struct MarioState *m) {
 }
 
 void pstrats_update_pitch(struct MarioState *m) {
-
+    // TODO: this (and roll)
 }
 
 void pstrats_update_roll(struct MarioState *m) {
