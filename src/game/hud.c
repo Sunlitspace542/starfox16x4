@@ -402,27 +402,27 @@ void render_hud_mario_lives(void) {
     print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(54), HUD_TOP_Y, "%d", gHudDisplay.lives);
 }
 
+int numNukes = 4;
 int hudY = 32;
 void render_hud_bombs(void) {
-    int numNukes = 4;
     switch(numNukes) {
     case 4:
-    print_text(230, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
-    print_text(247, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
-    print_text(264, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
-    print_text(281, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    print_text(230, hudY, "$"); // nova bombs
+    print_text(247, hudY, "$"); // nova bombs
+    print_text(264, hudY, "$"); // nova bombs
+    print_text(281, hudY, "$"); // nova bombs
     break;
     case 3:
-    print_text(230, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
-    print_text(247, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
-    print_text(264, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    print_text(247, hudY, "$"); // nova bombs
+    print_text(264, hudY, "$"); // nova bombs
+    print_text(281, hudY, "$"); // nova bombs
     break;
     case 2:
-    print_text(230, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
-    print_text(247, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    print_text(264, hudY, "$"); // nova bombs
+    print_text(281, hudY, "$"); // nova bombs
     break;
     case 1:
-    print_text(230, hudY, "$"); // 'Coin' glyph // placeholder nova bombs
+    print_text(281, hudY, "$"); // nova bombs
     break;
     case 0:
     break;
@@ -434,14 +434,9 @@ int shieldboxY = 14;
 // SHIELD text (and outer boxes for meters)
 
 void render_hud_shield_text(void) {
-    print_text(30, hudY-4, "_"); // SHIELD text
-    print_text(46, hudY-4, "("); // SHIELD text
-    print_text(62, hudY-4, ")"); // SHIELD text
-
-/*
-            render_hud_shield_meter(28, 28); // x, y
-            render_hud_boost_meter(246, 28); // x, y  
-*/
+    print_text(30-5, hudY-4, "_"); // SHIELD text
+    print_text(46-5, hudY-4, "("); // SHIELD text
+    print_text(62-5, hudY-4, ")"); // SHIELD text
 
     print_text(28-3, shieldboxY, "}"); // SHIELD BOOST box
     print_text(44-3, shieldboxY, "{"); // SHIELD BOOST box
@@ -454,7 +449,7 @@ void render_hud_shield_text(void) {
     print_text(294-3, shieldboxY, "]"); // SHIELD BOOST box
     
 //DBG
-/*
+
     print_text_fmt_int(16, 20, "Z %d", gMarioState->pos[2]);
     print_text_fmt_int(16, 40, "Y %d", gMarioState->pos[1]);
     print_text_fmt_int(16, 60, "X %d", gMarioState->pos[0]);
@@ -464,7 +459,7 @@ void render_hud_shield_text(void) {
     print_text_fmt_int(16, 140, "GTMR %d", gGlobalTimer);
     print_text_fmt_int(16, 160, "LTMR %d", gLocalTimer);
     //print_text_fmt_int(16, 180, "MAG %d", gMarioState->intendedMag);
-    */
+    
     print_fps(10,30); // puppyprint needs to be on for this
 
 }
@@ -491,7 +486,7 @@ void render_hud_shield_meter(s16 x, s16 y) {
     gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 
-// these have to be here for now until i understand how this works
+// this code has to be here or game will hard crash (breakpoint)
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
     create_dl_rotation_matrix(MENU_MTX_NOPUSH, 90.0f, 0, 0, 1.0f);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 0);
@@ -515,7 +510,7 @@ void render_hud_boost_meter(s16 x, s16 y) {
     gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 
-// these have to be here for now until i understand how this works
+// this code has to be here or game will hard crash (breakpoint)
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
     create_dl_rotation_matrix(MENU_MTX_NOPUSH, 90.0f, 0, 0, 1.0f);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 0);

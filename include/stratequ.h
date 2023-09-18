@@ -46,4 +46,5 @@ extern f32 hp_ratio;
 extern f32 shieldMeterMax;
 extern f32 shieldMeterScale;
 extern f32 boostMeterScale;
+extern int numNukes;
 
