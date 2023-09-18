@@ -188,6 +188,10 @@ void pstrats_update_pitch(struct MarioState *m) {
 
 }
 
+void pstrats_update_roll(struct MarioState *m) {
+    // no barrel rolls... yet
+}
+
 void pstrats_update_shipflags(struct MarioState *m) {
     if (psf3_enginesnd == 1) {
     play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject); // arwing engine sound
