@@ -404,25 +404,28 @@ void render_hud_mario_lives(void) {
 
 int numNukes = 4;
 int hudY = 32;
+// NOTE: these should go from right to left
+
 void render_hud_bombs(void) {
     switch(numNukes) {
     case 4:
-    print_text(230, hudY, "$"); // nova bombs
-    print_text(247, hudY, "$"); // nova bombs
-    print_text(264, hudY, "$"); // nova bombs
-    print_text(281, hudY, "$"); // nova bombs
+    print_text(243, hudY, "$"); // nova bombs
+    print_text(243+13, hudY, "$"); // nova bombs
+    print_text(243+26, hudY, "$"); // nova bombs
+    print_text(243+39, hudY, "$"); // nova bombs
     break;
     case 3:
-    print_text(247, hudY, "$"); // nova bombs
-    print_text(264, hudY, "$"); // nova bombs
-    print_text(281, hudY, "$"); // nova bombs
+    print_text(243+13, hudY, "$"); // nova bombs
+    print_text(243+26, hudY, "$"); // nova bombs
+    print_text(243+39, hudY, "$"); // nova bombs
     break;
     case 2:
-    print_text(264, hudY, "$"); // nova bombs
-    print_text(281, hudY, "$"); // nova bombs
+    print_text(243+26, hudY, "$"); // nova bombs
+    print_text(243+39, hudY, "$"); // nova bombs
     break;
     case 1:
-    print_text(281, hudY, "$"); // nova bombs
+    print_text(243+26, hudY, "$"); // nova bombs
+    print_text(243+39, hudY, "$"); // nova bombs
     break;
     case 0:
     break;
@@ -449,7 +452,7 @@ void render_hud_shield_text(void) {
     print_text(294-3, shieldboxY, "]"); // SHIELD BOOST box
     
 //DBG
-
+/*
     print_text_fmt_int(16, 20, "Z %d", gMarioState->pos[2]);
     print_text_fmt_int(16, 40, "Y %d", gMarioState->pos[1]);
     print_text_fmt_int(16, 60, "X %d", gMarioState->pos[0]);
@@ -461,7 +464,7 @@ void render_hud_shield_text(void) {
     //print_text_fmt_int(16, 180, "MAG %d", gMarioState->intendedMag);
     
     print_fps(10,30); // puppyprint needs to be on for this
-
+*/
 }
 
 // shield and boost meters.
@@ -482,7 +485,7 @@ void render_hud_shield_meter(s16 x, s16 y) {
 
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
     create_dl_scale_matrix(MENU_MTX_NOPUSH, shieldMeterScale, 0.8f, 1.0f); // XX YY ZZ
-    gDPSetEnvColor(gDisplayListHead++, 247, 99, 33, 255); // RRR, GGG, BBB, AAA
+    gDPSetEnvColor(gDisplayListHead++, 255, 0, 0, 255); // RRR, GGG, BBB, AAA
     gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 
@@ -506,7 +509,7 @@ void render_hud_boost_meter(s16 x, s16 y) {
 
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
     create_dl_scale_matrix(MENU_MTX_NOPUSH, boostMeterScale, 0.8f, 1.0f); // XX YY ZZ
-    gDPSetEnvColor(gDisplayListHead++, 140, 189, 239, 255); // RRR, GGG, BBB, AAA
+    gDPSetEnvColor(gDisplayListHead++, 115, 90, 222, 255); // RRR, GGG, BBB, AAA
     gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 

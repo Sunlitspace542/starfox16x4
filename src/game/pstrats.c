@@ -105,6 +105,12 @@ s32 player_istrat(struct MarioState *m) {
         play_sound(SOUND_MOVING_TERRAIN_SLIDE, m->marioObj->header.gfx.cameraToObject);
     }
 
+    // meter drawing test.
+    if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
+        playerB_HP--;
+        boostMeterScale -= 0.1f;
+    }
+
 
     // we're flying a plane thing here, so let's make the flight controls make sense.
     // up - dive
@@ -169,6 +175,7 @@ s32 player_istrat(struct MarioState *m) {
     return FALSE;
 }
 
+// changes player yaw based on stick input
 void pstrats_update_turning(struct MarioState *m) {
     s16 intendedDYaw;
     f32 intendedMag;
@@ -179,11 +186,10 @@ void pstrats_update_turning(struct MarioState *m) {
         intendedDYaw = m->intendedYaw - m->faceAngle[1];
         intendedMag = m->intendedMag / 32.0f;
 
-        // Apply forward velocity based on analog stick input.
-       // m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
+        // m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
         m->faceAngle[1] += 512.0f * sins(intendedDYaw) * intendedMag;
 
-        // Ensure the angle stays within the range [-5600, 5600].
+        // Ensure the angle stays within the range [-5600, 5600]
         if (m->faceAngle[1] > 5600) {
             m->faceAngle[1] = 5600;
         } else if (m->faceAngle[1] < -5600) {
@@ -192,7 +198,7 @@ void pstrats_update_turning(struct MarioState *m) {
     } else {
         m->faceAngle[1] = approach_s32(m->faceAngle[1], 0, 0x1F0, 0x1F0);
 
-        // Ensure the angle stays within the range [-5600, 5600].
+        // Ensure the angle stays within the range [-5600, 5600]
         if (m->faceAngle[1] > 5600) {
             m->faceAngle[1] = 5600;
         } else if (m->faceAngle[1] < -5600) {
@@ -200,7 +206,6 @@ void pstrats_update_turning(struct MarioState *m) {
         }
     }
 
-    // Update velocity components based on the updated angle and forward velocity.
     m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
     m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
 }
