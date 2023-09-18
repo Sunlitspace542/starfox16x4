@@ -425,7 +425,6 @@ void render_hud_bombs(void) {
     print_text(243+39, hudY, "$"); // nova bombs
     break;
     case 1:
-    print_text(243+26, hudY, "$"); // nova bombs
     print_text(243+39, hudY, "$"); // nova bombs
     break;
     case 0:

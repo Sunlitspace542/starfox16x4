@@ -149,6 +149,7 @@ s32 player_istrat(struct MarioState *m) {
     // Special weapon (bomb/nuke).
     if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON)) {
         spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_nuke);
+        numNukes--;
     }
 
 

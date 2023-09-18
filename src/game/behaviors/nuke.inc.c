@@ -9,7 +9,11 @@ void nuke_Istrat(void) {
         o->oTimer++; // increment the object timer
 
     if (o->oTimer > 100) { // despawn if object timer is 100
-        s_remove_obj(o);
+        s_remove_obj(o); // would be detonate but we can't do that just yet
+    }
+
+    if (gPlayer1Controller->buttonPressed & B_BUTTON) {
+        s_remove_obj(o); // would be detonate but we can't do that just yet
     }
     cur_obj_move_using_fvel_and_gravity(); // actually tell the thing to move
 }

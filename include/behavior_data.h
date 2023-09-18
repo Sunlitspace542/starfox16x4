@@ -13,6 +13,7 @@ extern const BehaviorScript bhvDddWarp[];
 
 // NEW PATHS
 extern const BehaviorScript P_Elaser[]; // Player's single laser.
+extern const BehaviorScript P_nuke[]; // Player's special weapon.
 extern const BehaviorScript hard180yr_Istrat[];
 // NEW PATHS
 
