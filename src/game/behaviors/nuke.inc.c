@@ -12,7 +12,7 @@ void nuke_Istrat(void) {
         s_remove_obj(o); // would be detonate but we can't do that just yet
     }
 
-    if (gPlayer1Controller->buttonPressed & B_BUTTON) {
+    if ((gPlayer1Controller->buttonPressed & B_BUTTON) && (o->oTimer > 50)) {
         s_remove_obj(o); // would be detonate but we can't do that just yet
     }
     cur_obj_move_using_fvel_and_gravity(); // actually tell the thing to move
