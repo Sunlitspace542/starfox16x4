@@ -33,6 +33,8 @@ void bhv_act_selector_init(void);
 void bhv_act_selector_loop(void);
 // MENUS
 
+void bhv_sound_spawner_init(void);
+
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 
 // Water splash

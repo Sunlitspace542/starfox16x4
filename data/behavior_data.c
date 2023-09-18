@@ -603,4 +603,13 @@ const BehaviorScript bhvActSelector[] = {
 
 // MENU
 
+const BehaviorScript bhvSoundSpawner[] = {
+    p_initialize(OBJ_LIST_UNIMPORTANT),
+    p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    p_wait(3),
+    p_program(bhv_sound_spawner_init),
+    p_wait(30),
+    p_killshape(),
+};
+
 

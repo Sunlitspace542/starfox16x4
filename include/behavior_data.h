@@ -45,4 +45,6 @@ extern const BehaviorScript bhvActSelectorStarType[];
 extern const BehaviorScript bhvActSelector[];
 // MENU
 
+extern const BehaviorScript bhvSoundSpawner[];
+
 #endif // BEHAVIOR_DATA_H

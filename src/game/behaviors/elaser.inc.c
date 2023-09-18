@@ -2,8 +2,8 @@
 
 void elaser_Istrat(void) {
     cur_obj_scale(1.0f);
-        o->oVelZ = 66 * 2;
-        o->oForwardVel = 66 * 2;
+        o->oVelZ = 66 * 4;
+        o->oForwardVel = 66 * 4;
         o->oTimer++;
 
     // TODO: add collisions with objects
