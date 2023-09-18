@@ -3,16 +3,20 @@
 #include "stratequ.h"
 
 void nuke_Istrat(void) {
+    int nukelimit;
     cur_obj_scale(1.0f); // scale object
         o->oVelZ = 66 * 2; // Set Z velocity
         o->oForwardVel = 66 * 2; // Set Forward velocity
         o->oTimer++; // increment the object timer
+        nukelimit += 1;
 
     if (o->oTimer > 100) { // despawn if object timer is 100
+        nukelimit -= 1;
         s_remove_obj(o); // would be detonate but we can't do that just yet
     }
 
     if ((gPlayer1Controller->buttonPressed & B_BUTTON) && (o->oTimer > 50)) {
+        nukelimit -= 1;
         s_remove_obj(o); // would be detonate but we can't do that just yet
     }
     cur_obj_move_using_fvel_and_gravity(); // actually tell the thing to move
