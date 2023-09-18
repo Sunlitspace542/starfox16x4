@@ -23,3 +23,18 @@ Sunlit: programming, assets
 - Remove all objects/behaviors/models (clean slate)  
 - Figure out how i'm going to handle music/sounds  
 - Start porting strats/paths/models  
+
+## List of important things to be done
+
+### Overall:
+- [X] Remove all SM64 object behaviors
+- [ ] Remove SM64 actor models (partially done)
+- [ ] Remove all vanilla music and their instrument banks
+
+### Game:
+``src/game/hud.c``:  
+- [X] Implement HUD (shield, boost, brake, bombs)
+``src/game/pstrats.c``:  
+- [ ] Player pitch, yaw & roll
+- [X] Get a basic laser strat in
+- [ ] Proper boosting and braking
