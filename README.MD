@@ -14,19 +14,11 @@ Kandowontu: Answering my Star Fox related questions
 Monika: assistance  
 Sunlit: programming, assets  
 
-
-## TODO
-- Strip Mario's behaviors down to only what is needed for the game to still work  
-- get PSTRATS up and running  
-- Rename all obj_helper and bhv macros to their PATH and STRAT equivalents  
-- Remove all objects/behaviors/models (clean slate)  
-- Figure out how i'm going to handle music/sounds  
-- Start porting strats/paths/models  
-
 ## List of important things to be done
 
 ### Freeing up ROM space:
 - [X] Remove all SM64 object behaviors
+- [ ] Remove all of Mario's code that we don't need 
 - [ ] Remove SM64 actor models (partially done)
 - [ ] Remove all vanilla music and their instrument banks
 
