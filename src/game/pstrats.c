@@ -60,6 +60,16 @@
 // - SHIELD meter
 // Anything that isn't on this list has already been done.
 
+// player speeds.
+int maxPspeed = 85;
+int medPspeed = 65;
+int minPspeed = 20;
+// initialize player's variables.
+int playerB_HP = 40;
+int playerB_MaxHP = 40;
+int psf3_enginesnd = 1;
+
+
 s32 player_istrat(struct MarioState *m) {
     struct WallCollisionData wallData;
     struct Surface *floor, *ceil;

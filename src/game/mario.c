@@ -1782,7 +1782,10 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
  *                  INITIALIZATION                *
  **************************************************/
 
+#include "stratequ.h"
+
 void init_mario(void) {
+
     gMarioState->actionTimer = 0;
     gMarioState->framesSinceA = 0xFF;
     gMarioState->framesSinceB = 0xFF;

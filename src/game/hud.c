@@ -18,6 +18,7 @@
 #include "engine/math_util.h"
 #include "puppycam2.h"
 #include "puppyprint.h"
+#include "mario.h"
 
 #include "config.h"
 
@@ -430,6 +431,8 @@ void render_hud_bombs(void) {
 
 int shieldboxY = 14;
 
+// SHIELD text (and outer boxes for meters)
+
 void render_hud_shield_text(void) {
     print_text(30, hudY-4, "_"); // SHIELD text
     print_text(46, hudY-4, "("); // SHIELD text
@@ -468,15 +471,22 @@ void render_hud_shield_text(void) {
 
 // shield and boost meters.
 
-f32 shieldMeterFull = 1.2f;
-f32 boostMeterScale = 1.2f;
-f32 hp_ratio = playerB_HP / playerB_Max_HP;
+#include "stratequ.h"
 
+f32 shieldMeterScale; // Declare shieldMeterScale at file scope
+
+void init_hud_values(void) {
+    f32 hp_ratio = (f32)playerB_HP / playerB_MaxHP;
+    f32 shieldMeterMax = 1.2f;
+    shieldMeterScale = shieldMeterMax * hp_ratio;
+}
 
 void render_hud_shield_meter(s16 x, s16 y) {
 
+    init_hud_values();
+
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
-    create_dl_scale_matrix(MENU_MTX_NOPUSH, hp_ratio, 0.8f, 1.0f); // XX YY ZZ
+    create_dl_scale_matrix(MENU_MTX_NOPUSH, shieldMeterScale, 0.8f, 1.0f); // XX YY ZZ
     gDPSetEnvColor(gDisplayListHead++, 247, 99, 33, 255); // RRR, GGG, BBB, AAA
     gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
@@ -494,6 +504,8 @@ void render_hud_shield_meter(s16 x, s16 y) {
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 
 }
+
+    f32 boostMeterScale = 1.2f;
 
 void render_hud_boost_meter(s16 x, s16 y) {
 
