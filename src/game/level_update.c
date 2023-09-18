@@ -270,58 +270,58 @@ void set_mario_initial_cap_powerup(struct MarioState *m) {
 void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg) {
     switch (spawnType) {
         case MARIO_SPAWN_DOOR_WARP:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, actionArg);
+            set_mario_action(m, PLAYER_ISTRAT, actionArg);
             break;
         case MARIO_SPAWN_IDLE:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_PIPE:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_TELEPORT:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_INSTANT_ACTIVE:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_AIRBORNE:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_HARD_AIR_KNOCKBACK:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_SPIN_AIRBORNE_CIRCLE:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_DEATH:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_SPIN_AIRBORNE:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_FLYING:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 2);
+            set_mario_action(m, PLAYER_ISTRAT, 2);
             break;
         case MARIO_SPAWN_SWIMMING:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 1);
+            set_mario_action(m, PLAYER_ISTRAT, 1);
             break;
         case MARIO_SPAWN_PAINTING_STAR_COLLECT:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_PAINTING_DEATH:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_AIRBORNE_STAR_COLLECT:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_AIRBORNE_DEATH:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_LAUNCH_STAR_COLLECT:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
         case MARIO_SPAWN_LAUNCH_DEATH:
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             break;
     }
 
@@ -1201,20 +1201,20 @@ s32 init_level(void) {
 
 #ifdef PEACH_SKIP
             if (gCurrDemoInput != NULL) {
-                set_mario_action(gMarioState, ACT_DEBUG_FREE_MOVE, 0);
+                set_mario_action(gMarioState, PLAYER_ISTRAT, 0);
             } else if (!gDebugLevelSelect) {
                 if (gMarioState->action != ACT_UNINITIALIZED) {
-                    set_mario_action(gMarioState, ACT_DEBUG_FREE_MOVE, 0);
+                    set_mario_action(gMarioState, PLAYER_ISTRAT, 0);
                 }
             }
         }
 #else
             if (gCurrDemoInput != NULL) {
-                set_mario_action(gMarioState, ACT_DEBUG_FREE_MOVE, 0);
+                set_mario_action(gMarioState, PLAYER_ISTRAT, 0);
             } else if (!gDebugLevelSelect) {
                 if (gMarioState->action != ACT_UNINITIALIZED) {
                     if (save_file_exists(gCurrSaveFileNum - 1)) {
-                        set_mario_action(gMarioState, ACT_DEBUG_FREE_MOVE, 0);
+                        set_mario_action(gMarioState, PLAYER_ISTRAT, 0);
                     } else {
                         set_mario_action(gMarioState, ACT_INTRO_CUTSCENE, 0);
                         fadeFromColor = TRUE;

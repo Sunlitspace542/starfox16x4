@@ -28,29 +28,6 @@
 #include "sound_init.h"
 #include "rumble_init.h"
 
-static struct Object *sIntroWarpPipeObj;
-static struct Object *sEndPeachObj;
-static struct Object *sEndRightToadObj;
-static struct Object *sEndLeftToadObj;
-static struct Object *sEndJumboStarObj;
-static s16 sEndPeachAnimation;
-static s16 sEndToadAnims[2];
-
-Vp sEndCutsceneVp = {
-    {
-        { (SCREEN_WIDTH  * 2), (SCREEN_HEIGHT * 2), 511, 0 },
-        { (SCREEN_WIDTH  * 2), (SCREEN_HEIGHT * 2), 511, 0 }
-    }
-};
-struct CreditsEntry *sDispCreditsEntry = NULL;
-
-// related to peach gfx?
-static s8 sPeachManualBlinkTime = 0;
-static s8 sPeachIsBlinking = FALSE;
-static s8 sPeachBlinkTimes[7] = { 2, 3, 2, 1, 2, 3, 2 };
-
-static u8 sStarsNeededForDialog[] = { 1, 3, 8, 30, 50, 70 };
-
 /*************************************************************************\
 *                                                                         *
 *                               Star Fox                                  *
@@ -77,7 +54,7 @@ static u8 sStarsNeededForDialog[] = { 1, 3, 8, 30, 50, 70 };
 //*******************************
 #include "stratequ.h" // strategy equates for player speed and stuff
 
-s32 act_debug_free_move(struct MarioState *m) {
+s32 player_istrat(struct MarioState *m) {
     struct WallCollisionData wallData;
     struct Surface *floor, *ceil;
     Vec3f pos;
@@ -167,7 +144,7 @@ s32 act_debug_free_move(struct MarioState *m) {
     pstrats_update_interactions(m);
     pstrats_update_turning(m);
     pstrats_update_pitch(m);
-    mapmacs_do_objs(m);
+    //mapmacs_do_objs(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
 
@@ -229,7 +206,8 @@ void pstrats_update_interactions(struct MarioState *m) {
 
 void mapmacs_do_objs(struct MarioState *m) {
     // TODO: this is dumb
-
+    // this also just needs work. these should
+    // really not be spawning relative to the player's position.
 	MAPOBJ(0,1200,000,5000,MODEL_MARIO,P_Elaser);
 	MAPOBJ(0,-1200,000,5000,MODEL_MARIO,P_Elaser);
 
@@ -271,6 +249,28 @@ void mapmacs_do_objs(struct MarioState *m) {
 
 
 
+static struct Object *sIntroWarpPipeObj;
+static struct Object *sEndPeachObj;
+static struct Object *sEndRightToadObj;
+static struct Object *sEndLeftToadObj;
+static struct Object *sEndJumboStarObj;
+static s16 sEndPeachAnimation;
+static s16 sEndToadAnims[2];
+
+Vp sEndCutsceneVp = {
+    {
+        { (SCREEN_WIDTH  * 2), (SCREEN_HEIGHT * 2), 511, 0 },
+        { (SCREEN_WIDTH  * 2), (SCREEN_HEIGHT * 2), 511, 0 }
+    }
+};
+struct CreditsEntry *sDispCreditsEntry = NULL;
+
+// related to peach gfx?
+static s8 sPeachManualBlinkTime = 0;
+static s8 sPeachIsBlinking = FALSE;
+static s8 sPeachBlinkTimes[7] = { 2, 3, 2, 1, 2, 3, 2 };
+
+static u8 sStarsNeededForDialog[] = { 1, 3, 8, 30, 50, 70 };
 
 /**
  * Data for the jumbo star cutscene. It specifies the flight path after triple
@@ -2712,7 +2712,7 @@ s32 mario_execute_cutscene_action(struct MarioState *m) {
         case ACT_FALL_AFTER_STAR_GRAB:       cancel = act_fall_after_star_grab(m);       break;
         case ACT_READING_AUTOMATIC_DIALOG:   cancel = act_reading_automatic_dialog(m);   break;
         case ACT_READING_NPC_DIALOG:         cancel = act_reading_npc_dialog(m);         break;
-        case ACT_DEBUG_FREE_MOVE:            cancel = act_debug_free_move(m);            break;
+        case PLAYER_ISTRAT:            cancel = player_istrat(m);            break;
         case ACT_READING_SIGN:               cancel = act_reading_sign(m);               break;
         case ACT_JUMBO_STAR_CUTSCENE:        cancel = act_jumbo_star_cutscene(m);        break;
         case ACT_WAITING_FOR_DIALOG:         cancel = act_waiting_for_dialog(m);         break;

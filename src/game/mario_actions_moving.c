@@ -1088,7 +1088,7 @@ s32 act_decelerating(struct MarioState *m) {
     }
 
     if (update_decelerating_speed(m)) {
-        return set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+        return set_mario_action(m, PLAYER_ISTRAT, 0);
     }
 
     switch (perform_ground_step(m)) {
@@ -1604,7 +1604,7 @@ s32 common_ground_knockback_action(struct MarioState *m, s32 animation, s32 chec
             if (actionArg > 0) {
                 m->invincTimer = 30;
             }
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
         }
     }
 
@@ -1684,7 +1684,7 @@ s32 act_death_exit_land(struct MarioState *m) {
     }
 
     if (is_anim_at_end(m)) {
-        set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+        set_mario_action(m, PLAYER_ISTRAT, 0);
     }
 
     return FALSE;

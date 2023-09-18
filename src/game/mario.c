@@ -1711,13 +1711,13 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
 #ifdef ENABLE_DEBUG_FREE_MOVE
         if (gPlayer1Controller->buttonDown & U_JPAD && !(gPlayer1Controller->buttonDown & L_TRIG)) {
             set_camera_mode(gMarioState->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
-            set_mario_action(gMarioState, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(gMarioState, PLAYER_ISTRAT, 0);
         }
 #endif
 #ifdef ENABLE_CREDITS_BENCHMARK
         static s32 startedBenchmark = FALSE;
         if (!startedBenchmark) {
-            set_mario_action(gMarioState, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(gMarioState, PLAYER_ISTRAT, 0);
             level_trigger_warp(gMarioState, WARP_OP_CREDITS_START);
             startedBenchmark = TRUE;
         }

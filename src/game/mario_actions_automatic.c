@@ -70,7 +70,7 @@ s32 set_pole_position(struct MarioState *m, f32 offsetY) {
     f32 floorHeight = find_floor(m->pos[0], m->pos[1], m->pos[2], &floor);
     if (m->pos[1] < floorHeight) {
         m->pos[1] = floorHeight;
-        set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+        set_mario_action(m, PLAYER_ISTRAT, 0);
         result = POLE_TOUCHED_FLOOR;
     } else if (marioObj->oMarioPolePos < -m->usedObj->hitboxDownOffset) {
         m->pos[1] = m->usedObj->oPosY - m->usedObj->hitboxDownOffset;
@@ -82,7 +82,7 @@ s32 set_pole_position(struct MarioState *m, f32 offsetY) {
             set_mario_action(m, ACT_SOFT_BONK, 0);
             result = POLE_FELL_OFF;
         } else {
-            set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+            set_mario_action(m, PLAYER_ISTRAT, 0);
             result = POLE_TOUCHED_FLOOR;
         }
     }
