@@ -453,7 +453,7 @@ void render_hud_shield_text(void) {
     print_text(294-3, shieldboxY, "]"); // SHIELD BOOST box
     
 //DBG
-/*
+
     print_text_fmt_int(16, 20, "Z %d", gMarioState->pos[2]);
     print_text_fmt_int(16, 40, "Y %d", gMarioState->pos[1]);
     print_text_fmt_int(16, 60, "X %d", gMarioState->pos[0]);
@@ -465,7 +465,7 @@ void render_hud_shield_text(void) {
     //print_text_fmt_int(16, 180, "MAG %d", gMarioState->intendedMag);
     
     print_fps(10,30); // puppyprint needs to be on for this
-*/
+
 }
 
 // shield and boost meters.

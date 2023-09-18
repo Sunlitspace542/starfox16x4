@@ -12,6 +12,7 @@ s32 update_angle_from_move_flags(s32 *angle);
 
 // NEW STRATS
 void elaser_Istrat(void); // player's single laser.
+void nuke_Istrat(void); // player's special weapon.
 void hard180yr_main(void);
 // NEW STRATS
 

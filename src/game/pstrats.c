@@ -68,6 +68,8 @@ int minPspeed = 20;
 int playerB_HP = 40;
 int playerB_MaxHP = 40;
 int psf3_enginesnd = 1;
+int psf2_boosting = 32;
+int psf2_braking = 64;
 
 
 s32 player_istrat(struct MarioState *m) {
@@ -168,6 +170,7 @@ s32 player_istrat(struct MarioState *m) {
     pstrats_update_interactions(m);
     pstrats_update_turning(m);
     pstrats_update_pitch(m);
+    pstrats_update_roll(m);
     //mapmacs_do_objs(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
@@ -213,11 +216,25 @@ void pstrats_update_turning(struct MarioState *m) {
     // TODO: this (and roll)
 
 void pstrats_update_pitch(struct MarioState *m) {
+            if (gPlayer1Controller->stickY < 0) {
+                m->faceAngle[0] += DEGREES(5);
+            }
 
+            if (gPlayer1Controller->stickY > 0) {
+                m->faceAngle[0] += DEGREES(5);
+            }
+            vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[0], 0);
 }
 
 void pstrats_update_roll(struct MarioState *m) {
-    // no barrel rolls... yet
+            if (gPlayer1Controller->buttonDown & L_TRIG) {
+                m->faceAngle[2] += DEGREES(5);
+            }
+
+            if (gPlayer1Controller->buttonDown & R_TRIG) {
+                m->faceAngle[2] += DEGREES(5);
+            }
+            vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[2], 0);
 }
 
 void pstrats_update_shipflags(struct MarioState *m) {

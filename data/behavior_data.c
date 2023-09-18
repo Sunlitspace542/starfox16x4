@@ -459,6 +459,15 @@ const BehaviorScript P_Elaser[] = {
 	p_loop(),
 };
 
+const BehaviorScript P_nuke[] = {
+	p_initialize(OBJ_LIST_LEVEL),
+    p_setbit(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	p_setmovedata(/*Wall hitbox radius*/ 30, /*Gravity*/ 0, /*Bounciness*/ 0, /*Drag strength*/ 0, /*Friction*/ 0, /*Buoyancy*/ 0, /*Unused*/ 0, 0),
+	p_while(),
+		p_program(nuke_Istrat),
+	p_loop(),
+};
+
 const BehaviorScript hard180yr_Istrat[] = {
 	p_initialize(OBJ_LIST_LEVEL),
 	p_setobjname(INTERACT_DAMAGE),

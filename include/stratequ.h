@@ -33,6 +33,8 @@
 
 // pshipflags3 (done)
 extern int psf3_enginesnd;	// 0/1 , off/on
+extern int psf2_boosting;
+extern int psf2_braking;
 
 // player speeds.
 extern int maxPspeed;
