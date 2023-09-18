@@ -49,4 +49,5 @@ extern f32 shieldMeterMax;
 extern f32 shieldMeterScale;
 extern f32 boostMeterScale;
 extern int numNukes;
+extern int nukelimit;
 
