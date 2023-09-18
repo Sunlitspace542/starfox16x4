@@ -28,7 +28,7 @@
 #include "levels/hmc/header.h"
 #include "main.h"
 #include "mario.h"
-#include "mario_actions_cutscene.h"
+#include "pstrats.h"
 #include "mario_step.h"
 #include "obj_behaviors.h"
 #include "obj_behaviors_2.h"

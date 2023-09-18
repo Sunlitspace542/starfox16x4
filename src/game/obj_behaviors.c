@@ -21,7 +21,7 @@
 #include "levels/bob/header.h"
 #include "levels/ttm/header.h"
 #include "mario.h"
-#include "mario_actions_cutscene.h"
+#include "pstrats.h"
 #include "mario_misc.h"
 #include "memory.h"
 #include "obj_behaviors.h"

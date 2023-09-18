@@ -11,7 +11,7 @@
 #include "ingame_menu.h"
 #include "screen_transition.h"
 #include "mario.h"
-#include "mario_actions_cutscene.h"
+#include "pstrats.h"
 #include "print.h"
 #include "hud.h"
 #include "audio/external.h"

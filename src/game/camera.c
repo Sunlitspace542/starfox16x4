@@ -14,7 +14,7 @@
 #include "engine/behavior_script.h"
 #include "level_update.h"
 #include "ingame_menu.h"
-#include "mario_actions_cutscene.h"
+#include "pstrats.h"
 #include "save_file.h"
 #include "object_helpers.h"
 #include "print.h"

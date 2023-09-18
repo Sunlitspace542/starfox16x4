@@ -1,7 +1,7 @@
 #include <PR/ultratypes.h>
 
 #include "sm64.h"
-#include "mario_actions_cutscene.h"
+#include "pstrats.h"
 #include "mario_actions_moving.h"
 #include "area.h"
 #include "audio/external.h"
@@ -40,7 +40,7 @@
 *                                                                         *
 *_________________________________________________________________________*
 *                                                                         *
-*  File: mario_actions_cutscene.c                                         *
+*  File: pstrats.c                                         *
 *_________________________________________________________________________*
 *                                                                         *
 *  Descr: PLAYER'S STRATEGIES.                                            *

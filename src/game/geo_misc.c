@@ -10,7 +10,7 @@
 #include "levels/ending/header.h"
 #include "levels/rr/header.h"
 #include "mario.h"
-#include "mario_actions_cutscene.h"
+#include "pstrats.h"
 #include "memory.h"
 #include "object_list_processor.h"
 #include "rendering_graph_node.h"

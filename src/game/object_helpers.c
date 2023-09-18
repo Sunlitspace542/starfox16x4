@@ -18,7 +18,7 @@
 #include "level_table.h"
 #include "level_update.h"
 #include "mario.h"
-#include "mario_actions_cutscene.h"
+#include "pstrats.h"
 #include "memory.h"
 #include "obj_behaviors.h"
 #include "object_helpers.h"
