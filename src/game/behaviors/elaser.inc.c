@@ -1,12 +1,14 @@
 // player's single laser strategy.
 
 void elaser_Istrat(void) {
-    if (o->oTimer == 0) {
+    cur_obj_scale(1.0f);
         o->oVelZ = 66 * 2;
         o->oForwardVel = 66 * 2;
-    }
+        o->oTimer++;
 
-    if (o->oPosZ > 4096) { // despawn.
+    // TODO: add collisions with objects
+
+    if (o->oTimer > 100) { // despawn.
         s_remove_obj(o);
     }
     cur_obj_move_using_fvel_and_gravity();
