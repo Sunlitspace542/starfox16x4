@@ -18,7 +18,7 @@ Sunlit: programming, assets
 
 ### Freeing up ROM space:
 - [X] Remove all SM64 object behaviors
-- [ ] Remove all of Mario's code that we don't need 
+- [ ] Remove all the Mario behavior/action code that we don't need 
 - [ ] Remove SM64 actor models (partially done)
 - [ ] Remove all vanilla music and their instrument banks
 
