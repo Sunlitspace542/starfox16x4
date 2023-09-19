@@ -4,7 +4,7 @@
 *                              -----------                                *
 *                                                                         *
 *                          Nintendo 64 version.                           *
-*                                                                           *
+*                                                                         *
 *_________________________________________________________________________*
 *                                                                         *
 *  File: pstrats.c                                                        *
@@ -45,27 +45,13 @@
 #include "rumble_init.h"
 #include "spawn_sound.h"
 
-//*******************************
-//*                             *
-//*  PLAYER MOVEMENT STRATEGY.  *
-//*                             *
-//*******************************
-#include "stratequ.h" // strategy equates for player speed and stuff
+#include "stratequ.h" // strategy equates.
 
-// TODO: we can't start working on WORLD and objs and stuff until basic player functionality is complete.
-// That means:
-// - pitch change (for climbing and diving)
-// - roll change (for barrel rolls), both pch and rol needed for player wobble
-// - firing (laser strategy, needs model)
-// - Boost/Brake meter and the associated HUD elements (basic boost/brake already exists)
-// - SHIELD meter
-// Anything that isn't on this list has already been done.
-
+// initialize player's variables.
 // player speeds.
 int maxPspeed = 85;
 int medPspeed = 65;
 int minPspeed = 20;
-// initialize player's variables.
 int playerB_HP = 40;
 int playerB_MaxHP = 40;
 int psf3_enginesnd = 1;
@@ -78,13 +64,19 @@ s32 player_istrat(struct MarioState *m) {
     struct Surface *floor, *ceil;
     Vec3f pos;
 
+    // increment the local timer every frame if the global timer isn't 0
+    // (which it should be, if it isn't, either the user left the game on for like 5 years or something's really busted)
     if(gGlobalTimer > 0) {
-    gLocalTimer++; // increment the local timer every frame.
+        gLocalTimer++;
     }
 
     vec3f_copy(pos, m->pos);
     pstrats_update_shipflags(m);
 
+    // WORLD.ASM
+    if (pos[2] > 20450) { // Loop pos at 4096
+        pos[2] = 0;
+    }
 
     // constantly move ship forward.
     if (!(gPlayer1Controller->buttonDown & (U_CBUTTONS | D_CBUTTONS))) {
@@ -106,16 +98,15 @@ s32 player_istrat(struct MarioState *m) {
     }
 
     // meter drawing test.
-    if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
-        playerB_HP--;
-        boostMeterScale -= 0.1f;
-    }
+    //if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
+    //    playerB_HP--;
+    //    boostMeterScale -= 0.1f;
+    //}
 
-
-    // we're flying a plane thing here, so let's make the flight controls make sense.
-    // up - dive
-    // down - climb
-    // also add dpad for those who want a more SNES-like control scheme.
+    /* we're flying a plane thing here, so let's make the flight controls make sense.   */
+    /* up - dive                                                                        */
+    /* down - climb                                                                     */
+    /* also add dpad for those who want a more SNES-like control scheme.                */
     if (pos[1] != 540) { // set level "ceiling" for now
         if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
             pos[1] += minPspeed;
@@ -133,12 +124,6 @@ s32 player_istrat(struct MarioState *m) {
 
     if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
         pos[0] -= medPspeed;
-    }
-
-
-    // WORLD.ASM
-    if (pos[2] > 20450) { // Loop pos at 4096
-        pos[2] = 0;
     }
 
     // firing.
@@ -172,16 +157,14 @@ s32 player_istrat(struct MarioState *m) {
         vec3f_copy(m->pos, pos);
     }
 
-    //m->faceAngle[1] = m->intendedYaw;
     pstrats_update_interactions(m);
     pstrats_update_turning(m);
     pstrats_update_pitch(m);
     pstrats_update_roll(m);
     //mapmacs_do_objs();
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
-    vec3s_copy(m->marioObj->header.gfx.angle, m->faceAngle); // THE ALL IMPORTANT LINE
-    // this allows for pitch and roll changes, along with yaw.
-
+    // Make sure that all angle data is being copied over to the player gfx
+    vec3s_copy(m->marioObj->header.gfx.angle, m->faceAngle);
     return FALSE;
 }
 
@@ -203,8 +186,6 @@ void pstrats_update_turning(struct MarioState *m) {
     }
 }
 
-    // TODO: this (and roll)
-
 void pstrats_update_pitch(struct MarioState *m) {
     if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
         m->faceAngle[0] += 512.0f;
@@ -221,22 +202,20 @@ void pstrats_update_pitch(struct MarioState *m) {
         m->faceAngle[0] = -4608;
     }
 
-    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[0], 0);
+    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[0], 0); // SUNLITNOTE: do we actually need this? idk
 }
 
-
-
 void pstrats_update_roll(struct MarioState *m) {
-            if (gPlayer1Controller->buttonDown & L_TRIG) {
-                            //s32 approach_s32(s32 current, s32 target, s32 inc, s32 dec);
-                m->faceAngle[2] = approach_s32(m->faceAngle[2], -17000, 0x400, 0x400);
-            } else if (gPlayer1Controller->buttonDown & R_TRIG) {
-                m->faceAngle[2] = approach_s32(m->faceAngle[2], 17000, 0x400, 0x400);
-            } else {
-                m->faceAngle[2] = approach_s32(m->faceAngle[2], 0, 0x400, 0x400);
-            }
+    if ((gPlayer1Controller->buttonDown & L_TRIG) | (gPlayer1Controller->buttonDown & Z_TRIG)) {
+        //s32 approach_s32(s32 current, s32 target, s32 inc, s32 dec);
+        m->faceAngle[2] = approach_s32(m->faceAngle[2], -17000, 0x400, 0x400);
+    } else if (gPlayer1Controller->buttonDown & R_TRIG) {
+        m->faceAngle[2] = approach_s32(m->faceAngle[2], 17000, 0x400, 0x400);
+    } else {
+        m->faceAngle[2] = approach_s32(m->faceAngle[2], 0, 0x400, 0x400);
+    }
 
-            vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[2], 0);
+        vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[2], 0); // SUNLITNOTE: do we actually need this? idk
 }
 
 void pstrats_update_shipflags(struct MarioState *m) {
@@ -286,16 +265,9 @@ void mapmacs_do_objs(void) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
+/*************************/
+/*   NON-PSTRATS STUFF   */
+/*************************/
 
 static struct Object *sIntroWarpPipeObj;
 static struct Object *sEndPeachObj;

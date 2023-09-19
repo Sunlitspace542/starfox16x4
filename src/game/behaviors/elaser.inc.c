@@ -45,7 +45,7 @@ elaser_strat
 
 void elaser_Istrat(void) {
     cur_obj_scale(1.0f); // scale object
-        o->oVelZ = 66 * 4; // Set Z velocity
+        //o->oVelZ = 66 * 4; // Set Z velocity
         o->oForwardVel = 66 * 4; // Set Forward velocity
         o->oTimer++; // increment the object timer
 
