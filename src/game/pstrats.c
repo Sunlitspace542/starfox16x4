@@ -187,6 +187,25 @@ s32 player_istrat(struct MarioState *m) {
 
 // changes player yaw based on stick input
 void pstrats_update_turning(struct MarioState *m) {
+    // NEW CODE
+
+    if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
+        m->faceAngle[1] += 512.0f;
+    } else if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
+        m->faceAngle[1] -= 512.0f;
+    } else {
+        m->faceAngle[1] = approach_s32(m->faceAngle[1], 0, 0x1F0, 0x1F0);
+    }
+
+    // Ensure the pitch angle stays within the range [-4608, 4608].
+    if (m->faceAngle[1] > 5600) {
+        m->faceAngle[1] = 5600;
+    } else if (m->faceAngle[1] < -5600) {
+        m->faceAngle[1] = -5600;
+    }
+
+    // OLD CODE
+    /*
     s16 intendedDYaw;
     f32 intendedMag;
 
@@ -218,14 +237,15 @@ void pstrats_update_turning(struct MarioState *m) {
 
     m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
     m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
+    */
 }
 
     // TODO: this (and roll)
 
 void pstrats_update_pitch(struct MarioState *m) {
-    if (gPlayer1Controller->stickY > 0) {
+    if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
         m->faceAngle[0] += 512.0f;
-    } else if (gPlayer1Controller->stickY < 0) {
+    } else if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
         m->faceAngle[0] -= 512.0f;
     } else {
         m->faceAngle[0] = approach_s32(m->faceAngle[0], 0, 0x1F0, 0x1F0);
