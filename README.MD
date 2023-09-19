@@ -7,28 +7,33 @@ I've started reading through and documenting the source code of the original Sta
 After various observations regarding SM64's development and Star Fox's influence on it, I decided to try to port the game to the N64 using the SM64 engine.  
 
 ## Credits (so far)
-AloXado320: Programming assistance, answering my dumb questions  
+AloXado320: Programming assistance, answering my dumb SM64 questions  
 Church of Kondo: Restored music used for BGM  
 HackerSM64 developers/contributors: Making HackerSM64 in the first place  
-Kandowontu: Answering my Star Fox related questions  
-Monika: assistance  
-Sunlit: programming, assets  
+Kandowontu: Answering my Star Fox related questions, feedback, general encouragement  
+Monika: Assistance, feedback, moral support  
+Sunlit: Lead programmer, model porting, sprites  
 
 ## List of important things to be done
 
-### Freeing up ROM space:
-- [X] Remove all SM64 object behaviors
+### Freeing up/Conserving ROM Space:
+- [X] Remove all SM64 object behaviors  
 - [ ] Remove all the Mario behavior/action code that we don't need 
-- [ ] Remove SM64 actor models (partially done)
+- [ ] Remove SM64 actor models (partially done)  
 - [ ] Remove all vanilla music and their instrument banks
+- [ ] Settle on a good rate for streamed audio BGM  
 
-### Game:
+### Game Code:
 ``src/game/hud.c``:  
 
 - [X] Implement HUD (shield, boost, brake, bombs)  
 
 ``src/game/pstrats.c``:  
 
-- [x] Player pitch, yaw & roll
-- [X] Get a basic laser strat in
-- [ ] Proper boosting and braking
+- [x] Player pitch, yaw & roll  
+- [X] Get a basic laser strat in  
+- [ ] Proper boosting and braking  
+
+other:  
+- [ ] Begin work on implementing Star Fox world functionality, object macros, levels, etc.  
+- [ ] Port over PATH/strat commands from Star Fox as necessary  
