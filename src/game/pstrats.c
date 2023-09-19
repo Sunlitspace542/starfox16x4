@@ -43,6 +43,7 @@
 #include "seq_ids.h"
 #include "sound_init.h"
 #include "rumble_init.h"
+#include "spawn_sound.h"
 
 //*******************************
 //*                             *
@@ -147,7 +148,7 @@ s32 player_istrat(struct MarioState *m) {
     }
 
     // Special weapon (bomb/nuke).
-    if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON)) {
+    if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON) && (numNukes > 0)) {
         spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_nuke);
         numNukes--;
     }
@@ -177,7 +178,7 @@ s32 player_istrat(struct MarioState *m) {
     pstrats_update_turning(m);
     pstrats_update_pitch(m);
     pstrats_update_roll(m);
-    //mapmacs_do_objs(m);
+    //mapmacs_do_objs();
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_copy(m->marioObj->header.gfx.angle, m->faceAngle); // THE ALL IMPORTANT LINE
     // this allows for pitch and roll changes, along with yaw.
@@ -289,7 +290,7 @@ void pstrats_update_interactions(struct MarioState *m) {
     }
 }
 
-void mapmacs_do_objs(struct MarioState *m) {
+void mapmacs_do_objs(void) {
     // TODO: this is dumb
     // this also just needs work. these should
     // really not be spawning relative to the player's position.

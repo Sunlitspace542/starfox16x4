@@ -141,7 +141,7 @@ void pstrats_update_turning(struct MarioState *m);
 void pstrats_update_pitch(struct MarioState *m);
 void pstrats_update_roll(struct MarioState *m);
 void pstrats_update_interactions(struct MarioState *m);
-void mapmacs_do_objs(struct MarioState *m);
+void mapmacs_do_objs(void);
 
 
 #endif // MARIO_ACTIONS_CUTSCENE_H
