@@ -79,12 +79,12 @@ s32 player_istrat(struct MarioState *m) {
     Vec3f pos;
 
     if(gGlobalTimer > 0) {
-    gLocalTimer++;
+    gLocalTimer++; // increment the local timer every frame.
     }
 
     //if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
 
-    set_mario_animation(m, MARIO_ANIM_A_POSE);
+    //set_mario_animation(m, MARIO_ANIM_A_POSE);
     vec3f_copy(pos, m->pos);
     pstrats_update_shipflags(m);
 
@@ -119,13 +119,15 @@ s32 player_istrat(struct MarioState *m) {
     // up - dive
     // down - climb
     // also add dpad for those who want a more SNES-like control scheme.
-    if (pos[1] != 520) { // set level "ceiling" for now
+    if (pos[1] != 540) { // set level "ceiling" for now
         if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
             pos[1] += minPspeed;
         }
     }
-    if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
-        pos[1] -= minPspeed;
+    if (pos[1] != 140) {
+        if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
+            pos[1] -= minPspeed;
+        }
     }
 
     if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
@@ -144,12 +146,12 @@ s32 player_istrat(struct MarioState *m) {
 
     // firing.
     if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
-        spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_Elaser);
+        spawn_object_relative(0, 0, pos[1], 20, gCurrentObject, MODEL_MARIO, P_Elaser);
     }
 
     // Special weapon (bomb/nuke).
     if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON) && (numNukes > 0)) {
-        spawn_object_relative(0, 0, pos[1], 200, gCurrentObject, MODEL_MARIO, P_nuke);
+        spawn_object_relative(0, 0, pos[1], 20, gCurrentObject, MODEL_MARIO, P_nuke);
         numNukes--;
     }
 
@@ -188,8 +190,6 @@ s32 player_istrat(struct MarioState *m) {
 
 // changes player yaw based on stick input
 void pstrats_update_turning(struct MarioState *m) {
-    // NEW CODE
-
     if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
         m->faceAngle[1] += 512.0f;
     } else if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
@@ -204,41 +204,6 @@ void pstrats_update_turning(struct MarioState *m) {
     } else if (m->faceAngle[1] < -5600) {
         m->faceAngle[1] = -5600;
     }
-
-    // OLD CODE
-    /*
-    s16 intendedDYaw;
-    f32 intendedMag;
-
-    m->forwardVel = approach_f32(m->forwardVel, 0.0f, 0.150f, 0.150f);
-
-    if ((m->input & INPUT_NONZERO_ANALOG)) {
-        intendedDYaw = m->intendedYaw - m->faceAngle[1];
-        intendedMag = m->intendedMag / 32.0f;
-
-        // m->forwardVel += 1.5f * coss(intendedDYaw) * intendedMag;
-        m->faceAngle[1] += 512.0f * sins(intendedDYaw) * intendedMag;
-
-        // Ensure the angle stays within the range [-5600, 5600]
-        if (m->faceAngle[1] > 5600) {
-            m->faceAngle[1] = 5600;
-        } else if (m->faceAngle[1] < -5600) {
-            m->faceAngle[1] = -5600;
-        }
-    } else {
-        m->faceAngle[1] = approach_s32(m->faceAngle[1], 0, 0x1F0, 0x1F0);
-
-        // Ensure the angle stays within the range [-5600, 5600]
-        if (m->faceAngle[1] > 5600) {
-            m->faceAngle[1] = 5600;
-        } else if (m->faceAngle[1] < -5600) {
-            m->faceAngle[1] = -5600;
-        }
-    }
-
-    m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
-    m->vel[2] = m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
-    */
 }
 
     // TODO: this (and roll)
