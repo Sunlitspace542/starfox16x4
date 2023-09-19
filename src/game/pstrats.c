@@ -55,8 +55,8 @@ int minPspeed = 20;
 int playerB_HP = 40;
 int playerB_MaxHP = 40;
 int psf3_enginesnd = 1;
-int psf2_boosting = 32;
-int psf2_braking = 64;
+int psf2_boosting = 0;
+int psf2_braking = 0;
 
 
 s32 player_istrat(struct MarioState *m) {
@@ -89,7 +89,9 @@ s32 player_istrat(struct MarioState *m) {
     // boosting and braking.
     if (gPlayer1Controller->buttonDown & U_CBUTTONS) {
         pos[2] += maxPspeed;
-        create_sound_spawner(SOUND_ACTION_FLYING_FAST);
+        play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
+        //psf2_boosting = 1;
+        //pstrats_boost(m);
     }
 
     if (gPlayer1Controller->buttonDown & D_CBUTTONS) { 
@@ -201,8 +203,6 @@ void pstrats_update_pitch(struct MarioState *m) {
     } else if (m->faceAngle[0] < -4608) {
         m->faceAngle[0] = -4608;
     }
-
-    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[0], 0); // SUNLITNOTE: do we actually need this? idk
 }
 
 void pstrats_update_roll(struct MarioState *m) {
@@ -214,8 +214,6 @@ void pstrats_update_roll(struct MarioState *m) {
     } else {
         m->faceAngle[2] = approach_s32(m->faceAngle[2], 0, 0x400, 0x400);
     }
-
-        vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[2], 0); // SUNLITNOTE: do we actually need this? idk
 }
 
 void pstrats_update_shipflags(struct MarioState *m) {
@@ -223,6 +221,27 @@ void pstrats_update_shipflags(struct MarioState *m) {
     play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject); // arwing engine sound
     }
 }
+
+// doesn't work right now, old boost behavior restored for now.
+void pstrats_boost(struct MarioState *m) {
+    Vec3f pos;
+    if (psf2_boosting == 1) {
+        pos[2] += medPspeed;
+        if (gLocalTimer != 0) {
+            //boostMeterScale--;
+            approach_f32(boostMeterScale, 0.0f, 0.0f, 0.1f);
+        }
+
+        if (boostMeterScale <= 0) {
+            psf2_boosting = 0;
+        }
+    } else if (psf2_boosting == 0) {
+        if (gLocalTimer != 0) {
+            boostMeterScale++;
+        }
+    }
+}
+
 
 void pstrats_update_interactions(struct MarioState *m) {
     mario_process_interactions(m);

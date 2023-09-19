@@ -11,16 +11,10 @@
         "inst0": {
             "release_rate": 10,
             "envelope": "envelope0",
-            "sound": "sf_corneria_custom_L"
-        },
-        "inst1": {
-            "release_rate": 10,
-            "envelope": "envelope0",
-            "sound": "sf_corneria_custom_R"
+            "sound": "sf_corneria_custom"
         }
     },
     "instrument_list": [
-        "inst0",
-        "inst1"
+        "inst0"
     ]
 }
