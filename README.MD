@@ -12,7 +12,7 @@ Church of Kondo: Restored music used for BGM
 HackerSM64 developers/contributors: Making HackerSM64 in the first place  
 Kandowontu: Answering my Star Fox related questions, feedback, general encouragement  
 Monika: Assistance, feedback, moral support  
-Sunlit: Lead programmer, model porting, sprites  
+Sunlit: Lead programmer, model porting, sprites, real N64 testing  
 
 ## List of important things to be done
 
@@ -34,6 +34,6 @@ Sunlit: Lead programmer, model porting, sprites
 - [X] Get a basic laser strat in  
 - [ ] Proper boosting and braking  
 
-other:  
+Other:  
 - [ ] Begin work on implementing Star Fox world functionality, object macros, levels, etc.  
 - [ ] Port over PATH/strat commands from Star Fox as necessary  
