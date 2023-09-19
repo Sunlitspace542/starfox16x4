@@ -23,3 +23,6 @@
 #include "transparent_star/geo.inc.c"
 #include "white_particle/geo.inc.c"
 #include "wooden_signpost/geo.inc.c"
+
+#include "elaser/geo.inc.c"
+#include "nuke/geo.inc.c"

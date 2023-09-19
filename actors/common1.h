@@ -290,4 +290,8 @@ extern const Gfx wooden_signpost_seg3_dl_0302DCD0[];
 extern const Gfx wooden_signpost_seg3_dl_0302DD08[];
 extern const Collision wooden_signpost_seg3_collision_0302DD80[];
 
+#include "elaser/geo_header.h"
+
+#include "nuke/geo_header.h"
+
 #endif

@@ -1,0 +1,10 @@
+extern const GeoLayout nuke_geo[];
+extern Lights1 nuke_f3dlite_material_lights;
+extern u8 nuke_nuke_frame1_ci4[];
+extern u8 nuke_nuke_frame1_ci4_pal_rgba16[];
+extern Vtx nuke_Bone_mesh_layer_4_vtx_0[4];
+extern Gfx nuke_Bone_mesh_layer_4_tri_0[];
+extern Gfx mat_nuke_f3dlite_material[];
+extern Gfx mat_revert_nuke_f3dlite_material[];
+extern Gfx nuke_Bone_mesh_layer_4[];
+extern Gfx nuke_material_revert_render_settings[];

@@ -4,7 +4,7 @@
 *                              -----------                                *
 *                                                                         *
 *                          Nintendo 64 version.                           *
-*                                                                         *
+*                                                                           *
 *_________________________________________________________________________*
 *                                                                         *
 *  File: pstrats.c                                                        *
@@ -82,9 +82,6 @@ s32 player_istrat(struct MarioState *m) {
     gLocalTimer++; // increment the local timer every frame.
     }
 
-    //if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
-
-    //set_mario_animation(m, MARIO_ANIM_A_POSE);
     vec3f_copy(pos, m->pos);
     pstrats_update_shipflags(m);
 
@@ -146,12 +143,12 @@ s32 player_istrat(struct MarioState *m) {
 
     // firing.
     if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
-        spawn_object_relative(0, 0, pos[1], 20, gCurrentObject, MODEL_MARIO, P_Elaser);
+        spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_ELASER, P_Elaser);
     }
 
     // Special weapon (bomb/nuke).
     if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON) && (numNukes > 0)) {
-        spawn_object_relative(0, 0, pos[1], 20, gCurrentObject, MODEL_MARIO, P_nuke);
+        spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_NUKE, P_nuke);
         numNukes--;
     }
 
