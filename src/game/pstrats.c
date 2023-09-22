@@ -15,7 +15,7 @@
 \*************************************************************************/
 
 // in short, a lot of IFs.
-// methinks all the player code needs a rewrite.
+// TODO: methinks all the player code needs a rewrite.
 // TODO: redo shipflags so it works like SF1, redo boost/brake so it works like SF1
 
 #include <PR/ultratypes.h>
@@ -66,16 +66,20 @@ int playerB_MaxHP = 40;
 int player_BP = 40;
 int player_MaxBP = 40;
 // shipflags.
+int pshipflags;
 int pshipflags2;
 int pshipflags3;
-int psf3_enginesnd = 1;
-int psf2_boosting = 0;
-int psf2_braking = 0;
+
+// SEE ALSO: init_mario in mario.c
 
 s32 player_istrat(struct MarioState *m) {
     struct WallCollisionData wallData;
     struct Surface *floor, *ceil;
     Vec3f pos;
+
+    // setup flags.
+    pshipflags3 |= psf3_enginesnd; // turn on engine sound
+    //////////////
 
     // increment the local timer every frame if the global timer isn't 0.
     // (which it should be, if it isn't, either the user left the game on for like 5 years or something's broken)
@@ -84,15 +88,9 @@ s32 player_istrat(struct MarioState *m) {
     }
 
     vec3f_copy(pos, m->pos);
-    pstrats_update_shipflags(m);
+    pstrats_update_shipflags(m); // update player flags.
 
-    // WORLD.ASM
-    if (pos[2] > 20450) { // Loop pos at 4096
-        pos[2] = 0;
-    }
-
-    // SUNLITNOTE: this could all be moved into an input update routine (going to need to anyway for levels/demos)
-    // start input update code
+    // button input junk.
 
     // constantly move ship forward.
     if (!(gPlayer1Controller->buttonDown & ((psf2_boosting != 1) | (psf2_braking != 1)))) {
@@ -105,11 +103,11 @@ s32 player_istrat(struct MarioState *m) {
 
     // boosting and braking.
     if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (player_BP != 0)) { 
-        psf2_boosting = 1;
+        //psf2_boosting = 1;
         player_BP--;
         pos[2] += maxPspeed;
     } else if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (player_BP != 0)) { 
-        psf2_braking = 1;
+        //psf2_braking = 1;
         player_BP--;
         pos[2] += minPspeed;
     } else {
@@ -117,8 +115,8 @@ s32 player_istrat(struct MarioState *m) {
             if (player_BP != 40) {
                 player_BP++;
             } else if (player_BP == 40) {
-                psf2_boosting = 0;
-                psf2_braking = 0;
+                //psf2_boosting = 0;
+                //psf2_braking = 0;
             }
         }
     }
@@ -169,7 +167,10 @@ s32 player_istrat(struct MarioState *m) {
         numNukes--;
     }
 
-    // end input update code
+    // WORLD stuff
+    if (pos[2] > 20450) { // Loop pos at 4096
+        pos[2] = 0;
+    }
 
     // spawn pseudo floor object to prevent OOB death
     resolve_and_return_wall_collisions(pos, 60.0f, 50.0f, &wallData);
@@ -190,13 +191,11 @@ s32 player_istrat(struct MarioState *m) {
         vec3f_copy(m->pos, pos);
     }
 
-    // update player status.
+    // execute everything else.
     pstrats_update_interactions(m);
-    pstrats_update_turning(m);
+    pstrats_update_yaw(m);
     pstrats_update_pitch(m);
     pstrats_update_roll(m);
-    pstrats_update_boost(m);
-    //mapmacs_do_objs();
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     // Make sure that all angle data is being copied over to the player gfx
     vec3s_copy(m->marioObj->header.gfx.angle, m->faceAngle);
@@ -204,7 +203,7 @@ s32 player_istrat(struct MarioState *m) {
 }
 
 // changes player yaw based on stick input
-void pstrats_update_turning(struct MarioState *m) {
+void pstrats_update_yaw(struct MarioState *m) {
     if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
         m->faceAngle[1] += 512.0f;
     } else if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
@@ -250,25 +249,78 @@ void pstrats_update_roll(struct MarioState *m) {
 }
 
 void pstrats_update_shipflags(struct MarioState *m) {
-    if (psf3_enginesnd == 1) {
-    play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject); // arwing engine sound
+    // pshipflags
+    if (pshipflags3 & psf_bodycoll) {
+
+    }
+    if (pshipflags3 & psf_LWingcoll) {
+
+    }
+    if (pshipflags3 & psf_Rwingcoll) {
+
+    }
+    if (pshipflags3 & psf_brkLWing) {
+
+    }
+    if (pshipflags3 & psf_brkRwing) {
+
+    }
+    if (pshipflags3 & psf_noctrl) {
+
+    }
+    if (pshipflags3 & psf_nofire) {
+
+    }
+    if (pshipflags3 & psf_noYctrl) {
+
+    }
+
+    // pshipflags2
+    if (pshipflags3 & psf2_doublaser) {
+
+    }
+    if (pshipflags3 & psf2_wireship) {
+    
+    }
+    if (pshipflags3 & psf2_nospark) {
+
+    }
+    if (pshipflags3 & psf2_turn180) {
+
+    }
+    if (pshipflags3 & psf2_forceboost) {
+
+    }
+    if (pshipflags3 & psf2_boosting) {
+
+    }
+    if (pshipflags3 & psf2_braking) {
+
+    }
+    if (pshipflags3 & psf2_playerHP0) {
+
+    }
+
+    // pshipflags3
+    if (pshipflags3 & psf3_intunnel) {
+
+    }
+    if (pshipflags3 & psf3_enginesnd) {
+        play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject); // arwing's engine.
+    }
+    if (pshipflags3 & psf3_forcebrake) {
+
+    }
+    if (pshipflags3 & psf3_nocollisions) {
+
+    }
+    if (pshipflags3 & psf3_beamball) {
+
     }
 }
 
 void pstrats_update_interactions(struct MarioState *m) {
-    // stubbed for now 
     // TODO: obj collisions code
-}
-
-// updates boosting and braking actions.
-// what this should do:
-// boost ship
-// bring boost meter down to 0
-// stop boosting
-// bring boost meter back to full
-// end routine 
-void pstrats_update_boost(struct MarioState *m) {
-
 }
 
 void mapmacs_do_objs(void) {
@@ -283,24 +335,6 @@ void mapmacs_do_objs(void) {
 
 	MAPOBJ(60,1200,000,5000,MODEL_MARIO,P_Elaser);
 	MAPOBJ(60,-1200,000,5000,MODEL_MARIO,P_Elaser);
-
-	MAPOBJ(90,1200,000,5000,MODEL_MARIO,P_Elaser);
-	MAPOBJ(90,-1200,000,5000,MODEL_MARIO,P_Elaser);
-
-	MAPOBJ(120,1200,000,5000,MODEL_MARIO,P_Elaser);
-	MAPOBJ(120,-1200,000,5000,MODEL_MARIO,P_Elaser);
-
-	MAPOBJ(150,1200,000,5000,MODEL_MARIO,P_Elaser);
-	MAPOBJ(150,-1200,000,5000,MODEL_MARIO,P_Elaser);
-
-	MAPOBJ(180,1200,000,5000,MODEL_MARIO,P_Elaser);
-	MAPOBJ(180,-1200,000,5000,MODEL_MARIO,P_Elaser);
-
-	MAPOBJ(200,1200,000,5000,MODEL_MARIO,P_Elaser);
-	MAPOBJ(200,-1200,000,5000,MODEL_MARIO,P_Elaser);
-
-	MAPOBJ(230,1200,000,5000,MODEL_MARIO,P_Elaser);
-	MAPOBJ(230,-1200,000,5000,MODEL_MARIO,P_Elaser);
 
 }
 
@@ -908,7 +942,6 @@ s32 act_quicksand_death(struct MarioState *m) {
         }
     }
     stationary_ground_step(m);
-    play_sound(SOUND_MOVING_QUICKSAND_DEATH, m->marioObj->header.gfx.cameraToObject);
     return FALSE;
 }
 
