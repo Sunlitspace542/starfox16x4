@@ -14,6 +14,10 @@
 *                                                                         *
 \*************************************************************************/
 
+// in short, a lot of IFs.
+// methinks all the player code needs a rewrite.
+// TODO: redo shipflags so it works like SF1, redo boost/brake so it works like SF1
+
 #include <PR/ultratypes.h>
 
 #include "sm64.h"
@@ -44,29 +48,38 @@
 #include "sound_init.h"
 #include "rumble_init.h"
 #include "spawn_sound.h"
+#ifdef DEBUGINFO
+#include "print.h"
+#endif
 
-#include "stratequ.h" // strategy equates.
+#include "stratequ.h" // include strategy equates header.
 
 // initialize player's variables.
 // player speeds.
 int maxPspeed = 85;
 int medPspeed = 65;
 int minPspeed = 20;
+// health points.
 int playerB_HP = 40;
 int playerB_MaxHP = 40;
+// boost points.
+int player_BP = 40;
+int player_MaxBP = 40;
+// shipflags.
+int pshipflags2;
+int pshipflags3;
 int psf3_enginesnd = 1;
 int psf2_boosting = 0;
 int psf2_braking = 0;
-
 
 s32 player_istrat(struct MarioState *m) {
     struct WallCollisionData wallData;
     struct Surface *floor, *ceil;
     Vec3f pos;
 
-    // increment the local timer every frame if the global timer isn't 0
-    // (which it should be, if it isn't, either the user left the game on for like 5 years or something's really busted)
-    if(gGlobalTimer > 0) {
+    // increment the local timer every frame if the global timer isn't 0.
+    // (which it should be, if it isn't, either the user left the game on for like 5 years or something's broken)
+    if (gGlobalTimer > 0) {
         gLocalTimer++;
     }
 
@@ -78,42 +91,59 @@ s32 player_istrat(struct MarioState *m) {
         pos[2] = 0;
     }
 
+    // SUNLITNOTE: this could all be moved into an input update routine (going to need to anyway for levels/demos)
+    // start input update code
+
     // constantly move ship forward.
-    if (!(gPlayer1Controller->buttonDown & (U_CBUTTONS | D_CBUTTONS))) {
+    if (!(gPlayer1Controller->buttonDown & ((psf2_boosting != 1) | (psf2_braking != 1)))) {
         pos[2] += medPspeed;
     }
 
     // TODO for boosting and braking:
     // Add boost meter timer for these actions.
+    // TODO: janky, currently SF64-style boost/brake.
 
     // boosting and braking.
-    if (gPlayer1Controller->buttonDown & U_CBUTTONS) {
+    if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (player_BP != 0)) { 
+        psf2_boosting = 1;
+        player_BP--;
         pos[2] += maxPspeed;
-        play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
-        //psf2_boosting = 1;
-        //pstrats_boost(m);
-    }
-
-    if (gPlayer1Controller->buttonDown & D_CBUTTONS) { 
+    } else if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (player_BP != 0)) { 
+        psf2_braking = 1;
+        player_BP--;
         pos[2] += minPspeed;
-        play_sound(SOUND_MOVING_TERRAIN_SLIDE, m->marioObj->header.gfx.cameraToObject);
+    } else {
+        if ((gLocalTimer != 0)) {
+            if (player_BP != 40) {
+                player_BP++;
+            } else if (player_BP == 40) {
+                psf2_boosting = 0;
+                psf2_braking = 0;
+            }
+        }
     }
 
     // meter drawing test.
-    //if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
-    //    playerB_HP--;
-    //    boostMeterScale -= 0.1f;
-    //}
+    #ifdef DEBUGINFO
+    print_text_fmt_int(16, 180, "BST %d", player_BP);
+    if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
+        playerB_HP--;
+        player_BP--;
+    }
+    #endif
 
+    /************************************************************************************/
     /* we're flying a plane thing here, so let's make the flight controls make sense.   */
     /* up - dive                                                                        */
     /* down - climb                                                                     */
-    /* also add dpad for those who want a more SNES-like control scheme.                */
+    /* also add D-pad for those who want a more SNES-like control scheme.                */
+    /************************************************************************************/
     if (pos[1] != 540) { // set level "ceiling" for now
         if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
             pos[1] += minPspeed;
         }
     }
+
     if (pos[1] != 140) {
         if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
             pos[1] -= minPspeed;
@@ -139,6 +169,7 @@ s32 player_istrat(struct MarioState *m) {
         numNukes--;
     }
 
+    // end input update code
 
     // spawn pseudo floor object to prevent OOB death
     resolve_and_return_wall_collisions(pos, 60.0f, 50.0f, &wallData);
@@ -159,10 +190,12 @@ s32 player_istrat(struct MarioState *m) {
         vec3f_copy(m->pos, pos);
     }
 
+    // update player status.
     pstrats_update_interactions(m);
     pstrats_update_turning(m);
     pstrats_update_pitch(m);
     pstrats_update_roll(m);
+    pstrats_update_boost(m);
     //mapmacs_do_objs();
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     // Make sure that all angle data is being copied over to the player gfx
@@ -222,32 +255,20 @@ void pstrats_update_shipflags(struct MarioState *m) {
     }
 }
 
-// doesn't work right now, old boost behavior restored for now.
-void pstrats_boost(struct MarioState *m) {
-    Vec3f pos;
-    if (psf2_boosting == 1) {
-        pos[2] += medPspeed;
-        if (gLocalTimer != 0) {
-            //boostMeterScale--;
-            approach_f32(boostMeterScale, 0.0f, 0.0f, 0.1f);
-        }
-
-        if (boostMeterScale <= 0) {
-            psf2_boosting = 0;
-        }
-    } else if (psf2_boosting == 0) {
-        if (gLocalTimer != 0) {
-            boostMeterScale++;
-        }
-    }
+void pstrats_update_interactions(struct MarioState *m) {
+    // stubbed for now 
+    // TODO: obj collisions code
 }
 
+// updates boosting and braking actions.
+// what this should do:
+// boost ship
+// bring boost meter down to 0
+// stop boosting
+// bring boost meter back to full
+// end routine 
+void pstrats_update_boost(struct MarioState *m) {
 
-void pstrats_update_interactions(struct MarioState *m) {
-    mario_process_interactions(m);
-        if (m->marioObj->collidedObjInteractTypes & (INTERACT_DAMAGE)) {
-        m->hurtCounter += 4 * 8;
-    }
 }
 
 void mapmacs_do_objs(void) {

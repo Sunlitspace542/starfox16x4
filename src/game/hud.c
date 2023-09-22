@@ -452,7 +452,7 @@ void render_hud_shield_text(void) {
     print_text(294-3, shieldboxY, "]"); // SHIELD BOOST box
     
 //DBG
-/*
+#ifdef DEBUGINFO
     print_text_fmt_int(16, 20, "Z %d", gMarioState->pos[2]);
     print_text_fmt_int(16, 40, "Y %d", gMarioState->pos[1]);
     print_text_fmt_int(16, 60, "X %d", gMarioState->pos[0]);
@@ -461,10 +461,9 @@ void render_hud_shield_text(void) {
     print_text_fmt_int(16, 120, "PCH %d", (u16) gMarioState->faceAngle[0]);
     print_text_fmt_int(16, 140, "GTMR %d", gGlobalTimer);
     print_text_fmt_int(16, 160, "LTMR %d", gLocalTimer);
-    //print_text_fmt_int(16, 180, "MAG %d", gMarioState->intendedMag);
     
     print_fps(10,30); // puppyprint needs to be on for this
-*/
+#endif
 }
 
 // shield and boost meters.
@@ -472,16 +471,24 @@ void render_hud_shield_text(void) {
 #include "stratequ.h"
 
 f32 shieldMeterScale; // Declare shieldMeterScale at file scope
+f32 boostMeterScale; // Declare boostMeterScale at file scope
 
+// initializes HUD values.
 void init_hud_values(void) {
+    // HP (health points)
     f32 hp_ratio = (f32)playerB_HP / playerB_MaxHP;
     f32 shieldMeterMax = 1.2f;
     shieldMeterScale = shieldMeterMax * hp_ratio;
+    // BP (boost points)
+    f32 bp_ratio = (f32)player_BP / player_MaxBP;
+    f32 boostMeterMax = 1.2f;
+    boostMeterScale = boostMeterMax * bp_ratio;
 }
 
+// The following two functions are responsible for drawing the two meters in the HUD.
 void render_hud_shield_meter(s16 x, s16 y) {
 
-    init_hud_values();
+    init_hud_values(); // initialize HUD values.
 
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
     create_dl_scale_matrix(MENU_MTX_NOPUSH, shieldMeterScale, 0.8f, 1.0f); // XX YY ZZ
@@ -503,9 +510,9 @@ void render_hud_shield_meter(s16 x, s16 y) {
 
 }
 
-    f32 boostMeterScale = 1.2f;
-
 void render_hud_boost_meter(s16 x, s16 y) {
+
+    init_hud_values(); // initialize HUD values.
 
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
     create_dl_scale_matrix(MENU_MTX_NOPUSH, boostMeterScale, 0.8f, 1.0f); // XX YY ZZ

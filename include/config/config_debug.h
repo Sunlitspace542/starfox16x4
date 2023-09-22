@@ -34,7 +34,7 @@
 
 // A vanilla style debug mode. It doesn't rely on a text engine, but it's much less powerful that PUPPYPRINT_DEBUG.
 // Press D-pad left to show the debug UI.
-#define VANILLA_STYLE_CUSTOM_DEBUG
+// #define VANILLA_STYLE_CUSTOM_DEBUG
 
 // Visual debug enables some collision visuals. Tapping Right on the D-pad will cycle between visual hitboxes, visual surfaces, both, and neither.
 // If puppyprint is enabled, then this can be cycled only while the screen is active.
@@ -55,3 +55,9 @@
 
 // Forces a crash when the game starts. Useful for debugging the crash screen.
 // #define DEBUG_FORCE_CRASH_ON_BOOT
+
+// NEW stuffs
+// enable strategy debugging
+// prereqs: PUPPYPRINT_DEBUG 1
+#define DEBUGINFO
+
