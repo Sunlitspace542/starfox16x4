@@ -59,5 +59,5 @@
 // NEW stuffs
 // enable strategy debugging
 // prereqs: PUPPYPRINT_DEBUG 1
-//#define DEBUGINFO
+#define DEBUGINFO
 

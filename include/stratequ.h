@@ -24,6 +24,19 @@ flags |= FLAG_A; // Set FLAG_A
 clear:
 flags &= ~FLAG_B; // Clear FLAG_B
 
+-- HOW TO CHECK FLAGS--
+if equal:
+
+if (flags & FLAG_A) {
+    // FLAG_A is set
+}
+
+if not equal:
+
+if (!(flags & FLAG_A)) {
+    // FLAG_A is not set
+}
+
 ********************************/
 
 /*

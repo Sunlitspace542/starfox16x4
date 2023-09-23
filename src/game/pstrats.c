@@ -109,8 +109,9 @@ s32 player_istrat(struct MarioState *m) {
     #ifdef DEBUGINFO
     print_text_fmt_int(16, 180, "BST %d", player_BP);
     if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
-        playerB_HP--;
-        player_BP--;
+    pstrats_boostmtr_cooldown();
+    //    playerB_HP--;
+    //    player_BP--;
     }
     #endif
 
@@ -148,12 +149,14 @@ s32 player_istrat(struct MarioState *m) {
         // Add boost meter timer for these actions.
 
         // boosting and braking.
-        if ((gPlayer1Controller->buttonDown & U_CBUTTONS)) { 
+        if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (!(pshipflags2 & psf2_braking)) && (player_BP >= 1)) { 
             pshipflags3 |= psf2_boosting; // Set boosting flag
+            create_sound_spawner(SOUND_ACTION_FLYING_FAST);
         }
 
-        if ((gPlayer1Controller->buttonDown & D_CBUTTONS)) { 
+        if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (!(pshipflags2 & psf2_boosting)) && (player_BP >= 1)) { 
             pshipflags3 |= psf2_braking; // Set braking flag
+            create_sound_spawner(SOUND_ACTION_FLYING_FAST);
         }
 
         // firing.
@@ -197,10 +200,10 @@ s32 player_istrat(struct MarioState *m) {
     }
 
     // execute everything else.
-    pstrats_update_interactions(m);
     pstrats_update_yaw(m);
     pstrats_update_pitch(m);
     pstrats_update_roll(m);
+    pstrats_update_collisions(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     // Make sure that all angle data is being copied over to the player gfx
     // so we can have rotation on all 3 axes. (very important)
@@ -256,6 +259,39 @@ void pstrats_update_roll(struct MarioState *m) {
     }
 }
 
+
+void pstrats_boost(struct MarioState *m) {
+    Vec3f pos;
+    if (player_BP != 0) {
+        player_BP--;
+        pos[2] += maxPspeed;
+    } else {
+        pshipflags2 &= ~psf2_boosting; // Clear boosting flag bit
+        pstrats_boostmtr_cooldown();
+    }
+}
+
+void pstrats_brake(struct MarioState *m) {
+    Vec3f pos;
+    if (player_BP != 0) {
+        player_BP--;
+        pos[2] += minPspeed;
+    } else {
+        pshipflags2 &= ~psf2_braking; // Clear braking flag bit
+        pstrats_boostmtr_cooldown();
+    }
+}
+
+// BUG: cooldown does not refill bar, "capped" at 1 (why?)
+// cool down boost meter after use (cannot perform special moves again until refilled)
+void pstrats_boostmtr_cooldown(void) {
+    if (!(pshipflags2 & psf2_boosting) && !(pshipflags2 & psf2_braking)) {
+        if (player_BP != 40) {
+            player_BP++;
+        }
+    }
+}
+
 // check each bit of the 3 shipflags bits (see STRATEQU.H) and update things accordingly.
 void pstrats_update_shipflags(struct MarioState *m) {
 
@@ -302,10 +338,10 @@ void pstrats_update_shipflags(struct MarioState *m) {
 
     }
     if (pshipflags3 & psf2_boosting) {
-
+        pstrats_boost(m);
     }
     if (pshipflags3 & psf2_braking) {
-
+        pstrats_brake(m);
     }
     if (pshipflags3 & psf2_playerHP0) {
 
@@ -330,7 +366,29 @@ void pstrats_update_shipflags(struct MarioState *m) {
 
 }
 
-void pstrats_update_interactions(struct MarioState *m) {
+/* old code for reference:
+    if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (player_BP != 0)) { 
+        psf2_boosting = 1;
+        player_BP--;
+        pos[2] += maxPspeed;
+    } else if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (player_BP != 0)) { 
+        psf2_braking = 1;
+        player_BP--;
+        pos[2] += minPspeed;
+    } else {
+        if ((gLocalTimer != 0)) {
+            if (player_BP != 40) {
+                player_BP++;
+            } else if (player_BP == 40) {
+                psf2_boosting = 0;
+                psf2_braking = 0;
+            }
+        }
+    }
+*/
+
+
+void pstrats_update_collisions(struct MarioState *m) {
     // TODO: obj collisions code
 }
 
