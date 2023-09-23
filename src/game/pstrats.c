@@ -106,12 +106,7 @@ s32 player_istrat(struct MarioState *m) {
 
     // meter drawing test.
     #ifdef DEBUGINFO
-    print_text_fmt_int(16, 180, "PSF2 = %d", m->pshipflags2);
-    //print_text_fmt_int(16, 180, "BP %d", m->player_BP);
-    if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
-    //    playerB_HP--;
-    //    player_BP--;
-    }
+    print_text_fmt_int(16, 180, "PSF3 %d", m->pshipflags3);
     #endif
 
     // button input junk. (this feels like such a nasty way to do things...)
