@@ -109,7 +109,7 @@ s32 player_istrat(struct MarioState *m) {
     #ifdef DEBUGINFO
     print_text_fmt_int(16, 180, "BP %d", player_BP);
     if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
-        pstrats_boostmtr_cooldown(m);
+    //    pstrats_boostmtr_cooldown(m);
     //    playerB_HP--;
     //    player_BP--;
     }
