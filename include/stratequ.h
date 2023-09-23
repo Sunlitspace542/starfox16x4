@@ -137,7 +137,7 @@ extern int minPspeed;
 extern int playerB_HP;
 extern int playerB_MaxHP;
 extern f32 bp_ratio;
-extern int player_BP; // boost points
+extern f32 player_BP; // boost points
 extern int player_MaxBP;
 extern f32 boostMeterScale;
 extern f32 hp_ratio;

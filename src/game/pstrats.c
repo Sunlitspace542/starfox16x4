@@ -69,7 +69,7 @@ int minPspeed = 20;
 int playerB_HP = 40;
 int playerB_MaxHP = 40;
 // boost points.
-int player_BP = 40;
+f32 player_BP = 40;
 int player_MaxBP = 40;
 // shipflags.
 int pshipflags;
@@ -161,12 +161,12 @@ s32 player_istrat(struct MarioState *m) {
 
         if (!(pshipflags & psf_nofire)) {
             // firing.
-            if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
+            if ((gPlayer1Controller->buttonPressed & L_CBUTTONS)) {
                 spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_ELASER, P_Elaser);
             }
 
             // Special weapon (bomb/nuke).
-            if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON) && (numNukes > 0)) {
+            if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) && (numNukes > 0)) {
                 spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_NUKE, P_nuke);
                 numNukes--;
             }
@@ -337,8 +337,8 @@ void pstrats_update_shipflags(struct MarioState *m) {
 void pstrats_boost(struct MarioState *m) {
     Vec3f pos;
     if (player_BP != 0) {
-        player_BP--;
         pos[2] += maxPspeed;
+        player_BP--;
     } else if (player_BP == 0) {
         m->pshipflags2 &= ~psf2_boosting; // Clear braking flag bit
         pstrats_boostmtr_cooldown(m);
@@ -348,21 +348,20 @@ void pstrats_boost(struct MarioState *m) {
 void pstrats_brake(struct MarioState *m) {
     Vec3f pos;
     if (player_BP != 0) {
-        player_BP--;
         pos[2] += minPspeed;
+        player_BP--;
     } else if (player_BP == 0) {
         m->pshipflags2 &= ~psf2_braking; // Clear braking flag bit
         pstrats_boostmtr_cooldown(m);
     }
 }
 
-// BUG: cooldown does not refill bar, "capped" at 1 (why?)
-// PROGRESS: almost there with fixing
+// BUG: cooldown cannot gradually refill boost meter (why?)
 // cool down boost meter after use
 void pstrats_boostmtr_cooldown(struct MarioState *m) {
     if (!(m->pshipflags2 & psf2_boosting) && !(m->pshipflags2 & psf2_braking)) {
-        if (player_BP != 40) {
-            player_BP = 40; // temp workaround for now (needs to be gradual increase but that doesn't work)
+        for (; player_BP < player_MaxBP; player_BP += 0.9f) { // wh
+        //    player_BP++;
         }
     }
 }
