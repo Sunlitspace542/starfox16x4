@@ -159,17 +159,18 @@ s32 player_istrat(struct MarioState *m) {
             create_sound_spawner(SOUND_ACTION_FLYING_FAST);
         }
 
-        // firing.
-        if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
-            spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_ELASER, P_Elaser);
-        }
+        if (!(pshipflags3 & psf_nofire)) {
+            // firing.
+            if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
+                spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_ELASER, P_Elaser);
+            }
 
-        // Special weapon (bomb/nuke).
-        if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON) && (numNukes > 0)) {
-            spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_NUKE, P_nuke);
-            numNukes--;
+            // Special weapon (bomb/nuke).
+            if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON) && (numNukes > 0)) {
+                spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_NUKE, P_nuke);
+                numNukes--;
+            }
         }
-
     }
 
     // end of button stuffs.
@@ -267,7 +268,7 @@ void pstrats_boost(struct MarioState *m) {
         pos[2] += maxPspeed;
     } else {
         pshipflags2 &= ~psf2_boosting; // Clear boosting flag bit
-        pstrats_boostmtr_cooldown();
+        //pstrats_boostmtr_cooldown();
     }
 }
 
@@ -278,7 +279,7 @@ void pstrats_brake(struct MarioState *m) {
         pos[2] += minPspeed;
     } else {
         pshipflags2 &= ~psf2_braking; // Clear braking flag bit
-        pstrats_boostmtr_cooldown();
+        //pstrats_boostmtr_cooldown();
     }
 }
 
@@ -326,7 +327,6 @@ void pstrats_update_shipflags(struct MarioState *m) {
 
     }
     if (pshipflags3 & psf2_wireship) {
-    
     }
     if (pshipflags3 & psf2_nospark) {
 
