@@ -26,9 +26,6 @@
 // Enables debug free move (D-pad up to enter, A to exit).
 //#define ENABLE_DEBUG_FREE_MOVE
 
-// Enables a custom, enhanced performance profiler. (Enables PUPPYPRINT by default in config_safeguards).
-#define PUPPYPRINT_DEBUG 1
-
 // Uses cycles instead of microseconds in Puppyprint debug output.
 // #define PUPPYPRINT_DEBUG_CYCLES
 
@@ -56,8 +53,11 @@
 // Forces a crash when the game starts. Useful for debugging the crash screen.
 // #define DEBUG_FORCE_CRASH_ON_BOOT
 
+// Enables a custom, enhanced performance profiler. (Enables PUPPYPRINT by default in config_safeguards).
+//#define PUPPYPRINT_DEBUG 1
+
 // NEW stuffs
 // enable strategy debugging
 // prereqs: PUPPYPRINT_DEBUG 1
-#define DEBUGINFO
+//#define DEBUGINFO
 
