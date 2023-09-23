@@ -107,7 +107,7 @@ s32 player_istrat(struct MarioState *m) {
 
     // meter drawing test.
     #ifdef DEBUGINFO
-    print_text_fmt_int(16, 180, "BST %d", player_BP);
+    print_text_fmt_int(16, 180, "BP %d", player_BP);
     if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
     pstrats_boostmtr_cooldown();
     //    playerB_HP--;
@@ -149,12 +149,12 @@ s32 player_istrat(struct MarioState *m) {
         // Add boost meter timer for these actions.
 
         // boosting and braking.
-        if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (!(pshipflags2 & psf2_braking)) && (player_BP >= 1)) { 
+        if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (!(pshipflags2 & psf2_braking))) { 
             pshipflags3 |= psf2_boosting; // Set boosting flag
             create_sound_spawner(SOUND_ACTION_FLYING_FAST);
         }
 
-        if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (!(pshipflags2 & psf2_boosting)) && (player_BP >= 1)) { 
+        if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (!(pshipflags2 & psf2_boosting))) { 
             pshipflags3 |= psf2_braking; // Set braking flag
             create_sound_spawner(SOUND_ACTION_FLYING_FAST);
         }
@@ -282,8 +282,8 @@ void pstrats_brake(struct MarioState *m) {
     }
 }
 
-// BUG: cooldown does not refill bar, "capped" at 1 (why?)
-// cool down boost meter after use (cannot perform special moves again until refilled)
+// BUG: cooldown does not refill bar, "capped" at 1, loops to 0 (why?)
+// cool down boost meter after use
 void pstrats_boostmtr_cooldown(void) {
     if (!(pshipflags2 & psf2_boosting) && !(pshipflags2 & psf2_braking)) {
         if (player_BP != 40) {
