@@ -256,54 +256,77 @@ void pstrats_update_roll(struct MarioState *m) {
     }
 }
 
+// check each bit of the 3 shipflags bits (see STRATEQU.H) and update things accordingly.
 void pstrats_update_shipflags(struct MarioState *m) {
-    // FIXME: rewrite as switch statement?
-    // still learning C so idk if that would end up biting us later on
+
     // pshipflags
-if (pshipflags3 & psf_bodycoll) {
-    // Code for psf_bodycoll
-} else if (pshipflags3 & psf_LWingcoll) {
-    // Code for psf_LWingcoll
-} else if (pshipflags3 & psf_Rwingcoll) {
-    // Code for psf_Rwingcoll
-} else if (pshipflags3 & psf_brkLWing) {
-    // Code for psf_brkLWing
-} else if (pshipflags3 & psf_brkRwing) {
-    // Code for psf_brkRwing
-} else if (pshipflags3 & psf_noctrl) {
-    // Code for psf_noctrl
-} else if (pshipflags3 & psf_nofire) {
-    // Code for psf_nofire
-} else if (pshipflags3 & psf_noYctrl) {
-    // Code for psf_noYctrl
-} else if (pshipflags3 & psf2_doublaser) {
-    // Code for psf2_doublaser
-} else if (pshipflags3 & psf2_wireship) {
-    // Code for psf2_wireship
-} else if (pshipflags3 & psf2_nospark) {
-    // Code for psf2_nospark
-} else if (pshipflags3 & psf2_turn180) {
-    // Code for psf2_turn180
-} else if (pshipflags3 & psf2_forceboost) {
-    // Code for psf2_forceboost
-} else if (pshipflags3 & psf2_boosting) {
-    // Code for psf2_boosting
-} else if (pshipflags3 & psf2_braking) {
-    // Code for psf2_braking
-} else if (pshipflags3 & psf2_playerHP0) {
-    // Code for psf2_playerHP0
-} else if (pshipflags3 & psf3_intunnel) {
-    // Code for psf3_intunnel
-} else if (pshipflags3 & psf3_enginesnd) {
-    play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject);
-    // Code for psf3_enginesnd
-} else if (pshipflags3 & psf3_forcebrake) {
-    // Code for psf3_forcebrake
-} else if (pshipflags3 & psf3_nocollisions) {
-    // Code for psf3_nocollisions
-} else if (pshipflags3 & psf3_beamball) {
-    // Code for psf3_beamball
-}
+    if (pshipflags3 & psf_bodycoll) {
+
+    }
+    if (pshipflags3 & psf_LWingcoll) {
+
+    }
+    if (pshipflags3 & psf_Rwingcoll) {
+
+    }
+    if (pshipflags3 & psf_brkLWing) {
+
+    }
+    if (pshipflags3 & psf_brkRwing) {
+
+    }
+    if (pshipflags3 & psf_noctrl) {
+
+    }
+    if (pshipflags3 & psf_nofire) {
+
+    }
+    if (pshipflags3 & psf_noYctrl) {
+
+    }
+
+    // pshipflags2
+    if (pshipflags3 & psf2_doublaser) { // Laser type 2: Double laser/Twin blaster (Twin Laser in SF64)
+
+    }
+    if (pshipflags3 & psf2_wireship) {
+    
+    }
+    if (pshipflags3 & psf2_nospark) {
+
+    }
+    if (pshipflags3 & psf2_turn180) {
+
+    }
+    if (pshipflags3 & psf2_forceboost) {
+
+    }
+    if (pshipflags3 & psf2_boosting) {
+
+    }
+    if (pshipflags3 & psf2_braking) {
+
+    }
+    if (pshipflags3 & psf2_playerHP0) {
+
+    }
+
+    // pshipflags3
+    if (pshipflags3 & psf3_intunnel) {
+
+    }
+    if (pshipflags3 & psf3_enginesnd) { // arwing's engine.
+        play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject);
+    }
+    if (pshipflags3 & psf3_forcebrake) { // force braking
+
+    }
+    if (pshipflags3 & psf3_nocollisions) {
+
+    }
+    if (pshipflags3 & psf3_beamball) { // Laser type 3: Beam Ball (Hyper Laser in SF64)
+
+    }
 
 }
 

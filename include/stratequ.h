@@ -26,11 +26,13 @@ flags &= ~FLAG_B; // Clear FLAG_B
 
 */
 
-/* player's ship flags.
+/*
+player's ship flags.
    there are 3 ship flag bytes.
    each bit corresponds to a different player status flag.
-   only 5 bytes are used in flags3. */
-// carried over from the original SNES source (converted to C syntax ofc)
+   only 5 bytes are used in flags3.
+*/
+// carried over from the original SNES source (converted to C syntax of course)
 // as a bonus, this saves on RAM! (only uses 3 bytes)
 
 extern int pshipflags; // was an 8-bit alc
