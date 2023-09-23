@@ -48,7 +48,9 @@ player's ship flags.
 // carried over from the original SNES source (converted to C syntax of course)
 // as a bonus, this saves on RAM! (only uses 3 bytes)
 
-extern int pshipflags; // was an 8-bit alc
+// NOTE: pshipflags, pshipflags2, pshipflags3 are u8's in gMarioState (see types.h)
+
+//pshipflags // was an 8-bit alc
 #define psf_bodycoll (1 << 0)       // 00000001 (1)
 #define psf_LWingcoll (1 << 1)      // 00000010 (2)
 #define psf_Rwingcoll (1 << 2)      // 00000100 (4)
@@ -58,7 +60,7 @@ extern int pshipflags; // was an 8-bit alc
 #define psf_nofire (1 << 6)         // 01000000 (64)
 #define psf_noYctrl (1 << 7)        // 10000000 (128)
 
-extern int pshipflags2; // was an 8-bit alc
+//pshipflags2 // was an 8-bit alc
 #define psf2_doublaser (1 << 0)     // 00000001 (1)
 #define psf2_wireship (1 << 1)      // 00000010 (2)
 #define psf2_nospark (1 << 2)       // 00000100 (4)
@@ -68,7 +70,7 @@ extern int pshipflags2; // was an 8-bit alc
 #define psf2_braking (1 << 6)       // 01000000 (64)
 #define psf2_playerHP0 (1 << 7)     // 10000000 (128)
 
-extern int pshipflags3; // was an 8-bit alc
+//pshipflags3 // was an 8-bit alc
 #define psf3_intunnel  (1 << 0)     // 00000001 (1)
 #define psf3_enginesnd (1 << 1)     // 00000010 (2)
 #define psf3_forcebrake (1 << 2)    // 00000100 (4)

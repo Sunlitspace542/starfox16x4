@@ -408,7 +408,7 @@ struct MarioBodyState {
     /*0x18*/ Vec3f heldObjLastPosition; /// also known as HOLP
     // u8 filler[4];
 };
-
+    // NOTE this
 struct MarioState {
     /*0x00*/ u16 playerID;
     /*0x02*/ u16 input;
@@ -471,6 +471,9 @@ struct MarioState {
     /*0xBC*/ f32 peakHeight;
     /*0xC0*/ f32 quicksandDepth;
     /*0xC4*/ f32 windGravity;
+    /*0xC5*/ u8 pshipflags; // pshipflags
+    /*0xC6*/ u8 pshipflags2;
+    /*0xC7*/ u8 pshipflags3;
     // -- HackerSM64 MarioState fields begin --
 #ifdef BREATH_METER
              s16 breath;

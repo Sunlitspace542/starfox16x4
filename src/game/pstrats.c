@@ -88,7 +88,7 @@ s32 player_istrat(struct MarioState *m) {
     Vec3f pos;
 
     // set up ship flags.
-    pshipflags3 |= psf3_enginesnd; // turn on engine sound
+    m->pshipflags3 |= psf3_enginesnd; // turn on engine sound
     //////////////
 
     // increment the local timer every frame if the global timer isn't 0.
@@ -109,7 +109,7 @@ s32 player_istrat(struct MarioState *m) {
     #ifdef DEBUGINFO
     print_text_fmt_int(16, 180, "BP %d", player_BP);
     if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
-    pstrats_boostmtr_cooldown();
+        pstrats_boostmtr_cooldown(m);
     //    playerB_HP--;
     //    player_BP--;
     }
@@ -149,17 +149,17 @@ s32 player_istrat(struct MarioState *m) {
         // Add boost meter timer for these actions.
 
         // boosting and braking.
-        if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (!(pshipflags2 & psf2_braking))) { 
-            pshipflags3 |= psf2_boosting; // Set boosting flag
+        if ((gPlayer1Controller->buttonPressed & U_CBUTTONS) && (!(pshipflags2 & psf2_braking)) && (player_BP == 40)) { 
+            m->pshipflags2 |= psf2_boosting; // Set boosting flag
             create_sound_spawner(SOUND_ACTION_FLYING_FAST);
         }
 
-        if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (!(pshipflags2 & psf2_boosting))) { 
-            pshipflags3 |= psf2_braking; // Set braking flag
+        if ((gPlayer1Controller->buttonPressed & D_CBUTTONS) && (!(pshipflags2 & psf2_boosting)) && (player_BP == 40)) { 
+            m->pshipflags2 |= psf2_braking; // Set braking flag
             create_sound_spawner(SOUND_ACTION_FLYING_FAST);
         }
 
-        if (!(pshipflags3 & psf_nofire)) {
+        if (!(pshipflags & psf_nofire)) {
             // firing.
             if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
                 spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_ELASER, P_Elaser);
@@ -260,15 +260,88 @@ void pstrats_update_roll(struct MarioState *m) {
     }
 }
 
+// check each bit of the 3 shipflags bits (see STRATEQU.H) and update things accordingly.
+void pstrats_update_shipflags(struct MarioState *m) {
+
+    // pshipflags
+    if (m->pshipflags & psf_bodycoll) {
+
+    }
+    if (m->pshipflags & psf_LWingcoll) {
+
+    }
+    if (m->pshipflags & psf_Rwingcoll) {
+
+    }
+    if (m->pshipflags & psf_brkLWing) {
+
+    }
+    if (m->pshipflags & psf_brkRwing) {
+
+    }
+    if (m->pshipflags & psf_noctrl) {
+
+    }
+    if (m->pshipflags & psf_nofire) {
+
+    }
+    if (m->pshipflags & psf_noYctrl) {
+
+    }
+
+    // pshipflags2
+    if (m->pshipflags2 & psf2_doublaser) { // Laser type 2: Double laser/Twin blaster (Twin Laser in SF64)
+
+    }
+    if (m->pshipflags2 & psf2_wireship) {
+    
+    }
+    if (m->pshipflags2 & psf2_nospark) {
+
+    }
+    if (m->pshipflags2 & psf2_turn180) {
+
+    }
+    if (m->pshipflags2 & psf2_forceboost) {
+
+    }
+    if (m->pshipflags2 & psf2_boosting) {
+            pstrats_boost(m);
+    }
+    if (m->pshipflags2 & psf2_braking) {
+            pstrats_brake(m);
+    }
+    if (m->pshipflags2 & psf2_playerHP0) {
+
+    }
+
+    // pshipflags3
+    if (m->pshipflags3 & psf3_intunnel) {
+
+    }
+    if (m->pshipflags3 & psf3_enginesnd) { // arwing's engine.
+        play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject);
+    }
+    if (m->pshipflags3 & psf3_forcebrake) { // force braking
+
+    }
+    if (m->pshipflags3 & psf3_nocollisions) {
+
+    }
+    if (m->pshipflags3 & psf3_beamball) { // Laser type 3: Beam Ball (Hyper Laser in SF64)
+
+    }
+
+}
 
 void pstrats_boost(struct MarioState *m) {
     Vec3f pos;
     if (player_BP != 0) {
         player_BP--;
         pos[2] += maxPspeed;
-    } else {
-        pshipflags2 &= ~psf2_boosting; // Clear boosting flag bit
-        //pstrats_boostmtr_cooldown();
+    } else if (player_BP == 0) {
+        m->pshipflags2 &= ~psf2_boosting; // Clear braking flag bit
+        pstrats_boostmtr_cooldown(m);
     }
 }
 
@@ -277,115 +350,22 @@ void pstrats_brake(struct MarioState *m) {
     if (player_BP != 0) {
         player_BP--;
         pos[2] += minPspeed;
-    } else {
-        pshipflags2 &= ~psf2_braking; // Clear braking flag bit
-        //pstrats_boostmtr_cooldown();
+    } else if (player_BP == 0) {
+        m->pshipflags2 &= ~psf2_braking; // Clear braking flag bit
+        pstrats_boostmtr_cooldown(m);
     }
 }
 
-// BUG: cooldown does not refill bar, "capped" at 1, loops to 0 (why?)
+// BUG: cooldown does not refill bar, "capped" at 1 (why?)
+// PROGRESS: almost there with fixing
 // cool down boost meter after use
-void pstrats_boostmtr_cooldown(void) {
-    if (!(pshipflags2 & psf2_boosting) && !(pshipflags2 & psf2_braking)) {
+void pstrats_boostmtr_cooldown(struct MarioState *m) {
+    if (!(m->pshipflags2 & psf2_boosting) && !(m->pshipflags2 & psf2_braking)) {
         if (player_BP != 40) {
-            player_BP++;
+            player_BP = 40; // temp workaround for now
         }
     }
 }
-
-// check each bit of the 3 shipflags bits (see STRATEQU.H) and update things accordingly.
-void pstrats_update_shipflags(struct MarioState *m) {
-
-    // pshipflags
-    if (pshipflags3 & psf_bodycoll) {
-
-    }
-    if (pshipflags3 & psf_LWingcoll) {
-
-    }
-    if (pshipflags3 & psf_Rwingcoll) {
-
-    }
-    if (pshipflags3 & psf_brkLWing) {
-
-    }
-    if (pshipflags3 & psf_brkRwing) {
-
-    }
-    if (pshipflags3 & psf_noctrl) {
-
-    }
-    if (pshipflags3 & psf_nofire) {
-
-    }
-    if (pshipflags3 & psf_noYctrl) {
-
-    }
-
-    // pshipflags2
-    if (pshipflags3 & psf2_doublaser) { // Laser type 2: Double laser/Twin blaster (Twin Laser in SF64)
-
-    }
-    if (pshipflags3 & psf2_wireship) {
-    }
-    if (pshipflags3 & psf2_nospark) {
-
-    }
-    if (pshipflags3 & psf2_turn180) {
-
-    }
-    if (pshipflags3 & psf2_forceboost) {
-
-    }
-    if (pshipflags3 & psf2_boosting) {
-        pstrats_boost(m);
-    }
-    if (pshipflags3 & psf2_braking) {
-        pstrats_brake(m);
-    }
-    if (pshipflags3 & psf2_playerHP0) {
-
-    }
-
-    // pshipflags3
-    if (pshipflags3 & psf3_intunnel) {
-
-    }
-    if (pshipflags3 & psf3_enginesnd) { // arwing's engine.
-        play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject);
-    }
-    if (pshipflags3 & psf3_forcebrake) { // force braking
-
-    }
-    if (pshipflags3 & psf3_nocollisions) {
-
-    }
-    if (pshipflags3 & psf3_beamball) { // Laser type 3: Beam Ball (Hyper Laser in SF64)
-
-    }
-
-}
-
-/* old code for reference:
-    if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (player_BP != 0)) { 
-        psf2_boosting = 1;
-        player_BP--;
-        pos[2] += maxPspeed;
-    } else if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (player_BP != 0)) { 
-        psf2_braking = 1;
-        player_BP--;
-        pos[2] += minPspeed;
-    } else {
-        if ((gLocalTimer != 0)) {
-            if (player_BP != 40) {
-                player_BP++;
-            } else if (player_BP == 40) {
-                psf2_boosting = 0;
-                psf2_braking = 0;
-            }
-        }
-    }
-*/
 
 
 void pstrats_update_collisions(struct MarioState *m) {

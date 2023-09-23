@@ -146,7 +146,7 @@ void pstrats_update_roll(struct MarioState *m);
 void pstrats_update_shipflags(struct MarioState *m);
 void pstrats_boost(struct MarioState *m);
 void pstrats_brake(struct MarioState *m);
-void pstrats_boostmtr_cooldown(void);
+void pstrats_boostmtr_cooldown(struct MarioState *m);
 void pstrats_update_collisions(struct MarioState *m);
 void mapmacs_do_objs(void);
 
