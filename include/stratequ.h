@@ -76,7 +76,8 @@ player's ship flags.
 #define psf3_forcebrake (1 << 2)    // 00000100 (4)
 #define psf3_nocollisions (1 << 3)  // 00001000 (8)
 #define psf3_beamball (1 << 4)      // 00010000 (16)
-// last 3 bits unused... (space for more flags someday?)
+#define psf3_bstcool (1 << 5)       // 00100000 (32) // new flag not present in original game
+// last 2 bits unused... (space for more flags someday?)
 
 // these were also moved to gMarioState
 

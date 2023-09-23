@@ -109,7 +109,6 @@ s32 player_istrat(struct MarioState *m) {
     print_text_fmt_int(16, 180, "PSF2 = %d", m->pshipflags2);
     //print_text_fmt_int(16, 180, "BP %d", m->player_BP);
     if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
-    //    pstrats_boost_cooldown(m);
     //    playerB_HP--;
     //    player_BP--;
     }
@@ -331,6 +330,17 @@ void pstrats_update_shipflags(struct MarioState *m) {
     if (m->pshipflags3 & psf3_beamball) { // Laser type 3: Beam Ball (Hyper Laser in SF64)
 
     }
+    // cool down boost meter after use
+    if (m->pshipflags3 & psf3_bstcool) { // Boost Cooldown flag
+        if (!(m->pshipflags2 & psf2_boosting) && !(m->pshipflags2 & psf2_braking)) {
+                if (m->player_BP != 40) {
+                    m->player_BP++;
+                } else {
+                    m->pshipflags3 &= ~psf3_bstcool;
+                }
+            }
+    }
+
 
 }
 
@@ -340,8 +350,8 @@ void pstrats_boost(struct MarioState *m) {
         pos[2] += maxPspeed;
         m->player_BP--;
     } else {
-    m->pshipflags2 &= ~psf2_boosting; // Clear braking flag bit
-        pstrats_boost_cooldown(m);
+        m->pshipflags2 &= ~psf2_boosting; // Clear braking flag bit
+        m->pshipflags3 |= psf3_bstcool; // Set boost cooldown flag bit
     }
 }
 
@@ -352,19 +362,9 @@ void pstrats_brake(struct MarioState *m) {
         m->player_BP--;
     } else {
         m->pshipflags2 &= ~psf2_braking; // Clear braking flag bit
-        pstrats_boost_cooldown(m);
+        m->pshipflags3 |= psf3_bstcool; // Set boost cooldown flag bit
     }
 }
-
-// cool down boost meter after use
-void pstrats_boost_cooldown(struct MarioState *m) {
-    if (!(m->pshipflags2 & psf2_boosting) && !(m->pshipflags2 & psf2_braking)) {
-        if (m->player_BP != 40) {
-            m->player_BP = 40;
-        }
-    }
-}
-
 
 void pstrats_update_collisions(struct MarioState *m) {
     // TODO: obj collisions code
