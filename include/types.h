@@ -471,9 +471,12 @@ struct MarioState {
     /*0xBC*/ f32 peakHeight;
     /*0xC0*/ f32 quicksandDepth;
     /*0xC4*/ f32 windGravity;
-    /*0xC5*/ u8 pshipflags; // pshipflags
+    /*0xC5*/ u8 pshipflags; // Player's flags.
     /*0xC6*/ u8 pshipflags2;
     /*0xC7*/ u8 pshipflags3;
+    /*0xC8*/ u8 playerflymode;
+    /*0xC9*/ u8 splayerflymodeopt;
+    /*0xCA*/ u8 pstratflags;
     // -- HackerSM64 MarioState fields begin --
 #ifdef BREATH_METER
              s16 breath;

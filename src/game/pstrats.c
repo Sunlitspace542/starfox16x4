@@ -101,7 +101,7 @@ s32 player_istrat(struct MarioState *m) {
     pstrats_update_shipflags(m); // update player flags.
 
     // constantly move ship forward.
-    if (!(gPlayer1Controller->buttonDown & ((psf2_boosting != 1) | (psf2_braking != 1)))) {
+    if ((!(m->pshipflags2 & psf2_boosting)) | (!(m->pshipflags2 & psf2_braking))) {
         pos[2] += medPspeed;
     }
 
@@ -362,7 +362,7 @@ void pstrats_brake(struct MarioState *m) {
 void pstrats_boostmtr_cooldown(struct MarioState *m) {
     if (!(m->pshipflags2 & psf2_boosting) && !(m->pshipflags2 & psf2_braking)) {
         if (player_BP != 40) {
-            player_BP = 40; // temp workaround for now
+            player_BP = 40; // temp workaround for now (needs to be gradual increase but that doesn't work)
         }
     }
 }

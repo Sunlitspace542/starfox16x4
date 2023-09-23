@@ -78,15 +78,17 @@ player's ship flags.
 #define psf3_beamball (1 << 4)      // 00010000 (16)
 // last 3 bits unused... (space for more flags someday?)
 
+// these were also moved to gMarioState
+
 // Player's flying mode flags.
-extern int playerflymode; // was an 8-bit alc
+//playerflymode // was an 8-bit alc
 #define pfm_diefall (1 << 0)    // 00000001 (1)
 #define pfm_dieYrot (1 << 1)    // 00000010 (2)
 #define pfm_water (1 << 2)      // 00000100 (4)
 #define pfm_shadows (1 << 3)    // 00001000 (6)      
 #define pfm_wobble (1 << 4)     // 00010000 (8)
 
-extern int splayerflymode; // was an 8-bit alc
+//splayerflymode // was an 8-bit alc
 #define spfm_norm 0
 #define spfm_close 1
 #define spfm_toinside 2
@@ -94,13 +96,13 @@ extern int splayerflymode; // was an 8-bit alc
 #define spfm_tonorm 4
 #define spfm_maxmode 5
 
-extern int splayerflymodeopt; // was an 8-bit alc
+//splayerflymodeopt; // was an 8-bit alc
 #define spfmo_AB spfm_inside
 #define spfmo_ABC spfm_maxmode
 
 // Player's strategy flags.
 // TODO: figure out if bit 3 of pstratflags is used anywhere in original game
-extern int pstratflags;
+//pstratflags // was an 8-bit alc
 #define pstf_novdistC (1 << 0)          // 00000001 (1)
 #define pstf_flag1 (1 << 1)             // 00000010 (2)
 #define pstf_noviewmove (1 << 2)        // 00000100 (4)
