@@ -17,7 +17,10 @@
 // in short, a lot of IFs.
 // TODO: methinks all the player code needs a rewrite.
 // TODO: redo shipflags so it works like SF1, redo boost/brake so it works like SF1
+// TODO: like 90% of this stuff isn't SNES accurate yet. It'll happen.. eventually..
 
+
+// File INCLUDES. //
 #include <PR/ultratypes.h>
 
 #include "sm64.h"
@@ -48,9 +51,12 @@
 #include "sound_init.h"
 #include "rumble_init.h"
 #include "spawn_sound.h"
+
 #ifdef DEBUGINFO
 #include "print.h"
 #endif
+
+// File INCLUDES. //
 
 #include "stratequ.h" // include strategy equates header.
 
@@ -116,58 +122,51 @@ s32 player_istrat(struct MarioState *m) {
     /* down - climb                                                                     */
     /* also add D-pad for those who want a more SNES-like control scheme.               */
     /************************************************************************************/
-    if (pos[1] != 540) { // set level "ceiling" for now
-        if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
-            pos[1] += minPspeed;
-        }
-    }
-
-    if (pos[1] != 140) {
-        if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
-            pos[1] -= minPspeed;
-        }
-    }
-
-    if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
-        pos[0] += medPspeed;
-    }
-
-    if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
-        pos[0] -= medPspeed;
-    }
-
-    // TODO for boosting and braking:
-    // Add boost meter timer for these actions.
-    // TODO: janky, currently SF64-style boost/brake.
-
-    // boosting and braking.
-    if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (player_BP != 0)) { 
-        pshipflags3 |= psf2_boosting; // Set boosting flag
-        player_BP--;
-        pos[2] += maxPspeed;
-    } else if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (player_BP != 0)) { 
-        pshipflags3 |= psf2_braking; // Set braking flag
-        player_BP--;
-        pos[2] += minPspeed;
-    } else {
-        if ((gLocalTimer != 0)) {
-            if (player_BP != 40) {
-                player_BP++;
-            } else if (player_BP == 40) {
-                pshipflags3 &= ~psf2_boosting; // Clear boosting flag
+    if (!(pshipflags & psf_noctrl)) { // only process inputs if noctrl flag is off
+        if (pos[1] != 540) { // set level "ceiling" for now
+            if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
+                pos[1] += minPspeed;
             }
         }
-    }
 
-    // firing.
-    if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
-        spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_ELASER, P_Elaser);
-    }
+        if (pos[1] != 140) { // set level "floor" for now
+            if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
+                pos[1] -= minPspeed;
+            }
+        }
 
-    // Special weapon (bomb/nuke).
-    if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON) && (numNukes > 0)) {
-        spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_NUKE, P_nuke);
-        numNukes--;
+        if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
+            pos[0] += medPspeed;
+        }
+
+        if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
+            pos[0] -= medPspeed;
+        }
+
+
+        // TODO for boosting and braking:
+        // Add boost meter timer for these actions.
+
+        // boosting and braking.
+        if ((gPlayer1Controller->buttonDown & U_CBUTTONS)) { 
+            pshipflags3 |= psf2_boosting; // Set boosting flag
+        }
+
+        if ((gPlayer1Controller->buttonDown & D_CBUTTONS)) { 
+            pshipflags3 |= psf2_braking; // Set braking flag
+        }
+
+        // firing.
+        if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
+            spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_ELASER, P_Elaser);
+        }
+
+        // Special weapon (bomb/nuke).
+        if ((gPlayer1Controller->buttonPressed & R_CBUTTONS) | (gPlayer1Controller->buttonPressed & B_BUTTON) && (numNukes > 0)) {
+            spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_NUKE, P_nuke);
+            numNukes--;
+        }
+
     }
 
     // end of button stuffs.
@@ -177,6 +176,7 @@ s32 player_istrat(struct MarioState *m) {
         pos[2] = 0;
     }
 
+    // SM64 junk that has to be here... (sigh)
     // spawn pseudo floor object to prevent OOB death
     resolve_and_return_wall_collisions(pos, 60.0f, 50.0f, &wallData);
 

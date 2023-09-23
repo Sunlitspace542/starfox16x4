@@ -15,7 +15,7 @@
 \*************************************************************************/
 
 
-/*
+/******************************
 --HOW TO SET AND CLEAR FLAGS--
 
 set:
@@ -24,7 +24,7 @@ flags |= FLAG_A; // Set FLAG_A
 clear:
 flags &= ~FLAG_B; // Clear FLAG_B
 
-*/
+********************************/
 
 /*
 player's ship flags.
@@ -84,11 +84,12 @@ extern int splayerflymodeopt; // was an 8-bit alc
 #define spfmo_ABC spfm_maxmode
 
 // Player's strategy flags.
+// TODO: figure out if bit 3 of pstratflags is used anywhere in original game
 extern int pstratflags;
 #define pstf_novdistC (1 << 0)          // 00000001 (1)
 #define pstf_flag1 (1 << 1)             // 00000010 (2)
 #define pstf_noviewmove (1 << 2)        // 00000100 (4)
-/*bit 3 skipped...           */         // 00001000 (6)  
+/*bit 3 skipped...           */         // 00001000 (6)
 #define pstf_inseq (1 << 4)             // 00010000 (8)  
 #define pstf_firstframeLcol (1 << 5)    // 00100000 (16) // first frame player laser collision ON.
 #define pstf_notdie (1 << 6)            // 00010000 (32)  
