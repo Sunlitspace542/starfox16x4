@@ -21,7 +21,7 @@ Sunlit: Lead programmer, model porting, sprites, real N64 testing
 - [ ] Remove all the Mario behavior/action code that we don't need 
 - [ ] Remove SM64 actor models (partially done)  
 - [ ] Remove all vanilla music and their instrument banks
-- [ ] Settle on a good rate for streamed audio BGM  
+- [x] Settle on a good rate for streamed audio BGM (32000hz mono)  
 
 ### Game Code:
 ``src/game/hud.c``:  
@@ -32,7 +32,8 @@ Sunlit: Lead programmer, model porting, sprites, real N64 testing
 
 - [x] Player pitch, yaw & roll  
 - [X] Get a basic laser strat in  
-- [ ] Proper boosting and braking  
+- [x] Proper boosting and braking  
+- [x] Player ship flags working  
 
 Other:  
 - [ ] Begin work on implementing Star Fox world functionality, object macros, levels, etc.  

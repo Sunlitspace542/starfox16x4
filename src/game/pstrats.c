@@ -153,6 +153,14 @@ s32 player_istrat(struct MarioState *m) {
             create_sound_spawner(SOUND_ACTION_FLYING_FAST);
         }
 
+        if (m->pshipflags2 & psf2_boosting) { // if boost flag on
+            pos[2] += maxPspeed;
+        }
+        if (m->pshipflags2 & psf2_braking) { // if brake flag on
+            pos[2] += minPspeed;
+        }
+
+
         if (!(pshipflags & psf_nofire)) {
             // firing.
             if ((gPlayer1Controller->buttonPressed & L_CBUTTONS)) {
@@ -342,7 +350,7 @@ void pstrats_update_shipflags(struct MarioState *m) {
 void pstrats_boost(struct MarioState *m) {
     Vec3f pos;
     if (m->player_BP != 0) {
-        pos[2] += maxPspeed;
+        //pos[2] += maxPspeed;
         m->player_BP--;
     } else {
         m->pshipflags2 &= ~psf2_boosting; // Clear braking flag bit
@@ -353,7 +361,7 @@ void pstrats_boost(struct MarioState *m) {
 void pstrats_brake(struct MarioState *m) {
     Vec3f pos;
     if (m->player_BP != 0) {
-        pos[2] += minPspeed;
+        //pos[2] += minPspeed;
         m->player_BP--;
     } else {
         m->pshipflags2 &= ~psf2_braking; // Clear braking flag bit
