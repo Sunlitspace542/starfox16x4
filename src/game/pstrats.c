@@ -145,12 +145,12 @@ s32 player_istrat(struct MarioState *m) {
         // boosting and braking.
         if ((gPlayer1Controller->buttonPressed & U_CBUTTONS) && (!(pshipflags2 & psf2_braking)) && (m->player_BP == 40)) { 
             m->pshipflags2 |= psf2_boosting; // Set boosting flag
-            create_sound_spawner(SOUND_ACTION_FLYING_FAST);
+            play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
         }
 
         if ((gPlayer1Controller->buttonPressed & D_CBUTTONS) && (!(pshipflags2 & psf2_boosting)) && (m->player_BP == 40)) { 
             m->pshipflags2 |= psf2_braking; // Set braking flag
-            create_sound_spawner(SOUND_ACTION_FLYING_FAST);
+            play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
         }
 
         if (m->pshipflags2 & psf2_boosting) { // if boost flag on
