@@ -1786,12 +1786,16 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
 
 void init_mario(void) {
 
-// set shipflags
+///////////////////////////////////
+// reset shipflags to 0
     int pshipflags = 0;
     int pshipflags2 = 0;
     int pshipflags3 = 0;
-
-// set shipflags
+    int playerflymode = 0;
+    int splayerflymode = 0;
+    int splayerflymodeopt = 0;
+    int pstratflags = 0;
+///////////////////////////////////
 
     gMarioState->actionTimer = 0;
     gMarioState->framesSinceA = 0xFF;

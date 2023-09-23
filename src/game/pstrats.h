@@ -140,8 +140,8 @@ extern struct CreditsEntry *sDispCreditsEntry;
 // pstrats
 
 s32 player_istrat(struct MarioState *m);
-void pstrats_update_yaw(struct MarioState *m);
 void pstrats_update_pitch(struct MarioState *m);
+void pstrats_update_yaw(struct MarioState *m);
 void pstrats_update_roll(struct MarioState *m);
 void pstrats_update_shipflags(struct MarioState *m);
 void pstrats_update_interactions(struct MarioState *m);

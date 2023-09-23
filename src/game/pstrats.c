@@ -54,7 +54,7 @@
 
 #include "stratequ.h" // include strategy equates header.
 
-// initialize player's variables.
+// initialize player's variables/flags.
 // player speeds.
 int maxPspeed = 85;
 int medPspeed = 65;
@@ -69,6 +69,10 @@ int player_MaxBP = 40;
 int pshipflags;
 int pshipflags2;
 int pshipflags3;
+int playerflymode;
+int splayerflymode;
+int splayerflymodeopt;
+int pstratflags;
 
 // SEE ALSO: init_mario in mario.c
 
@@ -77,7 +81,7 @@ s32 player_istrat(struct MarioState *m) {
     struct Surface *floor, *ceil;
     Vec3f pos;
 
-    // setup flags.
+    // set up ship flags.
     pshipflags3 |= psf3_enginesnd; // turn on engine sound
     //////////////
 
@@ -90,35 +94,9 @@ s32 player_istrat(struct MarioState *m) {
     vec3f_copy(pos, m->pos);
     pstrats_update_shipflags(m); // update player flags.
 
-    // button input junk.
-
     // constantly move ship forward.
     if (!(gPlayer1Controller->buttonDown & ((psf2_boosting != 1) | (psf2_braking != 1)))) {
         pos[2] += medPspeed;
-    }
-
-    // TODO for boosting and braking:
-    // Add boost meter timer for these actions.
-    // TODO: janky, currently SF64-style boost/brake.
-
-    // boosting and braking.
-    if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (player_BP != 0)) { 
-        //psf2_boosting = 1;
-        player_BP--;
-        pos[2] += maxPspeed;
-    } else if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (player_BP != 0)) { 
-        //psf2_braking = 1;
-        player_BP--;
-        pos[2] += minPspeed;
-    } else {
-        if ((gLocalTimer != 0)) {
-            if (player_BP != 40) {
-                player_BP++;
-            } else if (player_BP == 40) {
-                //psf2_boosting = 0;
-                //psf2_braking = 0;
-            }
-        }
     }
 
     // meter drawing test.
@@ -130,11 +108,13 @@ s32 player_istrat(struct MarioState *m) {
     }
     #endif
 
+    // button input junk. (this feels like such a nasty way to do things...)
+
     /************************************************************************************/
     /* we're flying a plane thing here, so let's make the flight controls make sense.   */
     /* up - dive                                                                        */
     /* down - climb                                                                     */
-    /* also add D-pad for those who want a more SNES-like control scheme.                */
+    /* also add D-pad for those who want a more SNES-like control scheme.               */
     /************************************************************************************/
     if (pos[1] != 540) { // set level "ceiling" for now
         if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
@@ -156,6 +136,29 @@ s32 player_istrat(struct MarioState *m) {
         pos[0] -= medPspeed;
     }
 
+    // TODO for boosting and braking:
+    // Add boost meter timer for these actions.
+    // TODO: janky, currently SF64-style boost/brake.
+
+    // boosting and braking.
+    if ((gPlayer1Controller->buttonDown & U_CBUTTONS) && (player_BP != 0)) { 
+        pshipflags3 |= psf2_boosting; // Set boosting flag
+        player_BP--;
+        pos[2] += maxPspeed;
+    } else if ((gPlayer1Controller->buttonDown & D_CBUTTONS) && (player_BP != 0)) { 
+        pshipflags3 |= psf2_braking; // Set braking flag
+        player_BP--;
+        pos[2] += minPspeed;
+    } else {
+        if ((gLocalTimer != 0)) {
+            if (player_BP != 40) {
+                player_BP++;
+            } else if (player_BP == 40) {
+                pshipflags3 &= ~psf2_boosting; // Clear boosting flag
+            }
+        }
+    }
+
     // firing.
     if ((gPlayer1Controller->buttonPressed & L_CBUTTONS) | (gPlayer1Controller->buttonPressed & A_BUTTON)) {
         spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_ELASER, P_Elaser);
@@ -166,6 +169,8 @@ s32 player_istrat(struct MarioState *m) {
         spawn_object_relative(0, 0, 0, 80, gCurrentObject, MODEL_NUKE, P_nuke);
         numNukes--;
     }
+
+    // end of button stuffs.
 
     // WORLD stuff
     if (pos[2] > 20450) { // Loop pos at 4096
@@ -198,8 +203,28 @@ s32 player_istrat(struct MarioState *m) {
     pstrats_update_roll(m);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     // Make sure that all angle data is being copied over to the player gfx
+    // so we can have rotation on all 3 axes. (very important)
     vec3s_copy(m->marioObj->header.gfx.angle, m->faceAngle);
     return FALSE;
+}
+
+// these 3 routines update the player's rotation (soon to be 4 with wobble)
+
+void pstrats_update_pitch(struct MarioState *m) {
+    if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
+        m->faceAngle[0] += 512.0f;
+    } else if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
+        m->faceAngle[0] -= 512.0f;
+    } else {
+        m->faceAngle[0] = approach_s32(m->faceAngle[0], 0, 0x1F0, 0x1F0);
+    }
+
+    // Ensure the pitch angle stays within the range [-4608, 4608].
+    if (m->faceAngle[0] > 4608) {
+        m->faceAngle[0] = 4608;
+    } else if (m->faceAngle[0] < -4608) {
+        m->faceAngle[0] = -4608;
+    }
 }
 
 // changes player yaw based on stick input
@@ -220,23 +245,6 @@ void pstrats_update_yaw(struct MarioState *m) {
     }
 }
 
-void pstrats_update_pitch(struct MarioState *m) {
-    if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
-        m->faceAngle[0] += 512.0f;
-    } else if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
-        m->faceAngle[0] -= 512.0f;
-    } else {
-        m->faceAngle[0] = approach_s32(m->faceAngle[0], 0, 0x1F0, 0x1F0);
-    }
-
-    // Ensure the pitch angle stays within the range [-4608, 4608].
-    if (m->faceAngle[0] > 4608) {
-        m->faceAngle[0] = 4608;
-    } else if (m->faceAngle[0] < -4608) {
-        m->faceAngle[0] = -4608;
-    }
-}
-
 void pstrats_update_roll(struct MarioState *m) {
     if ((gPlayer1Controller->buttonDown & L_TRIG) | (gPlayer1Controller->buttonDown & Z_TRIG)) {
         //s32 approach_s32(s32 current, s32 target, s32 inc, s32 dec);
@@ -249,74 +257,54 @@ void pstrats_update_roll(struct MarioState *m) {
 }
 
 void pstrats_update_shipflags(struct MarioState *m) {
+    // FIXME: rewrite as switch statement?
+    // still learning C so idk if that would end up biting us later on
     // pshipflags
-    if (pshipflags3 & psf_bodycoll) {
+if (pshipflags3 & psf_bodycoll) {
+    // Code for psf_bodycoll
+} else if (pshipflags3 & psf_LWingcoll) {
+    // Code for psf_LWingcoll
+} else if (pshipflags3 & psf_Rwingcoll) {
+    // Code for psf_Rwingcoll
+} else if (pshipflags3 & psf_brkLWing) {
+    // Code for psf_brkLWing
+} else if (pshipflags3 & psf_brkRwing) {
+    // Code for psf_brkRwing
+} else if (pshipflags3 & psf_noctrl) {
+    // Code for psf_noctrl
+} else if (pshipflags3 & psf_nofire) {
+    // Code for psf_nofire
+} else if (pshipflags3 & psf_noYctrl) {
+    // Code for psf_noYctrl
+} else if (pshipflags3 & psf2_doublaser) {
+    // Code for psf2_doublaser
+} else if (pshipflags3 & psf2_wireship) {
+    // Code for psf2_wireship
+} else if (pshipflags3 & psf2_nospark) {
+    // Code for psf2_nospark
+} else if (pshipflags3 & psf2_turn180) {
+    // Code for psf2_turn180
+} else if (pshipflags3 & psf2_forceboost) {
+    // Code for psf2_forceboost
+} else if (pshipflags3 & psf2_boosting) {
+    // Code for psf2_boosting
+} else if (pshipflags3 & psf2_braking) {
+    // Code for psf2_braking
+} else if (pshipflags3 & psf2_playerHP0) {
+    // Code for psf2_playerHP0
+} else if (pshipflags3 & psf3_intunnel) {
+    // Code for psf3_intunnel
+} else if (pshipflags3 & psf3_enginesnd) {
+    play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject);
+    // Code for psf3_enginesnd
+} else if (pshipflags3 & psf3_forcebrake) {
+    // Code for psf3_forcebrake
+} else if (pshipflags3 & psf3_nocollisions) {
+    // Code for psf3_nocollisions
+} else if (pshipflags3 & psf3_beamball) {
+    // Code for psf3_beamball
+}
 
-    }
-    if (pshipflags3 & psf_LWingcoll) {
-
-    }
-    if (pshipflags3 & psf_Rwingcoll) {
-
-    }
-    if (pshipflags3 & psf_brkLWing) {
-
-    }
-    if (pshipflags3 & psf_brkRwing) {
-
-    }
-    if (pshipflags3 & psf_noctrl) {
-
-    }
-    if (pshipflags3 & psf_nofire) {
-
-    }
-    if (pshipflags3 & psf_noYctrl) {
-
-    }
-
-    // pshipflags2
-    if (pshipflags3 & psf2_doublaser) {
-
-    }
-    if (pshipflags3 & psf2_wireship) {
-    
-    }
-    if (pshipflags3 & psf2_nospark) {
-
-    }
-    if (pshipflags3 & psf2_turn180) {
-
-    }
-    if (pshipflags3 & psf2_forceboost) {
-
-    }
-    if (pshipflags3 & psf2_boosting) {
-
-    }
-    if (pshipflags3 & psf2_braking) {
-
-    }
-    if (pshipflags3 & psf2_playerHP0) {
-
-    }
-
-    // pshipflags3
-    if (pshipflags3 & psf3_intunnel) {
-
-    }
-    if (pshipflags3 & psf3_enginesnd) {
-        play_sound(SOUND_MOVING_FLYING, m->marioObj->header.gfx.cameraToObject); // arwing's engine.
-    }
-    if (pshipflags3 & psf3_forcebrake) {
-
-    }
-    if (pshipflags3 & psf3_nocollisions) {
-
-    }
-    if (pshipflags3 & psf3_beamball) {
-
-    }
 }
 
 void pstrats_update_interactions(struct MarioState *m) {
@@ -327,14 +315,8 @@ void mapmacs_do_objs(void) {
     // TODO: this is dumb
     // this also just needs work. these should
     // really not be spawning relative to the player's position.
-	MAPOBJ(0,1200,000,5000,MODEL_MARIO,P_Elaser);
-	MAPOBJ(0,-1200,000,5000,MODEL_MARIO,P_Elaser);
-
-	MAPOBJ(30,1200,000,5000,MODEL_MARIO,P_Elaser);
-	MAPOBJ(30,-1200,000,5000,MODEL_MARIO,P_Elaser);
-
-	MAPOBJ(60,1200,000,5000,MODEL_MARIO,P_Elaser);
-	MAPOBJ(60,-1200,000,5000,MODEL_MARIO,P_Elaser);
+	MAPOBJ(0,1200,000,5000,MODEL_MARIO,hard180yr_Istrat);
+	MAPOBJ(0,-1200,000,5000,MODEL_MARIO,hard180yr_Istrat);
 
 }
 
