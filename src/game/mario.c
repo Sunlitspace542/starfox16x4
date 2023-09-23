@@ -1798,6 +1798,8 @@ void init_mario(void) {
 gMarioState->pshipflags = 0;
 gMarioState->pshipflags2 = 0;
 gMarioState->pshipflags3 = 0;
+// player variables.
+gMarioState->player_BP = 40;
 ///////////////////////////////////
 
     gMarioState->actionTimer = 0;

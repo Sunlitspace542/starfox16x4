@@ -480,7 +480,7 @@ void init_hud_values(void) {
     f32 shieldMeterMax = 1.2f;
     shieldMeterScale = shieldMeterMax * hp_ratio;
     // BP (boost points)
-    f32 bp_ratio = (f32)player_BP / player_MaxBP;
+    f32 bp_ratio = (f32)gMarioState->player_BP / player_MaxBP;
     f32 boostMeterMax = 1.2f;
     boostMeterScale = boostMeterMax * bp_ratio;
 }

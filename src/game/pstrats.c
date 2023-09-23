@@ -69,7 +69,6 @@ int minPspeed = 20;
 int playerB_HP = 40;
 int playerB_MaxHP = 40;
 // boost points.
-f32 player_BP = 40;
 int player_MaxBP = 40;
 // shipflags.
 int pshipflags;
@@ -107,9 +106,10 @@ s32 player_istrat(struct MarioState *m) {
 
     // meter drawing test.
     #ifdef DEBUGINFO
-    print_text_fmt_int(16, 180, "BP %d", player_BP);
+    print_text_fmt_int(16, 180, "PSF2 = %d", m->pshipflags2);
+    //print_text_fmt_int(16, 180, "BP %d", m->player_BP);
     if (gPlayer1Controller->buttonPressed & Z_TRIG) { 
-    //    pstrats_boostmtr_cooldown(m);
+    //    pstrats_boost_cooldown(m);
     //    playerB_HP--;
     //    player_BP--;
     }
@@ -149,12 +149,12 @@ s32 player_istrat(struct MarioState *m) {
         // Add boost meter timer for these actions.
 
         // boosting and braking.
-        if ((gPlayer1Controller->buttonPressed & U_CBUTTONS) && (!(pshipflags2 & psf2_braking)) && (player_BP == 40)) { 
+        if ((gPlayer1Controller->buttonPressed & U_CBUTTONS) && (!(pshipflags2 & psf2_braking)) && (m->player_BP == 40)) { 
             m->pshipflags2 |= psf2_boosting; // Set boosting flag
             create_sound_spawner(SOUND_ACTION_FLYING_FAST);
         }
 
-        if ((gPlayer1Controller->buttonPressed & D_CBUTTONS) && (!(pshipflags2 & psf2_boosting)) && (player_BP == 40)) { 
+        if ((gPlayer1Controller->buttonPressed & D_CBUTTONS) && (!(pshipflags2 & psf2_boosting)) && (m->player_BP == 40)) { 
             m->pshipflags2 |= psf2_braking; // Set braking flag
             create_sound_spawner(SOUND_ACTION_FLYING_FAST);
         }
@@ -336,32 +336,31 @@ void pstrats_update_shipflags(struct MarioState *m) {
 
 void pstrats_boost(struct MarioState *m) {
     Vec3f pos;
-    if (player_BP != 0) {
+    if (m->player_BP != 0) {
         pos[2] += maxPspeed;
-        player_BP--;
-    } else if (player_BP == 0) {
-        m->pshipflags2 &= ~psf2_boosting; // Clear braking flag bit
-        pstrats_boostmtr_cooldown(m);
+        m->player_BP--;
+    } else {
+    m->pshipflags2 &= ~psf2_boosting; // Clear braking flag bit
+        pstrats_boost_cooldown(m);
     }
 }
 
 void pstrats_brake(struct MarioState *m) {
     Vec3f pos;
-    if (player_BP != 0) {
+    if (m->player_BP != 0) {
         pos[2] += minPspeed;
-        player_BP--;
-    } else if (player_BP == 0) {
+        m->player_BP--;
+    } else {
         m->pshipflags2 &= ~psf2_braking; // Clear braking flag bit
-        pstrats_boostmtr_cooldown(m);
+        pstrats_boost_cooldown(m);
     }
 }
 
-// BUG: cooldown cannot gradually refill boost meter (why?)
 // cool down boost meter after use
-void pstrats_boostmtr_cooldown(struct MarioState *m) {
+void pstrats_boost_cooldown(struct MarioState *m) {
     if (!(m->pshipflags2 & psf2_boosting) && !(m->pshipflags2 & psf2_braking)) {
-        for (; player_BP < player_MaxBP; player_BP += 0.9f) { // wh
-        //    player_BP++;
+        if (m->player_BP != 40) {
+            m->player_BP = 40;
         }
     }
 }
