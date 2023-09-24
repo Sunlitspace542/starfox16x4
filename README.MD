@@ -34,7 +34,9 @@ Sunlit: Lead programmer, model porting, sprites, real N64 testing
 - [X] Get a basic laser strat in  
 - [x] Proper boosting and braking  
 - [x] Player ship flags working  
+- [ ] Player ship wobble
 
 Other:  
 - [ ] Begin work on implementing Star Fox world functionality, object macros, levels, etc.  
 - [ ] Port over PATH/strat commands from Star Fox as necessary  
+- Find loop points for music  

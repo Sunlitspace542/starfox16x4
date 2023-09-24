@@ -1788,13 +1788,6 @@ void init_mario(void) {
 
 ///////////////////////////////////
 // reset shipflags to 0
-//  int pshipflags = 0;
-//  int pshipflags2 = 0;
-//  int pshipflags3 = 0;
-//  int playerflymode = 0;
-//  int splayerflymode = 0;
-//  int splayerflymodeopt = 0;
-//  int pstratflags = 0;
 gMarioState->pshipflags = 0;
 gMarioState->pshipflags2 = 0;
 gMarioState->pshipflags3 = 0;

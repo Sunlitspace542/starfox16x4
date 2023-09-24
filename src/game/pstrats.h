@@ -6,6 +6,19 @@
 #include "macros.h"
 #include "types.h"
 
+// PSTRATS /////////////////////////////////////////////
+
+s32 player_istrat(struct MarioState *m);
+void pstrats_update_pitch(struct MarioState *m);
+void pstrats_update_yaw(struct MarioState *m);
+void pstrats_update_roll(struct MarioState *m);
+void pstrats_update_shipflags(struct MarioState *m);
+void pstrats_boost(struct MarioState *m);
+void pstrats_brake(struct MarioState *m);
+void pstrats_update_collisions(struct MarioState *m);
+
+////////////////////////////////////////////////////////
+
 enum ActionStatesReadingSign { // act_reading_sign
     ACT_STATE_READING_SIGN_START_DIALOG,
     ACT_STATE_READING_SIGN_TURN_TOWARD_SIGN,
@@ -136,18 +149,5 @@ s32 set_mario_npc_dialog(s32 actionArg);
 s32 mario_execute_cutscene_action(struct MarioState *m);
 extern Vp sEndCutsceneVp;
 extern struct CreditsEntry *sDispCreditsEntry;
-
-// pstrats
-
-s32 player_istrat(struct MarioState *m);
-void pstrats_update_pitch(struct MarioState *m);
-void pstrats_update_yaw(struct MarioState *m);
-void pstrats_update_roll(struct MarioState *m);
-void pstrats_update_shipflags(struct MarioState *m);
-void pstrats_boost(struct MarioState *m);
-void pstrats_brake(struct MarioState *m);
-void pstrats_update_collisions(struct MarioState *m);
-void mapmacs_do_objs(void);
-
 
 #endif // MARIO_ACTIONS_CUTSCENE_H

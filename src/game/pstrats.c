@@ -20,7 +20,7 @@
 // TODO: like 90% of this stuff isn't SNES accurate yet. It'll happen.. eventually..
 
 
-// File INCLUDES. //
+// File includes.
 #include <PR/ultratypes.h>
 
 #include "sm64.h"
@@ -53,14 +53,13 @@
 #include "spawn_sound.h"
 
 #ifdef DEBUGINFO
-#include "print.h"
+#include "print.h" // Include text printing routines for debug ROMs.
 #endif
 
-// File INCLUDES. //
+#include "stratequ.h" // Include strategy equates header.
 
-#include "stratequ.h" // include strategy equates header.
+// Initialize player's variables/flags for use in this file.
 
-// initialize player's variables/flags.
 // player speeds.
 int maxPspeed = 85;
 int medPspeed = 65;
@@ -86,25 +85,20 @@ s32 player_istrat(struct MarioState *m) {
     struct Surface *floor, *ceil;
     Vec3f pos;
 
-    // set up ship flags.
-    m->pshipflags3 |= psf3_enginesnd; // turn on engine sound
-    //////////////
+    // set up ship flags. ///////////////////////////////////
 
-    // increment the local timer every frame if the global timer isn't 0.
-    // (which it should be, if it isn't, either the user left the game on for like 5 years or something's broken)
+    m->pshipflags3 |= psf3_enginesnd; // turn on engine sound
+
+    /////////////////////////////////////////////////////////
+
+    // Increment the local timer every frame if the global timer isn't 0.
     if (gGlobalTimer > 0) {
         gLocalTimer++;
     }
 
-    vec3f_copy(pos, m->pos);
+    vec3f_copy(pos, m->pos); // copy pos to player's pos.
     pstrats_update_shipflags(m); // update player flags.
 
-    // constantly move ship forward.
-    if ((!(m->pshipflags2 & psf2_boosting)) | (!(m->pshipflags2 & psf2_braking))) {
-        pos[2] += medPspeed;
-    }
-
-    // meter drawing test.
     #ifdef DEBUGINFO
     print_text_fmt_int(16, 180, "PSF3 %d", m->pshipflags3);
     #endif
@@ -112,11 +106,18 @@ s32 player_istrat(struct MarioState *m) {
     // button input junk. (this feels like such a nasty way to do things...)
 
     /************************************************************************************/
+    /* PLAYER'S MOVEMENT                                                                */
     /* we're flying a plane thing here, so let's make the flight controls make sense.   */
     /* up - dive                                                                        */
     /* down - climb                                                                     */
     /* also add D-pad for those who want a more SNES-like control scheme.               */
     /************************************************************************************/
+
+    // constantly move ship forward at medium speed unless we're boosting or braking.
+    if ((!(m->pshipflags2 & psf2_boosting)) | (!(m->pshipflags2 & psf2_braking))) {
+        pos[2] += medPspeed;
+    }
+
     if (!(pshipflags & psf_noctrl)) { // only process inputs if noctrl flag is off
         if (pos[1] != 540) { // set level "ceiling" for now
             if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
@@ -154,10 +155,10 @@ s32 player_istrat(struct MarioState *m) {
         }
 
         if (m->pshipflags2 & psf2_boosting) { // if boost flag on
-            pos[2] += maxPspeed;
+            pos[2] += maxPspeed; // speed up
         }
         if (m->pshipflags2 & psf2_braking) { // if brake flag on
-            pos[2] += minPspeed;
+            pos[2] += minPspeed; // slow down
         }
 
 
@@ -178,11 +179,12 @@ s32 player_istrat(struct MarioState *m) {
     // end of button stuffs.
 
     // WORLD stuff
-    if (pos[2] > 20450) { // Loop pos at 4096
+    // Loop player's Z position back to 0 when 20450 is reached.
+    if (pos[2] > 20450) {
         pos[2] = 0;
     }
 
-    // SM64 junk that has to be here... (sigh)
+    // SM64 Stuff that has to be here for movement and collisions with world to work
     // spawn pseudo floor object to prevent OOB death
     resolve_and_return_wall_collisions(pos, 60.0f, 50.0f, &wallData);
 
@@ -202,21 +204,22 @@ s32 player_istrat(struct MarioState *m) {
         vec3f_copy(m->pos, pos);
     }
 
-    // execute everything else.
+    // execute all the other player update routines.
     pstrats_update_yaw(m);
     pstrats_update_pitch(m);
     pstrats_update_roll(m);
     pstrats_update_collisions(m);
+    // Copy player's actual position to player's gfx position.
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
-    // Make sure that all angle data is being copied over to the player gfx
+    // Make sure that the player gfx angle is being copied over to all angle data
     // so we can have rotation on all 3 axes. (very important)
     vec3s_copy(m->marioObj->header.gfx.angle, m->faceAngle);
     return FALSE;
 }
 
-// these 3 routines update the player's rotation (soon to be 4 with wobble)
-
-void pstrats_update_pitch(struct MarioState *m) {
+// These 3 routines update the player's rotation on the X, Y and Z axes.
+// TODO: Add player wobble
+void pstrats_update_pitch(struct MarioState *m) { // rotation around Y axis
     if ((gPlayer1Controller->stickY > 0) | (gPlayer1Controller->buttonDown & U_JPAD)) {
         m->faceAngle[0] += 512.0f;
     } else if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
@@ -234,7 +237,7 @@ void pstrats_update_pitch(struct MarioState *m) {
 }
 
 // changes player yaw based on stick input
-void pstrats_update_yaw(struct MarioState *m) {
+void pstrats_update_yaw(struct MarioState *m) { // Rotation around Z axis
     if ((gPlayer1Controller->stickX < 0) | (gPlayer1Controller->buttonDown & L_JPAD)) {
         m->faceAngle[1] += 512.0f;
     } else if ((gPlayer1Controller->stickX > 0) | (gPlayer1Controller->buttonDown & R_JPAD)) {
@@ -251,7 +254,7 @@ void pstrats_update_yaw(struct MarioState *m) {
     }
 }
 
-void pstrats_update_roll(struct MarioState *m) {
+void pstrats_update_roll(struct MarioState *m) { // Rotation around X axis.
     if ((gPlayer1Controller->buttonDown & L_TRIG) | (gPlayer1Controller->buttonDown & Z_TRIG)) {
         //s32 approach_s32(s32 current, s32 target, s32 inc, s32 dec);
         m->faceAngle[2] = approach_s32(m->faceAngle[2], -17000, 0x400, 0x400);
@@ -262,7 +265,8 @@ void pstrats_update_roll(struct MarioState *m) {
     }
 }
 
-// check each bit of the 3 shipflags bits (see STRATEQU.H) and update things accordingly.
+// Check each bit of the shipflags and do things accordingly.
+// (See stratequ.h, types.h) 
 void pstrats_update_shipflags(struct MarioState *m) {
 
     // pshipflags
@@ -334,7 +338,7 @@ void pstrats_update_shipflags(struct MarioState *m) {
 
     }
     // cool down boost meter after use
-    if (m->pshipflags3 & psf3_bstcool) { // Boost Cooldown flag
+    if (m->pshipflags3 & psf3_bstcool) { // Boost Cooldown flag (this fixes the boost cooldown bug we had previously)
         if (!(m->pshipflags2 & psf2_boosting) && !(m->pshipflags2 & psf2_braking)) {
                 if (m->player_BP != 40) {
                     m->player_BP++;
@@ -344,13 +348,11 @@ void pstrats_update_shipflags(struct MarioState *m) {
             }
     }
 
-
 }
 
+// Drains boost meter and then sets flags accordingly for boost/brake.
 void pstrats_boost(struct MarioState *m) {
-    Vec3f pos;
     if (m->player_BP != 0) {
-        //pos[2] += maxPspeed;
         m->player_BP--;
     } else {
         m->pshipflags2 &= ~psf2_boosting; // Clear braking flag bit
@@ -359,9 +361,7 @@ void pstrats_boost(struct MarioState *m) {
 }
 
 void pstrats_brake(struct MarioState *m) {
-    Vec3f pos;
     if (m->player_BP != 0) {
-        //pos[2] += minPspeed;
         m->player_BP--;
     } else {
         m->pshipflags2 &= ~psf2_braking; // Clear braking flag bit
@@ -371,15 +371,6 @@ void pstrats_brake(struct MarioState *m) {
 
 void pstrats_update_collisions(struct MarioState *m) {
     // TODO: obj collisions code
-}
-
-void mapmacs_do_objs(void) {
-    // TODO: this is dumb
-    // this also just needs work. these should
-    // really not be spawning relative to the player's position.
-	MAPOBJ(0,1200,000,5000,MODEL_MARIO,hard180yr_Istrat);
-	MAPOBJ(0,-1200,000,5000,MODEL_MARIO,hard180yr_Istrat);
-
 }
 
 

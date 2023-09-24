@@ -1,4 +1,4 @@
-// Master object spawner for test level.
+// Static object with hitbox.
 
 #include "game/game_init.h"
 
@@ -17,13 +17,4 @@ struct ObjectHitbox hard180yr_Hitbox = {
 
 void hard180yr_main(void) {
 
-s16 position = o->oPosX;
-
-    position += 24;
-
-    if (position > 4096) { // despawn.
-        s_remove_obj(o);
-    }
-
-    o->oInteractStatus = INT_STATUS_NONE;
 }

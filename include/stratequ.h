@@ -14,41 +14,40 @@
 *                                                                         *
 \*************************************************************************/
 
+/*************************************\
+* --HOW TO SET AND CLEAR FLAGS--      *
+*                                     *
+* set:                                *
+* flags |= FLAG; // Set FLAG          *
+*                                     *
+* clear:                              *
+* flags &= ~FLAG; // Clear FLAG       *
+*                                     *
+* -- HOW TO CHECK FLAGS--             *
+* if equal:                           *
+*                                     *
+* if (flags & FLAG) {                 *
+*     //your code here                *
+* }                                   *
+*                                     *
+* if not equal:                       *
+*                                     *
+* if (!(flags & FLAG)) {              *
+*     //your code here                *
+* }                                   *
+*                                     * 
+\*************************************/
 
-/******************************
---HOW TO SET AND CLEAR FLAGS--
+// NOTE: a lot of these have been moved to MarioState (see types.h)
 
-set:
-flags |= FLAG_A; // Set FLAG_A
-
-clear:
-flags &= ~FLAG_B; // Clear FLAG_B
-
--- HOW TO CHECK FLAGS--
-if equal:
-
-if (flags & FLAG_A) {
-    // FLAG_A is set
-}
-
-if not equal:
-
-if (!(flags & FLAG_A)) {
-    // FLAG_A is not set
-}
-
-********************************/
-
-/*
-player's ship flags.
-   there are 3 ship flag bytes.
-   each bit corresponds to a different player status flag.
-   only 5 bytes are used in flags3.
-*/
-// carried over from the original SNES source (converted to C syntax of course)
-// as a bonus, this saves on RAM! (only uses 3 bytes)
-
-// NOTE: pshipflags, pshipflags2, pshipflags3 are u8's in gMarioState (see types.h)
+/*************************************************************\
+*   Player's ship flags.                                      *
+*   There are 3 ship flag bytes.                              *
+*   Each bit corresponds to a different player status flag.   *
+*	IMPORTANT: Make sure when you set/clear flags that the    *
+*	flag you are setting matches the flag bit.                *
+*	Ex: m->pshipflags3 |= psf3_enginesnd;                     *
+\*************************************************************/
 
 //pshipflags // was an 8-bit alc
 #define psf_bodycoll (1 << 0)       // 00000001 (1)
@@ -76,18 +75,16 @@ player's ship flags.
 #define psf3_forcebrake (1 << 2)    // 00000100 (4)
 #define psf3_nocollisions (1 << 3)  // 00001000 (8)
 #define psf3_beamball (1 << 4)      // 00010000 (16)
-#define psf3_bstcool (1 << 5)       // 00100000 (32) // new flag not present in original game
+#define psf3_bstcool (1 << 5)       // 00100000 (32) // new flag (this fixes the boost cooldown bug we had previously)
 // last 2 bits unused... (space for more flags someday?)
-
-// these were also moved to gMarioState
 
 // Player's flying mode flags.
 //playerflymode // was an 8-bit alc
-#define pfm_diefall (1 << 0)    // 00000001 (1)
-#define pfm_dieYrot (1 << 1)    // 00000010 (2)
-#define pfm_water (1 << 2)      // 00000100 (4)
-#define pfm_shadows (1 << 3)    // 00001000 (6)      
-#define pfm_wobble (1 << 4)     // 00010000 (8)
+#define pfm_diefall (1 << 0)        // 00000001 (1)
+#define pfm_dieYrot (1 << 1)        // 00000010 (2)
+#define pfm_water (1 << 2)          // 00000100 (4)
+#define pfm_shadows (1 << 3)        // 00001000 (6)      
+#define pfm_wobble (1 << 4)         // 00010000 (8)
 
 //splayerflymode // was an 8-bit alc
 #define spfm_norm 0
@@ -135,10 +132,10 @@ extern int medPspeed;
 extern int minPspeed;
 
 // HUD stuffs
+// some of these have been moved to gMarioState
 extern int playerB_HP;
 extern int playerB_MaxHP;
 extern f32 bp_ratio;
-extern f32 player_BP; // boost points
 extern int player_MaxBP;
 extern f32 boostMeterScale;
 extern f32 hp_ratio;

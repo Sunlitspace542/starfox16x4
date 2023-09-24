@@ -94,10 +94,4 @@ void render_init(void);
 void select_gfx_pool(void);
 void display_and_vsync(void);
 
-// mapmacs
-#define MAPOBJ(frame, x, y, z, model, behavior) \
-    if (gLocalTimer == (frame)) { \
-        spawn_object_relative(0, (x), (y), (z), gCurrentObject, (model), (behavior)); \
-    }
-
 #endif // GAME_INIT_H
