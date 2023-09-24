@@ -436,7 +436,7 @@ int shieldboxY = 14;
 
 // SHIELD text (and outer boxes for meters)
 
-void render_hud_shield_text(void) {
+void render_hud_shield_stuff(void) {
     print_text(30-5, hudY-4, "_"); // SHIELD text
     print_text(46-5, hudY-4, "("); // SHIELD text
     print_text(62-5, hudY-4, ")"); // SHIELD text
@@ -665,33 +665,14 @@ void render_hud(void) {
             render_hud_cannon_reticle();
         }
 
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_LIVES) { // draw all the HUD things
+        if (hudDisplayFlags & HUD_DISPLAY_FLAG_LIVES) { // Draw ALL the HUD things!!!
             render_hud_mario_lives();
             render_hud_bombs();
-            render_hud_shield_text(); // Also renders shield/boost outer boxes.
+            render_hud_shield_stuff(); // Render all the sprites for the meters (and debug things if that's on)
             render_hud_shield_meter(28, 28); // x, y
             render_hud_boost_meter(246, 28); // x, y
         }
-/*
-#ifdef BREATH_METER
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_BREATH_METER) render_hud_breath_meter();
-#endif
 
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_CAMERA_AND_POWER) {
-            render_hud_power_meter();
-#ifdef PUPPYCAM
-            if (!gPuppyCam.enabled) {
-#endif
-            render_hud_camera_status();
-#ifdef PUPPYCAM
-            }
-#endif
-        }
-
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_TIMER) {
-            render_hud_timer();
-        }
-*/
         if (gSurfacePoolError & NOT_ENOUGH_ROOM_FOR_SURFACES) print_text(10, 40, "SURFACE POOL FULL");
         if (gSurfacePoolError & NOT_ENOUGH_ROOM_FOR_NODES) print_text(10, 60, "SURFACE NODE POOL FULL");
 
