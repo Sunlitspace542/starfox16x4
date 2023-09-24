@@ -222,7 +222,7 @@ ifeq ($(NON_MATCHING),1)
 endif
 
 
-TARGET_STRING := sm64
+TARGET_STRING := sf16x4
 
 # UNF - whether to use UNFLoader flashcart library
 #   1 - includes code in ROM
