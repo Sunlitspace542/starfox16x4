@@ -96,14 +96,14 @@ s32 player_istrat(struct MarioState *m) {
         gLocalTimer++;
     }
 
-    vec3f_copy(pos, m->pos); // copy pos to player's pos.
-    pstrats_update_shipflags(m); // update player flags.
+    vec3f_copy(pos, m->pos); // Copy pos to player's pos.
+    pstrats_update_shipflags(m); // Update player's flags.
 
     #ifdef DEBUGINFO
     print_text_fmt_int(16, 180, "PSF3 %d", m->pshipflags3);
     #endif
 
-    // button input junk. (this feels like such a nasty way to do things...)
+    // Start of button input code.
 
     /************************************************************************************/
     /* PLAYER'S MOVEMENT                                                                */
@@ -139,11 +139,7 @@ s32 player_istrat(struct MarioState *m) {
             pos[0] -= medPspeed;
         }
 
-
-        // TODO for boosting and braking:
-        // Add boost meter timer for these actions.
-
-        // boosting and braking.
+        // Boosting and braking.
         if ((gPlayer1Controller->buttonPressed & U_CBUTTONS) && (!(pshipflags2 & psf2_braking)) && (m->player_BP == 40)) { 
             m->pshipflags2 |= psf2_boosting; // Set boosting flag
             play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
@@ -153,7 +149,7 @@ s32 player_istrat(struct MarioState *m) {
             m->pshipflags2 |= psf2_braking; // Set braking flag
             play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
         }
-
+        // Change player's movement speed for boost and brake.
         if (m->pshipflags2 & psf2_boosting) { // if boost flag on
             pos[2] += maxPspeed; // speed up
         }
@@ -176,7 +172,7 @@ s32 player_istrat(struct MarioState *m) {
         }
     }
 
-    // end of button stuffs.
+    // End of button input code.
 
     // WORLD stuff
     // Loop player's Z position back to 0 when 20450 is reached.

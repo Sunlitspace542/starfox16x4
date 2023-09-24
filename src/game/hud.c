@@ -83,7 +83,7 @@ void print_fps(s32 x, s32 y) {
 #endif
 }
 
-// ------------ END OF FPS COUNER -----------------
+// ------------ END OF FPS COUNTER -----------------
 
 struct PowerMeterHUD {
     s8 animation;
@@ -453,6 +453,7 @@ void render_hud_shield_text(void) {
     
 //DBG
 #ifdef DEBUGINFO
+    // Print some strings reporting status of various game variables for debug ROMs.
     print_text_fmt_int(16, 20, "Z %d", gMarioState->pos[2]);
     print_text_fmt_int(16, 40, "Y %d", gMarioState->pos[1]);
     print_text_fmt_int(16, 60, "X %d", gMarioState->pos[0]);
@@ -466,12 +467,13 @@ void render_hud_shield_text(void) {
 #endif
 }
 
-// shield and boost meters.
+// Shield and boost meters.
 
-#include "stratequ.h"
+#include "stratequ.h" // Include strategy equates.
 
-f32 shieldMeterScale; // Declare shieldMeterScale at file scope
-f32 boostMeterScale; // Declare boostMeterScale at file scope
+// Initialize variables for use in this file:
+f32 shieldMeterScale;
+f32 boostMeterScale;
 
 // initializes HUD values.
 void init_hud_values(void) {
@@ -488,7 +490,7 @@ void init_hud_values(void) {
 // The following two functions are responsible for drawing the two meters in the HUD.
 void render_hud_shield_meter(s16 x, s16 y) {
 
-    init_hud_values(); // initialize HUD values.
+    init_hud_values(); // Initialize HUD values.
 
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
     create_dl_scale_matrix(MENU_MTX_NOPUSH, shieldMeterScale, 0.8f, 1.0f); // XX YY ZZ
@@ -496,7 +498,8 @@ void render_hud_shield_meter(s16 x, s16 y) {
     gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 
-// this code has to be here or game will hard crash (breakpoint)
+// This code has to be here or the game will hard crash (breakpoint)
+// TODO: find out why
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
     create_dl_rotation_matrix(MENU_MTX_NOPUSH, 90.0f, 0, 0, 1.0f);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 0);
@@ -512,7 +515,7 @@ void render_hud_shield_meter(s16 x, s16 y) {
 
 void render_hud_boost_meter(s16 x, s16 y) {
 
-    init_hud_values(); // initialize HUD values.
+    init_hud_values(); // Initialize HUD values.
 
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
     create_dl_scale_matrix(MENU_MTX_NOPUSH, boostMeterScale, 0.8f, 1.0f); // XX YY ZZ
@@ -520,7 +523,7 @@ void render_hud_boost_meter(s16 x, s16 y) {
     gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 
-// this code has to be here or game will hard crash (breakpoint)
+// This code has to be here or the game will hard crash (breakpoint)
     create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0);
     create_dl_rotation_matrix(MENU_MTX_NOPUSH, 90.0f, 0, 0, 1.0f);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 0);
@@ -545,40 +548,6 @@ void render_debug_mode(void) {
     print_fps(10,80);
 }
 #endif
-
-/**
- * Renders the amount of coins collected.
- */
-void render_hud_coins(void) {
-    print_text(HUD_COINS_X, HUD_TOP_Y, "$"); // 'Coin' glyph
-    print_text((HUD_COINS_X + 16), HUD_TOP_Y, "*"); // 'X' glyph
-    print_text_fmt_int((HUD_COINS_X + 30), HUD_TOP_Y, "%d", gHudDisplay.coins);
-}
-
-/**
- * Renders the amount of stars collected.
- * Disables "X" glyph when Mario has 100 stars or more.
- */
-void render_hud_stars(void) {
-    if (gHudFlash == HUD_FLASH_STARS && gGlobalTimer & 0x8) return;
-    s8 showX = (gHudDisplay.stars < 100);
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_STARS_X), HUD_TOP_Y, "^"); // 'Star' glyph
-    if (showX) print_text((GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_STARS_X) + 16), HUD_TOP_Y, "*"); // 'X' glyph
-    print_text_fmt_int((showX * 14) + GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_STARS_X - 16),
-                       HUD_TOP_Y, "%d", gHudDisplay.stars);
-}
-
-/**
- * Unused function that renders the amount of keys collected.
- * Leftover function from the beta version of the game.
- */
-void render_hud_keys(void) {
-    s16 i;
-
-    for (i = 0; i < gHudDisplay.keys; i++) {
-        print_text((i * 16) + 220, 142, "|"); // unused glyph - beta key
-    }
-}
 
 /**
  * Renders the timer when Mario start sliding in PSS.
@@ -696,16 +665,14 @@ void render_hud(void) {
             render_hud_cannon_reticle();
         }
 
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_LIVES) {
+        if (hudDisplayFlags & HUD_DISPLAY_FLAG_LIVES) { // draw all the HUD things
             render_hud_mario_lives();
             render_hud_bombs();
-            render_hud_shield_text(); // also shield/boost outer boxes
-            // soon:
-            // render_hud_meter_boxes();
+            render_hud_shield_text(); // Also renders shield/boost outer boxes.
             render_hud_shield_meter(28, 28); // x, y
             render_hud_boost_meter(246, 28); // x, y
         }
-
+/*
 #ifdef BREATH_METER
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_BREATH_METER) render_hud_breath_meter();
 #endif
@@ -724,7 +691,7 @@ void render_hud(void) {
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_TIMER) {
             render_hud_timer();
         }
-
+*/
         if (gSurfacePoolError & NOT_ENOUGH_ROOM_FOR_SURFACES) print_text(10, 40, "SURFACE POOL FULL");
         if (gSurfacePoolError & NOT_ENOUGH_ROOM_FOR_NODES) print_text(10, 60, "SURFACE NODE POOL FULL");
 
