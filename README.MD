@@ -1,10 +1,7 @@
-# Star Fox 16 x 4
+# Star Fox 16x4
 (todo: cool logo thing)  
+A remake of Star Fox (1993) for the Nintendo 64.
 Based on [HackerSM64](https://github.com/HackerN64/HackerSM64)
-
-## What??
-I've started reading through and documenting the source code of the original Star Fox as part of my [UltraStarFox](https://github.com/Sunlitspace542/ultrastarfox) fork of the source code.  
-After various observations regarding SM64's development and Star Fox's influence on it, I decided to try to port the game to the N64 using the SM64 engine.  
 
 ## Credits (in alphabetical order)
 AloXado320: Programming assistance, answering my dumb SM64 questions  
@@ -14,7 +11,7 @@ Kandowontu: Answering my Star Fox related questions, feedback, general encourage
 Monika: Assistance, feedback, moral support  
 Sunlit: Lead programmer, model porting, sprites, real N64 testing  
 
-## List of important things to be done
+## TODO List
 
 ### Freeing up/Conserving ROM Space:
 - [X] Remove all SM64 object behaviors  
@@ -34,6 +31,7 @@ Sunlit: Lead programmer, model porting, sprites, real N64 testing
 - [X] Get a basic laser strat in  
 - [x] Proper boosting and braking  
 - [x] Player ship flags working  
+- [ ] Barrel rolls
 - [ ] Player ship wobble
 
 Other:  
