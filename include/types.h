@@ -478,6 +478,7 @@ struct MarioState {
     /*0xC9*/ u8 splayerflymodeopt;
     /*0xCA*/ u8 pstratflags;
     /*0xCB*/ f32 player_BP;
+    /*0xCC*/ u8 rollDirection;
     // -- HackerSM64 MarioState fields begin --
 #ifdef BREATH_METER
              s16 breath;

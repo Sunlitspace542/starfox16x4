@@ -96,11 +96,11 @@ s32 player_istrat(struct MarioState *m) {
         gLocalTimer++;
     }
 
-    vec3f_copy(pos, m->pos); // Copy pos to player's pos.
+    vec3f_copy(pos, m->pos); // Copy player's pos to pos.
     pstrats_update_shipflags(m); // Update player's flags.
 
     #ifdef DEBUGINFO
-    print_text_fmt_int(16, 180, "PSF3 %d", m->pshipflags3);
+    //print_text_fmt_int(16, 180, "PSF3 %d", m->pshipflags3);
     #endif
 
     // Start of button input code.
@@ -204,6 +204,7 @@ s32 player_istrat(struct MarioState *m) {
     pstrats_update_yaw(m);
     pstrats_update_pitch(m);
     pstrats_update_roll(m);
+    pstrats_update_barrel_rolls(m);
     pstrats_update_collisions(m);
     // Copy player's actual position to player's gfx position.
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
@@ -251,13 +252,45 @@ void pstrats_update_yaw(struct MarioState *m) { // Rotation around Z axis
 }
 
 void pstrats_update_roll(struct MarioState *m) { // Rotation around X axis.
-    if ((gPlayer1Controller->buttonDown & L_TRIG) | (gPlayer1Controller->buttonDown & Z_TRIG)) {
-        //s32 approach_s32(s32 current, s32 target, s32 inc, s32 dec);
-        m->faceAngle[2] = approach_s32(m->faceAngle[2], -17000, 0x400, 0x400);
-    } else if (gPlayer1Controller->buttonDown & R_TRIG) {
-        m->faceAngle[2] = approach_s32(m->faceAngle[2], 17000, 0x400, 0x400);
-    } else {
-        m->faceAngle[2] = approach_s32(m->faceAngle[2], 0, 0x400, 0x400);
+        // check if down (rotate)
+    if (!(m->pshipflags3 & psf3_rolling)) {
+        if ((gPlayer1Controller->buttonDown & L_TRIG) | (gPlayer1Controller->buttonDown & Z_TRIG)) {
+            m->faceAngle[2] = approach_s32(m->faceAngle[2], -17000, 0x400, 0x400);
+        } else if (gPlayer1Controller->buttonDown & R_TRIG) {
+            m->faceAngle[2] = approach_s32(m->faceAngle[2], 17000, 0x400, 0x400);
+        } else {
+            m->faceAngle[2] = approach_s32(m->faceAngle[2], 0, 0x400, 0x400);
+        }
+    }
+}
+
+// this is all unfinished and busted. Still studying how the original game did this.
+
+u8 pressCounter;
+
+void pstrats_update_barrel_rolls(struct MarioState *m) {
+    u8 i;
+    for (i < player_rolldelay; i++;) {
+        print_text_fmt_int(16, 180, "I %d", i);
+        if (i == player_rolldelay) {
+            i = 0;
+        }
+    }
+
+    if (!(m->pshipflags3 & psf3_rolling)) {
+        if ((gPlayer1Controller->buttonPressed & L_TRIG) | (gPlayer1Controller->buttonPressed & Z_TRIG)) {
+
+        } else if (gPlayer1Controller->buttonPressed & R_TRIG) {
+            
+        }
+    }
+
+    if ((m->pshipflags3 & psf3_rolling) && (i == player_rolldelay)) {
+        if (m->rollDirection == 0) {
+            // rotate player left
+        } else if (m->rollDirection == 1) {
+            // rotate player right
+        }
     }
 }
 
@@ -343,6 +376,7 @@ void pstrats_update_shipflags(struct MarioState *m) {
                 }
             }
     }
+
 
 }
 

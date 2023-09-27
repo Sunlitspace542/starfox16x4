@@ -76,7 +76,8 @@
 #define psf3_nocollisions (1 << 3)  // 00001000 (8)
 #define psf3_beamball (1 << 4)      // 00010000 (16)
 #define psf3_bstcool (1 << 5)       // 00100000 (32) // new flag (this fixes the boost cooldown bug we had previously)
-// last 2 bits unused... (space for more flags someday?)
+#define psf3_rolling (1 << 6)		// 01000000 (64) // new flag 2
+// last  2 bits unused... (space for more flags someday?)
 
 // Player's flying mode flags.
 //playerflymode // was an 8-bit alc
@@ -109,6 +110,8 @@
 #define pstf_firstframeLcol (1 << 5)    // 00100000 (16) // first frame player laser collision ON.
 #define pstf_notdie (1 << 6)            // 00010000 (32)  
 
+#define player_rolldelay 6
+
 // movement limitations (yet to be converted to C + SM64 units)
 /*
 pml_Lwleft	equ	1
@@ -130,6 +133,10 @@ pml_all	equ	pml_lwtop!pml_rwtop!pml_lwbottom!pml_rwbottom!pml_lwleft!pml_rwright
 extern int maxPspeed;
 extern int medPspeed;
 extern int minPspeed;
+
+// other player stuffs.
+extern int rollCountL;
+extern int rollCountR;
 
 // HUD stuffs
 // some of these have been moved to gMarioState
