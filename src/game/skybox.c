@@ -154,13 +154,14 @@ s32 calculate_skybox_scaled_x(s8 player, f32 fov) {
  *
  * fov may have been used in an earlier version, but the developers changed the function to always use
  * 90 degrees.
+ * Fixed, FOV now controls scale as was originally intended
  */
-s32 calculate_skybox_scaled_y(s8 player, UNUSED f32 fov) {
+s32 calculate_skybox_scaled_y(s8 player, f32 fov) {
     // Convert pitch to degrees. Pitch is bounded between -90 (looking down) and 90 (looking up).
     f32 pitchInDegrees = (f32) sSkyBoxInfo[player].pitch * 360.0f / 65535.0f;
 
     // Scale by 360 / fov
-    f32 degreesToScale = 360.0f * pitchInDegrees / 90.0f;
+    f32 degreesToScale = 360.0f * pitchInDegrees / fov;
     s32 roundedY = roundf(degreesToScale);
 
     // Since pitch can be negative, and the tile grid starts 1 octant above the camera's focus, add
@@ -303,7 +304,7 @@ Gfx *create_skybox_facing_camera(s8 player, s8 background, f32 fov, Vec3f pos, V
     
     //! fov is always set to 90.0f. If this line is removed, then the game crashes because fov is 0 on
     //! the first frame, which causes a floating point divide by 0
-    fov = 90.0f;
+    fov = 20.0f;
     s16 yaw;
     vec3f_get_angle(pos, focus, &sSkyBoxInfo[player].pitch, &yaw);
     sSkyBoxInfo[player].yaw = yaw;
