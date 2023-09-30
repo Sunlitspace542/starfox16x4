@@ -122,7 +122,7 @@ const Gfx init_rdp[] = {
     gsDPSetCombineKey(G_CK_NONE),
     gsDPSetAlphaCompare(G_AC_NONE),
     gsDPSetRenderMode(G_RM_OPA_SURF, G_RM_OPA_SURF2),
-    gsDPSetColorDither(G_CD_MAGICSQ),
+    gsDPSetColorDither(G_CD_DISABLE), // was G_CD_MAGICSQ
     gsDPSetCycleType(G_CYC_FILL),
 
 // #ifdef VERSION_SH
