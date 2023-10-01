@@ -629,8 +629,8 @@ void render_hud(void) {
             render_hud_mario_lives();
             render_hud_bombs();
             render_hud_shield_stuff(); // Render all the sprites for the meters (and debug things if that's on)
-            render_hud_shield_meter(28, 28); // x, y
-            render_hud_boost_meter(246, 28); // x, y
+            render_hud_shield_meter(27, 28); // x, y
+            render_hud_boost_meter(245, 28); // x, y
         }
 
         if (gSurfacePoolError & NOT_ENOUGH_ROOM_FOR_SURFACES) print_text(10, 40, "SURFACE POOL FULL");
