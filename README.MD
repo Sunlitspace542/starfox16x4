@@ -34,7 +34,11 @@ Sunlit: Lead programmer, model porting, sprites, real N64 testing
 - [ ] Barrel rolls
 - [ ] Player ship wobble
 
+``src/game/skybox.c``:  
+- [x] Get skyboxes working  
+
 Other:  
+- [ ] Camera really needs some work  
 - [ ] Begin work on implementing Star Fox world functionality, object macros, levels, etc.  
 - [ ] Port over PATH/strat commands from Star Fox as necessary  
 - Find loop points for music  
