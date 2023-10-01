@@ -54,10 +54,10 @@
 // #define DEBUG_FORCE_CRASH_ON_BOOT
 
 // Enables a custom, enhanced performance profiler. (Enables PUPPYPRINT by default in config_safeguards).
-#define PUPPYPRINT_DEBUG 1
+//#define PUPPYPRINT_DEBUG 1
 
 // NEW stuffs
 // enable strategy debugging
 // prereqs: PUPPYPRINT_DEBUG 1
-#define DEBUGINFO
+//#define DEBUGINFO
 

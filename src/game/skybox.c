@@ -128,7 +128,7 @@ ColorRGB sSkyboxColors[] = {
 /**
  * The Y offset of the skybox.
  */
-#define SKYBOX_Y_OFFSET 0
+#define SKYBOX_Y_OFFSET -30
 
 /**
  * Convert the camera's yaw into an x position into the scaled skybox image.

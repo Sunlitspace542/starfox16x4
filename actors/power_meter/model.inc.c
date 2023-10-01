@@ -125,6 +125,6 @@ const Gfx dl_power_meter_health_segments_end[] = {
     gsSPSetGeometryMode(G_LIGHTING),
     gsDPSetRenderMode(G_RM_OPA_SURF, G_RM_OPA_SURF2),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
-    gsDPSetTextureFilter(G_TF_BILERP),
+    gsDPSetTextureFilter(G_TF_POINT),
     gsSPEndDisplayList(),
 };
