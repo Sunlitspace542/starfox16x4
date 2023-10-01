@@ -119,7 +119,7 @@ s32 player_istrat(struct MarioState *m) {
     }
 
     if (!(pshipflags & psf_noctrl)) { // only process inputs if noctrl flag is off
-        if (pos[1] != 540) { // set level "ceiling" for now
+        if (pos[1] != 600) { // set level "ceiling" for now
             if ((gPlayer1Controller->stickY < 0) | (gPlayer1Controller->buttonDown & D_JPAD)) {
                 pos[1] += minPspeed;
             }

@@ -128,7 +128,7 @@ ColorRGB sSkyboxColors[] = {
 /**
  * The Y offset of the skybox.
  */
-#define SKYBOX_Y_OFFSET -30
+#define SKYBOX_Y_OFFSET -90
 
 /**
  * Convert the camera's yaw into an x position into the scaled skybox image.
@@ -308,7 +308,7 @@ Gfx *create_skybox_facing_camera(s8 player, s8 background, f32 fov, Vec3f pos, V
     
     //! fov is always set to 90.0f. If this line is removed, then the game crashes because fov is 0 on
     //! the first frame, which causes a floating point divide by 0
-    fov = 20.0f; // controls zoom
+    fov = 30.0f; // controls zoom
     s16 yaw;
     vec3f_get_angle(pos, focus, &sSkyBoxInfo[player].pitch, &yaw);
     sSkyBoxInfo[player].yaw = yaw;
