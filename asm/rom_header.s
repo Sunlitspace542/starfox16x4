@@ -1,7 +1,11 @@
 /*
- * Super Mario 64 ROM header
+ * ROM header
  * Only the first 0x18 bytes matter to the console.
  */
+
+/*
+* Advanced Homebrew ROM header (https://n64brew.dev/wiki/ROM_Header#Advanced_Homebrew_ROM_Header)
+*/
 #include "config.h"
 .byte  0x80, 0x37, 0x12, 0x40   /* PI BSD Domain 1 register */
 .word  0x0000000F               /* Clockrate setting*/
@@ -17,7 +21,8 @@
 .ascii INTERNAL_ROM_NAME   /* Internal ROM name */
 .word  0x00000000               /* Unknown */
 .word  0x0000004E               /* Cartridge */
-.ascii "FO"                     /* Cartridge ID */
+/* Actual product code is NFO(J/E)*/
+.ascii "ED"                     /* Cartridge ID */
 
 /* Region */
 #if defined(VERSION_JP) || defined(VERSION_SH)
