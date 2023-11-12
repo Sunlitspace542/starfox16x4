@@ -4,7 +4,8 @@
  */
 
 /*
-* Advanced Homebrew ROM header (https://n64brew.dev/wiki/ROM_Header#Advanced_Homebrew_ROM_Header)
+* Advanced Homebrew ROM header
+* https://n64brew.dev/wiki/ROM_Header#Advanced_Homebrew_ROM_Header
 */
 #include "config.h"
 .byte  0x80, 0x37, 0x12, 0x40   /* PI BSD Domain 1 register */
@@ -39,6 +40,6 @@
     .byte  0x42                 /* Version */
 #elif defined(FLASHRAM)
     .byte  0x52                 /* Version */
-#else
+#else /* EEP4K */
     .byte  0x12                 /* Version */
 #endif
